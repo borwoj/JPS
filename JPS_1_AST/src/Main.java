@@ -1,9 +1,12 @@
 import ast.Expression;
+import ast.binary.CommaExpression;
 import ast.binary.DotExpression;
 import ast.binary.GreaterThanExpression;
+import ast.binary.InExpression;
 import ast.binary.WhereExpression;
 import ast.terminal.IntegerTerminal;
 import ast.terminal.NameTerminal;
+import ast.unary.BagExpression;
 import ast.unary.CountExpression;
 
 /**
@@ -24,7 +27,10 @@ public class Main {
 						"imie")), new IntegerTerminal(1)));
 
 		// zad. 2
-
+		Expression expression2 = new WhereExpression(new NameTerminal("firma"),
+				new InExpression(new NameTerminal("lokalizacja"),
+						new BagExpression(new CommaExpression(new NameTerminal(
+								"Warszawa"), new NameTerminal("£Ûdü")))));
 		// zad. 3
 
 		// zad. 4
