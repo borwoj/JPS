@@ -1,3 +1,5 @@
+package ast.auxname;
+import ast.Expression;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.auxname.IAuxiliaryNameExpression;
 

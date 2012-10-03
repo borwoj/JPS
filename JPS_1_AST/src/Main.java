@@ -1,6 +1,15 @@
-import edu.pjwstk.jps.ast.*;
+import ast.Expression;
+import ast.binary.DotExpression;
+import ast.binary.GreaterThanExpression;
+import ast.binary.WhereExpression;
+import ast.terminal.IntegerTerminal;
+import ast.terminal.NameTerminal;
+import ast.unary.CountExpression;
 
-/** @author £ukasz Kobyliñski (s6709), Borys Wojciechowski (s6427) **/
+/**
+ * @author £ukasz Kobyliñski (s6709)
+ * @author Borys Wojciechowski (s6427)
+ **/
 public class Main {
 
 	public static void main(String[] args) {
@@ -9,9 +18,15 @@ public class Main {
 						new NameTerminal("¿onaty")),
 				new NameTerminal("ksi¹¿ka")), new NameTerminal("autor"));
 
+		// zad. 1
 		Expression expression1 = new WhereExpression(new NameTerminal("osoba"),
 				new GreaterThanExpression(new CountExpression(new NameTerminal(
 						"imie")), new IntegerTerminal(1)));
 
+		// zad. 2
+
+		// zad. 3
+
+		// zad. 4
 	}
 }

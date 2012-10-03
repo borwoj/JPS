@@ -1,3 +1,5 @@
+package ast.binary;
+import ast.Expression;
 import edu.pjwstk.jps.ast.binary.IWhereExpression;
 
 public class WhereExpression extends BinaryExpression implements
