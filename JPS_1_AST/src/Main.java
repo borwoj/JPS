@@ -4,9 +4,14 @@ import edu.pjwstk.jps.ast.*;
 public class Main {
 
 	public static void main(String[] args) {
-		Expression ex = new DotExpression(new DotExpression(
+		Expression exampleFromPdf = new DotExpression(new DotExpression(
 				new WhereExpression(new NameTerminal("osoba"),
 						new NameTerminal("¿onaty")),
 				new NameTerminal("ksi¹¿ka")), new NameTerminal("autor"));
+
+		Expression expression1 = new WhereExpression(new NameTerminal("osoba"),
+				new GreaterThanExpression(new CountExpression(new NameTerminal(
+						"imie")), new IntegerTerminal(1)));
+
 	}
 }
