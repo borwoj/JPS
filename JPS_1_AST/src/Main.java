@@ -32,6 +32,22 @@ public class Main {
 						new BagExpression(new CommaExpression(new NameTerminal(
 								"Warszawa"), new NameTerminal("£Ûdü")))));
 		// zad. 3
+		Expression expression3 = new InExpression(
+				new BagExpression(
+						new CommaExpression(
+								new IntegerTerminal(1), 
+								new IntegerTerminal(2)
+						)
+				), 
+				new BagExpression(
+						new CommaExpression(
+								new CommaExpression(
+										new IntegerTerminal(1), 
+										new IntegerTerminal(2)
+								), 
+								new IntegerTerminal(3))
+						)
+				);
 
 		// zad. 4
 	}
