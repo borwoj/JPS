@@ -31,43 +31,23 @@ public class Main {
 		// zad. 2
 		Expression expression2 = new WhereExpression(new NameTerminal("firma"),
 				new InExpression(new NameTerminal("lokalizacja"),
-						new BagExpression(new CommaExpression(new NameTerminal(
-								"Warszawa"), new NameTerminal("£Ûdü")))));
-		
+						new BagExpression(new CommaExpression(
+								new StringTerminal("Warszawa"),
+								new StringTerminal("£Ûdü")))));
+
 		// zad. 3
-		Expression expression3 = new InExpression(
-				new BagExpression(
-						new CommaExpression(
-								new IntegerTerminal(1), 
-								new IntegerTerminal(2)
-						)
-				), 
-				new BagExpression(
-						new CommaExpression(
-								new CommaExpression(
-										new IntegerTerminal(1), 
-										new IntegerTerminal(2)
-								), 
-								new IntegerTerminal(3))
-				)
-		);
+		Expression expression3 = new InExpression(new BagExpression(
+				new CommaExpression(new IntegerTerminal(1),
+						new IntegerTerminal(2))), new BagExpression(
+				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
+						new IntegerTerminal(2)), new IntegerTerminal(3))));
 
 		// zad. 4
-		Expression expression4 = new DotExpression(
-				new WhereExpression(
-						new NameTerminal("firma"), 
-						new EqualsExpression(
-								new NameTerminal("nazwa"), 
-								new StringTerminal("XYZ")
-						)
-				), 
-				new WhereExpression(
-						new NameTerminal("zatrudnia"), 
-						new EqualsExpression(
-								new NameTerminal("nazwisko"), 
-								new StringTerminal("Kowalski")
-						)
-				)
-		);
+		Expression expression4 = new DotExpression(new WhereExpression(
+				new NameTerminal("firma"), new EqualsExpression(
+						new NameTerminal("nazwa"), new StringTerminal("XYZ"))),
+				new WhereExpression(new NameTerminal("zatrudnia"),
+						new EqualsExpression(new NameTerminal("nazwisko"),
+								new StringTerminal("Kowalski"))));
 	}
 }
