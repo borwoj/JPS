@@ -1,4 +1,5 @@
 package ast.terminal;
+
 import edu.pjwstk.jps.ast.terminal.IIntegerTerminal;
 
 public class IntegerTerminal extends TerminalExpression<Integer> implements
@@ -6,7 +7,6 @@ public class IntegerTerminal extends TerminalExpression<Integer> implements
 
 	public IntegerTerminal(Integer value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 
 }
