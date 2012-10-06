@@ -1,25 +1,28 @@
 package ast.binary;
+
 import ast.Expression;
+import ast.terminal.NameTerminal;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.binary.IBinaryExpression;
 
 public abstract class BinaryExpression extends Expression implements
 		IBinaryExpression {
 
+	Expression expLeft, expRight;
+
 	public BinaryExpression(Expression expLeft, Expression expRight) {
-		// TODO Auto-generated constructor stub
+		this.expLeft = expLeft;
+		this.expRight = expRight;
 	}
 
 	@Override
 	public IExpression getLeftExpression() {
-		// TODO Auto-generated method stub
-		return null;
+		return expLeft;
 	}
 
 	@Override
 	public IExpression getRightExpression() {
-		// TODO Auto-generated method stub
-		return null;
+		return expRight;
 	}
 
 }
