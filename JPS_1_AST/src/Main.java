@@ -1,6 +1,7 @@
 import qres.QResStack;
 import qres.collection.BagResult;
 import qres.single.BinderResult;
+import qres.single.BooleanResult;
 import qres.single.DoubleResult;
 import qres.single.IntegerResult;
 import qres.single.StringResult;
@@ -58,7 +59,9 @@ public class Main {
 						new EqualsExpression(new NameTerminal("nazwisko"),
 								new StringTerminal("Kowalski"))));
 
-		// mini-projekt 2
+	}
+
+	public void QRES_example() {
 		QResStack qres = new QResStack();
 		qres.push(new IntegerResult(1));
 		qres.push(new IntegerResult(2));
@@ -79,8 +82,9 @@ public class Main {
 		IntegerResult minusRes = new IntegerResult(minusLeft.getValue()
 				- minusRight.getValue());
 		qres.push(minusRes);
+	}
 
-		// zad. 1
+	public void QRES_zadanie_1() {
 		QResStack qres1 = new QResStack();
 		qres1.push(new IntegerResult(1)); // 1
 		qres1.push(new DoubleResult(2.1)); // 2
@@ -97,8 +101,9 @@ public class Main {
 		qres1.push(new IntegerResult(3)); // 5
 		qres1.push(new IntegerResult(4)); // 6
 		IntegerResult plusRight2 = (IntegerResult) qres1.pop();
-		IntegerResult plusLeft2 = (IntegerResult) qres1.pop(); 
-		IntegerResult plusRes2 = new IntegerResult(plusLeft2.getValue() + plusRight2.getValue());
+		IntegerResult plusLeft2 = (IntegerResult) qres1.pop();
+		IntegerResult plusRes2 = new IntegerResult(plusLeft2.getValue()
+				+ plusRight2.getValue());
 		qres1.push(plusRes2); // 7
 		qres1.push(new StringResult("test")); // 8
 		StringResult structRight2 = (StringResult) qres1.pop();
@@ -106,7 +111,7 @@ public class Main {
 		StructResult s3 = new StructResult();
 		s3.add(structRight2);
 		s3.add(structLeft2);
-		qres1.push(s3);  // 9
+		qres1.push(s3); // 9
 		StructResult s4 = (StructResult) qres1.pop();
 		BagResult b2 = new BagResult();
 		b1.add(s4);
@@ -120,10 +125,48 @@ public class Main {
 		StructResult s6 = (StructResult) qres1.pop();
 		BinderResult br1 = new BinderResult("nazwa", s6);
 		qres1.push(br1); // 12
-		
-		// zad. 2
-		
-		// zad. 3
+	}
 
+	public void QRES_zadanie_2() {
+		QResStack qres = new QResStack();
+		qres.push(new StringResult("ala")); // 1
+		qres.push(new StringResult("ma")); // 2
+		StringResult sr1 = (StringResult) qres.pop();
+		StringResult sr2 = (StringResult) qres.pop();
+		StructResult s1 = new StructResult();
+		s1.add(sr1);
+		s1.add(sr2);
+		qres.push(sr1); // 3
+		qres.push(new StringResult("kota")); // 4
+		StringResult sr3 = (StringResult) qres.pop();
+		StructResult s2 = (StructResult) qres.pop();
+		StructResult s3 = new StructResult();
+		s3.add(sr3);
+		s3.add(s2);
+		qres.push(s3); // 5
+		StructResult s4 = (StructResult) qres.pop();
+		BagResult b1 = new BagResult();
+		b1.add(s4);
+		qres.push(b1); // 6
+		qres.push(new IntegerResult(8)); // 7
+		qres.push(new IntegerResult(10)); // 8
+		IntegerResult multiRight = (IntegerResult) qres.pop();
+		IntegerResult multiLeft = (IntegerResult) qres.pop();
+		IntegerResult multiRes = new IntegerResult(multiLeft.getValue()
+				* multiRight.getValue());
+		qres.push(multiRes); // 9
+		qres.push(new BooleanResult(false)); // 10
+		BooleanResult br1 = (BooleanResult) qres.pop();
+		StringResult sr4 = (StringResult) qres.pop();
+		StructResult s5 = new StructResult();
+		s5.add(br1);
+		s5.add(sr4);
+		qres.push(s5); // 11
+		StructResult s6 = (StructResult) qres.pop();
+		BagResult b2 = (BagResult) qres.pop();
+		StructResult s7 = (StructResult) qres.pop();
+		s7.add(s6);
+		s7.add(b2);
+		qres.push(s7); // 12
 	}
 }
