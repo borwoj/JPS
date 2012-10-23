@@ -5,10 +5,19 @@ import edu.pjwstk.jps.result.IReferenceResult;
 
 public class ReferenceResult extends SingleResult implements IReferenceResult {
 
+	public OID value;
+
+	public ReferenceResult(OID value) {
+		this.value = value;
+	}
+
 	@Override
 	public OID getOIDValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return value;
+	}
+
+	public String toString() {
+		return "" + value;
 	}
 
 }

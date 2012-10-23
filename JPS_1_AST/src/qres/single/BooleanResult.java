@@ -4,8 +4,14 @@ import edu.pjwstk.jps.result.IBooleanResult;
 
 public class BooleanResult extends SimpleResult<Boolean> implements IBooleanResult {
 
+	public boolean value;
+	
 	public BooleanResult(boolean value) {
-		// TODO Auto-generated constructor stub
+		this.value = value;
+	}
+	
+	public String toString(){
+		return ""+value;
 	}
 
 }

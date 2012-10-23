@@ -2,10 +2,17 @@ package qres.single;
 
 import edu.pjwstk.jps.result.IIntegerResult;
 
-public class IntegerResult extends SimpleResult<Integer> implements IIntegerResult {
+public class IntegerResult extends SimpleResult<Integer> implements
+		IIntegerResult {
+
+	public Integer value;
 
 	public IntegerResult(Integer value) {
-		// TODO Auto-generated constructor stub
+		this.value = value;
+	}
+
+	public String toString() {
+		return "" + value;
 	}
 
 }

@@ -4,8 +4,14 @@ import edu.pjwstk.jps.result.IDoubleResult;
 
 public class DoubleResult extends SimpleResult<Double> implements IDoubleResult {
 
+	public double value;
+
 	public DoubleResult(double value) {
-		// TODO Auto-generated constructor stub
+		this.value = value;
+	}
+
+	public String toString() {
+		return "" + value;
 	}
 
 }

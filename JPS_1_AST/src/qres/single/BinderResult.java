@@ -6,20 +6,26 @@ import edu.pjwstk.jps.result.IBinderResult;
 
 public class BinderResult extends SingleResult implements IBinderResult {
 
-	public BinderResult(String string, AbstractQueryResult aqr) {
-		// TODO Auto-generated constructor stub
+	public String name;
+	public AbstractQueryResult value;
+
+	public BinderResult(String name, AbstractQueryResult value) {
+		this.name = name;
+		this.value = value;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public IAbstractQueryResult getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return value;
+	}
+
+	public String toString() {
+		return "name=" + name + ", value=" + value;
 	}
 
 }
