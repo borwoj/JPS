@@ -10,6 +10,10 @@ public class IntegerResult extends SimpleResult<Integer> implements
 	public IntegerResult(Integer value) {
 		this.value = value;
 	}
+	
+	public Integer getValue(){
+		return value;
+	}
 
 	public String toString() {
 		return "" + value;

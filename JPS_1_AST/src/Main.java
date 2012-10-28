@@ -58,6 +58,8 @@ public class Main {
 				new WhereExpression(new NameTerminal("zatrudnia"),
 						new EqualsExpression(new NameTerminal("nazwisko"),
 								new StringTerminal("Kowalski"))));
+		
+		QRES_zadanie_1();
 
 	}
 
@@ -84,11 +86,11 @@ public class Main {
 		qres.push(minusRes);
 	}
 
-	public void QRES_zadanie_1() {
+	public static void QRES_zadanie_1() {
 		QResStack qres1 = new QResStack();
 		qres1.push(new IntegerResult(1)); // 1
 		qres1.push(new DoubleResult(2.1)); // 2
-		IntegerResult structRight = (IntegerResult) qres1.pop();
+		DoubleResult structRight = (DoubleResult) qres1.pop();
 		IntegerResult structLeft = (IntegerResult) qres1.pop();
 		StructResult s1 = new StructResult();
 		s1.add(structRight);
@@ -119,12 +121,14 @@ public class Main {
 		BagResult b3 = (BagResult) qres1.pop();
 		BagResult b4 = (BagResult) qres1.pop();
 		StructResult s5 = new StructResult();
-		s5.add(b3);
-		s5.add(b4);
+		//s5.add(b3);
+		//s5.add(b4);
 		qres1.push(s5); // 11
 		StructResult s6 = (StructResult) qres1.pop();
 		BinderResult br1 = new BinderResult("nazwa", s6);
 		qres1.push(br1); // 12
+		
+		System.out.println(b4);
 	}
 
 	public void QRES_zadanie_2() {
@@ -166,7 +170,11 @@ public class Main {
 		BagResult b2 = (BagResult) qres.pop();
 		StructResult s7 = (StructResult) qres.pop();
 		s7.add(s6);
-		s7.add(b2);
+		//s7.add(b2);
 		qres.push(s7); // 12
+	}
+	
+	public void QRES_zadanie_3(){
+		
 	}
 }
