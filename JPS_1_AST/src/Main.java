@@ -66,7 +66,8 @@ public class Main {
 						new EqualsExpression(new NameTerminal("nazwisko"),
 								new StringTerminal("Kowalski"))));
 		
-		QRES_zadanie_1();
+		QRES_zadanie_1();		
+		QRES_zadanie_2();
 
 	}
 
@@ -94,6 +95,8 @@ public class Main {
 	}
 	
 	public static void QRES_zadanie_1() {
+		System.out.println("zadanie_1");
+		
 		QResStack qres1 = new QResStack();
 		qres1.push(new IntegerResult(1)); // 1
 		qres1.push(new DoubleResult(2.1)); // 2
@@ -181,48 +184,97 @@ public class Main {
 		
 		System.out.println(br1);		
 	}
-
-	public void QRES_zadanie_2() {
+	
+	public static void QRES_zadanie_2(){
+		System.out.println("\nzadanie_2");
+		
 		QResStack qres = new QResStack();
-		qres.push(new StringResult("ala")); // 1
-		qres.push(new StringResult("ma")); // 2
-		StringResult sr1 = (StringResult) qres.pop();
-		StringResult sr2 = (StringResult) qres.pop();
-		StructResult s1 = new StructResult();
-		s1.add(sr1);
-		s1.add(sr2);
-		qres.push(sr1); // 3
-		qres.push(new StringResult("kota")); // 4
-		StringResult sr3 = (StringResult) qres.pop();
-		StructResult s2 = (StructResult) qres.pop();
-		StructResult s3 = new StructResult();
-		s3.add(sr3);
-		s3.add(s2);
-		qres.push(s3); // 5
-		StructResult s4 = (StructResult) qres.pop();
+        qres.push(new StringResult("ala")); // 1
+        qres.push(new StringResult("ma")); // 2
+        StringResult string1 = (StringResult) qres.pop();
+        StringResult string2 = (StringResult) qres.pop();
+        StructResult struct1 = new StructResult();
+        struct1.add(string2);
+        struct1.add(string1);
+        qres.push(struct1); // 3
+        
+        System.out.println(struct1);
+        
+        qres.push(new StringResult("kota")); // 4
+        
+        StringResult string3 = (StringResult) qres.pop();
+        StructResult struct2 = (StructResult) qres.pop();
+        
+        StringResult string4 = (StringResult) struct2.elements().get(0);
+        StringResult string5 = (StringResult) struct2.elements().get(1);
+        
+        StructResult struct3 = new StructResult();
+        struct3.add(string4);
+        struct3.add(string5);
+        struct3.add(string3);
+        qres.push(struct3); // 5
+        
+        System.out.println(struct3);
+        
+        StructResult struct4 = (StructResult) qres.pop();
+		
+		List<ISingleResult> list_1 = struct4.elements();
+		
 		BagResult b1 = new BagResult();
-		b1.add(s4);
-		qres.push(b1); // 6
+		b1.add(list_1.get(0));
+		b1.add(list_1.get(1));
+		b1.add(list_1.get(2));
+		qres.push(b1); // 4
+		
+		System.out.println(b1);
+		
 		qres.push(new IntegerResult(8)); // 7
-		qres.push(new IntegerResult(10)); // 8
-		IntegerResult multiRight = (IntegerResult) qres.pop();
-		IntegerResult multiLeft = (IntegerResult) qres.pop();
-		IntegerResult multiRes = new IntegerResult(multiLeft.getValue()
-				* multiRight.getValue());
-		qres.push(multiRes); // 9
-		qres.push(new BooleanResult(false)); // 10
-		BooleanResult br1 = (BooleanResult) qres.pop();
-		StringResult sr4 = (StringResult) qres.pop();
-		StructResult s5 = new StructResult();
-		s5.add(br1);
-		s5.add(sr4);
-		qres.push(s5); // 11
-		StructResult s6 = (StructResult) qres.pop();
+        qres.push(new IntegerResult(10)); // 8
+        IntegerResult multiRight = (IntegerResult) qres.pop();
+        IntegerResult multiLeft = (IntegerResult) qres.pop();
+        IntegerResult multiRes = new IntegerResult(multiLeft.getValue()
+                        * multiRight.getValue());
+        qres.push(multiRes); // 9
+        qres.push(new BooleanResult(false)); // 10     
+        BooleanResult bool1 = (BooleanResult) qres.pop();
+        IntegerResult int4 = (IntegerResult) qres.pop();
+        StructResult struct5 = new StructResult();
+        struct5.add(int4);
+        struct5.add(bool1);
+        qres.push(struct5); // 11
+		
+		System.out.println(struct5);
+		
+		StructResult struct6 = (StructResult) qres.pop();
 		BagResult b2 = (BagResult) qres.pop();
-		StructResult s7 = (StructResult) qres.pop();
-		s7.add(s6);
-		//s7.add(b2);
-		qres.push(s7); // 12
+		
+		List<ISingleResult> list_2 = struct6.elements(); //struct
+		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) b2.getElements(); //bag
+		
+		StructResult b3res = new StructResult();
+		StructResult b3res2 = new StructResult();
+		StructResult b4res = new StructResult();
+		
+		b3res.add(arr1.get(0));
+		b3res.add(list_2.get(0));
+		b3res.add(list_2.get(1));
+		
+		b3res2.add(arr1.get(1));
+		b3res2.add(list_2.get(0));
+		b3res2.add(list_2.get(1));
+		
+		b4res.add(arr1.get(2));
+		b4res.add(list_2.get(0));
+		b4res.add(list_2.get(1));
+		
+		BagResult b5 = new BagResult();
+		b5.add(b3res);
+		b5.add(b3res2);
+		b5.add(b4res);
+		
+		qres.push(b5); // 12	
+		
+		System.out.println(b5);	
 	}
 	
 	public void QRES_zadanie_3(){

@@ -9,7 +9,7 @@ public class StringResult extends SimpleResult<String> implements IStringResult 
 	}
 	
 	public String toString(){
-		return value;
+		return ""+value;
 	}
 
 }
