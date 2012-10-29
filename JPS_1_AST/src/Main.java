@@ -68,6 +68,7 @@ public class Main {
 		
 		QRES_zadanie_1();		
 		QRES_zadanie_2();
+		QRES_zadanie_3();
 
 	}
 
@@ -277,7 +278,61 @@ public class Main {
 		System.out.println(b5);	
 	}
 	
-	public void QRES_zadanie_3(){
+	public static void QRES_zadanie_3(){
+		System.out.println("\nzadanie_3");
 		
+		QResStack qres = new QResStack();
+		qres.push(new StringResult("JPS")); // 1
+        qres.push(new StringResult("rules")); // 2
+        StringResult string1 = (StringResult) qres.pop();
+        StringResult string2 = (StringResult) qres.pop();
+        StructResult struct1 = new StructResult();
+        struct1.add(string2);
+        struct1.add(string1);
+        qres.push(struct1); // 3
+        
+        System.out.println(struct1);
+        
+        StructResult struct2 = (StructResult) qres.pop();		
+		List<ISingleResult> list_1 = struct2.elements();
+		
+		BagResult b1 = new BagResult();
+		b1.add(list_1.get(0));
+		b1.add(list_1.get(1));
+		qres.push(b1); // 4
+		
+		System.out.println(b1);
+		
+		BagResult b2 = (BagResult) qres.pop();
+		BinderResult br1 = new BinderResult("x", b2);
+		qres.push(br1); // 5
+		
+		System.out.println(br1);
+		
+		qres.push(new DoubleResult(2.1)); // 6
+		
+		DoubleResult double1 = (DoubleResult) qres.pop();
+        BinderResult br2 = (BinderResult) qres.pop();
+        StructResult struct3 = new StructResult();
+        struct3.add(br2);
+        struct3.add(double1);
+        
+        qres.push(struct3); // 7
+    
+        System.out.println(struct2);
+        
+        qres.push(new BooleanResult(false)); // 8
+        
+        BooleanResult bool1 = (BooleanResult) qres.pop();   
+        StructResult struct4 = (StructResult) qres.pop();		
+		List<ISingleResult> list_2 = struct4.elements(); 
+		
+		StructResult struct5 = new StructResult();
+		struct5.add(list_2.get(0));
+		struct5.add(bool1);
+		
+		qres.push(struct5); // 9
+		
+		System.out.println(struct5);
 	}
 }
