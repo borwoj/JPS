@@ -25,7 +25,7 @@ public class BinderResult extends SingleResult implements IBinderResult {
 	}
 
 	public String toString() {
-		return "name=" + name + ", value=" + value;
+		return "name = " + name + ", value = " + value;
 	}
 
 }

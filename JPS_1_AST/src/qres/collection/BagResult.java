@@ -26,7 +26,7 @@ public class BagResult extends CollectionResult implements IBagResult {
 		int i = 0;
 		while (itr.hasNext()) {
 			ISingleResult element = itr.next();
-			str = str + i + "=" + element;
+			str = str + i + " = " + element;
 			if (itr.hasNext()) {
 				str += " , ";
 			}

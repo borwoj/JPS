@@ -25,10 +25,15 @@ public class StructResult extends SingleResult implements IStructResult {
 	public String toString(){
 		String str = "struct(";
 		Iterator<ISingleResult> itr = list.iterator();
-	    while (itr.hasNext()) {
-	      ISingleResult element = itr.next();
-	      str = str + element;
-	    }		
+		int i = 0;
+		while (itr.hasNext()) {
+			ISingleResult element = itr.next();
+			str = str + i + " = " + element;
+			if (itr.hasNext()) {
+				str += " , ";
+			}
+			i++;
+		}	
 	    str = str + ")";
 		return str;
 	}
