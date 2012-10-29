@@ -23,7 +23,7 @@ public class StructResult extends SingleResult implements IStructResult {
 	}
 	
 	public String toString(){
-		String str = "bag(";
+		String str = "struct(";
 		Iterator<ISingleResult> itr = list.iterator();
 	    while (itr.hasNext()) {
 	      ISingleResult element = itr.next();
