@@ -66,9 +66,10 @@ public class Main {
 						new EqualsExpression(new NameTerminal("nazwisko"),
 								new StringTerminal("Kowalski"))));
 		
-		QRES_zadanie_1();		
-		QRES_zadanie_2();
-		QRES_zadanie_3();
+		// mini-projekt 2
+		//QRES_zadanie_1();		
+		//QRES_zadanie_2();
+		//QRES_zadanie_3();
 
 	}
 
@@ -149,8 +150,8 @@ public class Main {
 		BagResult b3 = (BagResult) qres1.pop();
 		BagResult b4 = (BagResult) qres1.pop();
 		
-		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) b3.getElements();
-		ArrayList<ISingleResult> arr2 = (ArrayList<ISingleResult>) b4.getElements();
+		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) b4.getElements();
+		ArrayList<ISingleResult> arr2 = (ArrayList<ISingleResult>) b3.getElements();
 		
 		StructResult b3res = new StructResult();
 		StructResult b3res2 = new StructResult();
@@ -180,10 +181,26 @@ public class Main {
 		System.out.println(b5);
 		
 		BagResult b6 = (BagResult) qres1.pop();
-		BinderResult br1 = new BinderResult("nazwa", b6);
+		ArrayList<ISingleResult> arr3 = (ArrayList<ISingleResult>) b6.getElements();
+		StructResult b5res = (StructResult) arr3.get(0);
+		StructResult b5res2 = (StructResult) arr3.get(1);
+		StructResult b6res = (StructResult) arr3.get(2);
+		StructResult b6res2 = (StructResult) arr3.get(3);
+				
+		BinderResult br1 = new BinderResult("nazwa", b5res);
+		BinderResult br2 = new BinderResult("nazwa", b5res2);
+		BinderResult br3 = new BinderResult("nazwa", b6res);
+		BinderResult br4 = new BinderResult("nazwa", b6res2);
+		
+		BagResult b7 = new BagResult();
+		b7.add(br1);
+		b7.add(br2);
+		b7.add(br3);
+		b7.add(br4);
+		
 		qres1.push(br1); // 12
 		
-		System.out.println(br1);		
+		System.out.println(b7);		
 	}
 	
 	public static void QRES_zadanie_2(){
@@ -309,7 +326,7 @@ public class Main {
 		
 		System.out.println(br1);
 		
-		qres.push(new DoubleResult(2.1)); // 6
+		qres.push(new DoubleResult(2.2)); // 6
 		
 		DoubleResult double1 = (DoubleResult) qres.pop();
         BinderResult br2 = (BinderResult) qres.pop();
@@ -318,10 +335,8 @@ public class Main {
         struct3.add(double1);
         
         qres.push(struct3); // 7
-    
-        System.out.println(struct2);
         
-        qres.push(new BooleanResult(false)); // 8
+        qres.push(new BooleanResult(true)); // 8
         
         BooleanResult bool1 = (BooleanResult) qres.pop();   
         StructResult struct4 = (StructResult) qres.pop();		
@@ -329,6 +344,7 @@ public class Main {
 		
 		StructResult struct5 = new StructResult();
 		struct5.add(list_2.get(0));
+		struct5.add(list_2.get(1));
 		struct5.add(bool1);
 		
 		qres.push(struct5); // 9

@@ -16,7 +16,7 @@ public class BagResult extends CollectionResult implements IBagResult {
 		return list;
 	}
 
-	public void add(ISingleResult result) {
+	public void add(ISingleResult result) { // TODO
 		list.add(result);
 	}
 
