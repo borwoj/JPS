@@ -2,7 +2,7 @@
 <baza>
 	<test>10</test>
 	<osoba>
-		<numer>s0000</numer>
+	    <numer>s0000</numer>
 		<grupa>123</grupa>
 		<spec>G</spec>
 		<imie>Anna</imie>
@@ -31,7 +31,7 @@
 			<miasto>Warszawa</miasto>
 		</adres>
 		<ksiazka>
-			<autor>Juliusz Słowacki</autor>
+			<autor>Juliusz Slowacki</autor>
 			<tytul>Kordian</tytul>
 			<egzemplarz>1236</egzemplarz>
 			<bibliotekarz>Hanna Kowalska</bibliotekarz>
