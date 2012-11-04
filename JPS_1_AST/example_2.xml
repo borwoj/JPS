@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baza>
+	<test>10</test>
+	<osoba>
+		<numer>s0000</numer>
+		<grupa>123</grupa>
+		<spec>G</spec>
+		<imie>Anna</imie>
+		<nazwisko>Kowalska</nazwisko>
+		<adres>
+			<ulica>Al. Jerozolimskie</ulica>
+			<kod>00-000</kod>
+			<miasto>Warszawa</miasto>
+		</adres>
+		<ksiazka>
+			<autor>Adam Mickiewicz</autor>
+			<tytul>Pan Tadeusz</tytul>
+			<egzemplarz>1234</egzemplarz>
+			<bibliotekarz>Hanna Kowalska</bibliotekarz>
+		</ksiazka>
+	</osoba>
+	<osoba>
+		<numer>s0001</numer>
+		<grupa>123</grupa>
+		<spec>G</spec>
+		<imie>Jan</imie>
+		<nazwisko>Nowak</nazwisko>
+		<adres>
+			<ulica>Koszykowa 15</ulica>
+			<kod>01-123</kod>
+			<miasto>Warszawa</miasto>
+		</adres>
+		<ksiazka>
+			<autor>Juliusz Słowacki</autor>
+			<tytul>Kordian</tytul>
+			<egzemplarz>1236</egzemplarz>
+			<bibliotekarz>Hanna Kowalska</bibliotekarz>
+		</ksiazka>
+	</osoba>
+</baza>
