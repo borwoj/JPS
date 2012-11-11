@@ -17,7 +17,7 @@ import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.OID;
 
 public class SBAStore implements ISBAStore {
-	
+
 	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
@@ -54,26 +54,36 @@ public class SBAStore implements ISBAStore {
 
 	public void readXML(Element root, ComplexObject parent) {
 		List<Element> childrenList = root.getChildren();
-		if (childrenList.size() == 0) {		
-			
+		if (childrenList.size() == 0) {
+
 			String value = root.getValue();
-			
+
 			SimpleObject simpleObj;
-			
-			if(value.matches("([0-9]*[.,][0-9]+)|([0-9]+[.,][0-9]*)")){
-				simpleObj = new DoubleObject(root.getName(), Double.parseDouble(value));
-			}else if(value.matches("[0-9]+")){
-				simpleObj = new IntegerObject(root.getName(), Integer.parseInt(value));
-			}else if(value.matches("(true)|(false)")){
-				simpleObj = new BooleanObject(root.getName(), Boolean.parseBoolean(value));
-			}else{
+
+			if (value.matches("([0-9]*[.,][0-9]+)|([0-9]+[.,][0-9]*)")) {
+				simpleObj = new DoubleObject(root.getName(),
+						Double.parseDouble(value));
+			} else if (value.matches("[0-9]+")) {
+				simpleObj = new IntegerObject(root.getName(),
+						Integer.parseInt(value));
+			} else if (value.matches("(true)|(false)")) {
+				simpleObj = new BooleanObject(root.getName(),
+						Boolean.parseBoolean(value));
+			} else {
 				simpleObj = new StringObject(root.getName(), value);
 			}
-			
-			if (parent != null)
-				parent.getChildOIDs().add(simpleObj.getOID());			
-		} else {
+
+			if (parent != null) {
+				parent.getChildOIDs().add(simpleObj.getOID());
+			}
+		}
+
+		else {
 			ComplexObject comObj = new ComplexObject(root.getName());
+
+			if (parent != null) {
+				parent.getChildOIDs().add(comObj.getOID());
+			}
 			for (Element child : childrenList) {
 				readXML(child, comObj);
 			}

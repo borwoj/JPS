@@ -46,7 +46,7 @@ public class Main {
 
 	public static void miniProjekt3() {
 		SBAStore store = new SBAStore();
-		store.loadXML(EXAMPLE_XML_2);
+		store.loadXML(EXAMPLE_XML);
 		Element entryElement = store.getDoc().getRootElement();
 		store.readXML(entryElement, null);
 
