@@ -50,15 +50,18 @@ public class SBAStore implements ISBAStore {
 
 	}
 
-	public void readXML(Element root) {
+	public void readXML(Element root, ComplexObject parent) {
 		List<Element> childrenList = root.getChildren();
 		if (childrenList.size() == 0) {
 			StringObject strObj = new StringObject(root.getName());
 			String value = root.getValue();
 			strObj.value = value;
+			if (parent != null)
+				parent.getChildOIDs().add(strObj.getOID());
 		} else {
+			ComplexObject comObj = new ComplexObject(root.getName());
 			for (Element child : childrenList) {
-				readXML(child);
+				readXML(child, comObj);
 			}
 		}
 	}

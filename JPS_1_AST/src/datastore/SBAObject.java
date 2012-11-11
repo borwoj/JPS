@@ -23,7 +23,7 @@ public abstract class SBAObject implements ISBAObject {
 	}
 
 	@Override
-	public OID getOID() {
+	public MyOID getOID() {
 		return OID;
 	}
 

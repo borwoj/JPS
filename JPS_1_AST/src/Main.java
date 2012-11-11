@@ -24,9 +24,11 @@ import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import ast.unary.CountExpression;
 import datastore.BooleanObject;
+import datastore.ComplexObject;
 import datastore.IntegerObject;
 import datastore.MyOID;
 import datastore.SBAStore;
+import datastore.SimpleObject;
 import edu.pjwstk.jps.result.ISingleResult;
 
 /**
@@ -45,7 +47,17 @@ public class Main {
 		SBAStore store = new SBAStore();
 		store.loadXML(EXAMPLE_XML_2);
 		Element entryElement = store.getDoc().getRootElement();
-		store.readXML(entryElement);
+		store.readXML(entryElement, null);
+
+		System.out.println("\nWszystkie zlozone obiekty:");
+		for (ComplexObject co : ComplexObject.allComplexObjects) {
+			System.out.println(co);
+		}
+
+		System.out.println("\nWszystkie proste obiekty:");
+		for (SimpleObject so : SimpleObject.allSimpleObjects) {
+			System.out.println(so);
+		}
 	}
 
 	public static void miniProjekt1() {
