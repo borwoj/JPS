@@ -23,5 +23,9 @@ public class MyOID implements OID {
 	private MyOID(long OID) {
 		this.id = OID;
 	}
+	
+	public String toString(){
+		return "i"+id;	
+	}
 
 }
