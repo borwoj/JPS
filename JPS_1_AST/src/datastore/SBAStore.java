@@ -18,7 +18,8 @@ import edu.pjwstk.jps.datastore.OID;
 
 public class SBAStore implements ISBAStore {
 
-	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
+	public static HashMap<OID, SBAObject> allObjectsMap = new HashMap<OID, SBAObject>();
+ 	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;
@@ -26,8 +27,14 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public ISBAObject retrieve(OID oid) {
-		// TODO Auto-generated method stub
-		return null;
+		//return allObjectsMap.get(oid);
+		SBAObject ret = null;
+		for(SBAObject sbao : allObjects){
+			if(oid == sbao.getOID()){
+				ret = sbao;
+			}
+		}
+		return ret;	
 	}
 
 	@Override

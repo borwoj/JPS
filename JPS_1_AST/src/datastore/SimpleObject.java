@@ -16,7 +16,7 @@ public abstract class SimpleObject<T> extends SBAObject implements
 		super(name);
 		this.value = value;
 		allSimpleObjects.add(this);
-		SBAStore.allObjects.add(this);
+		//SBAStore.allObjects.add(this);
 	}
 
 	@Override

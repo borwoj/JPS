@@ -15,7 +15,7 @@ public class ComplexObject extends SBAObject implements IComplexObject {
 	public ComplexObject(String name) {
 		super(name);
 		allComplexObjects.add(this);
-		SBAStore.allObjects.add(this);
+		//SBAStore.allObjects.add(this);
 	}
 
 	@Override

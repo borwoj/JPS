@@ -15,6 +15,9 @@ public abstract class SBAObject implements ISBAObject {
 		this.name = name;
 		this.OID = MyOID.createOID();
 		allObjects.put(this.OID.id, this);
+		
+		SBAStore.allObjects.add(this);
+		SBAStore.allObjectsMap.put(OID, this);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Element;
 
@@ -30,6 +32,7 @@ import datastore.MyOID;
 import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.SimpleObject;
+import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
 
 /**
@@ -63,7 +66,10 @@ public class Main {
 		System.out.println("\nWszystkie obiekty:");
 		for (SBAObject sbao : SBAStore.allObjects) {
 			System.out.println(sbao);
-		}
+		}   
+	    /*for (SBAObject values : SBAStore.allObjectsMap.values()) {
+	        System.out.println(values);
+	    }*/
 	}
 
 	public static void miniProjekt1() {
