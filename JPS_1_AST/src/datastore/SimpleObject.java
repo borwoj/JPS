@@ -7,8 +7,8 @@ public abstract class SimpleObject<T> extends SBAObject implements
 
 	public T value;
 
-	public SimpleObject(String name, MyOID OID) {
-		super(name, OID);
+	public SimpleObject(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 

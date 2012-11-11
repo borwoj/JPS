@@ -7,8 +7,8 @@ import edu.pjwstk.jps.datastore.OID;
 
 public class ComplexObject extends SBAObject implements IComplexObject {
 
-	public ComplexObject(String name, MyOID OID) {
-		super(name, OID);
+	public ComplexObject(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 

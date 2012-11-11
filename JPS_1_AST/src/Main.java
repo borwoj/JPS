@@ -1,19 +1,7 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.XMLOutputter;
-
-import datastore.SBAStore;
-
-import edu.pjwstk.jps.result.ISingleResult;
-import edu.pjwstk.jps.result.IStructResult;
+import org.jdom2.Element;
 
 import qres.QResStack;
 import qres.collection.BagResult;
@@ -35,6 +23,11 @@ import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import ast.unary.CountExpression;
+import datastore.BooleanObject;
+import datastore.IntegerObject;
+import datastore.MyOID;
+import datastore.SBAStore;
+import edu.pjwstk.jps.result.ISingleResult;
 
 /**
  * @author £ukasz Kobyliñski (s6709)
@@ -51,8 +44,8 @@ public class Main {
 	public static void miniProjekt3() {
 		SBAStore store = new SBAStore();
 		store.loadXML(EXAMPLE_XML_2);
-		
-		
+		Element entryElement = store.getDoc().getRootElement();
+		store.readXML(entryElement);
 	}
 
 	public static void miniProjekt1() {
