@@ -1,7 +1,6 @@
 package datastore;
 
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -52,12 +51,24 @@ public class SBAStore implements ISBAStore {
 
 	public void readXML(Element root, ComplexObject parent) {
 		List<Element> childrenList = root.getChildren();
-		if (childrenList.size() == 0) {
-			StringObject strObj = new StringObject(root.getName());
+		if (childrenList.size() == 0) {		
+			
 			String value = root.getValue();
-			strObj.value = value;
+			
+			SimpleObject simpleObj;
+			
+			if(value.matches("([0-9]*[.,][0-9]+)|([0-9]+[.,][0-9]*)")){
+				simpleObj = new DoubleObject(root.getName(), Double.parseDouble(value));
+			}else if(value.matches("[0-9]+")){
+				simpleObj = new IntegerObject(root.getName(), Integer.parseInt(value));
+			}else if(value.matches("(true)|(false)")){
+				simpleObj = new BooleanObject(root.getName(), Boolean.parseBoolean(value));
+			}else{
+				simpleObj = new StringObject(root.getName(), value);
+			}
+			
 			if (parent != null)
-				parent.getChildOIDs().add(strObj.getOID());
+				parent.getChildOIDs().add(simpleObj.getOID());			
 		} else {
 			ComplexObject comObj = new ComplexObject(root.getName());
 			for (Element child : childrenList) {

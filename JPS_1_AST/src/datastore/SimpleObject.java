@@ -12,8 +12,9 @@ public abstract class SimpleObject<T> extends SBAObject implements
 
 	public T value;
 
-	public SimpleObject(String name) {
+	public SimpleObject(String name, T value) {
 		super(name);
+		this.value = value;
 		allSimpleObjects.add(this);
 	}
 
