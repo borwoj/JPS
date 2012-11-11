@@ -51,6 +51,8 @@ public class Main {
 	public static void miniProjekt3() {
 		SBAStore store = new SBAStore();
 		store.loadXML(EXAMPLE_XML_2);
+		
+		
 	}
 
 	public static void miniProjekt1() {
