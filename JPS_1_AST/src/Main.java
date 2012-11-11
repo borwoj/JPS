@@ -46,12 +46,13 @@ public class Main {
 		miniProjekt3();
 	}
 
-	public static void miniProjekt3(){
+	public static void miniProjekt3() {
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = null;
 		try {
 			doc = builder.build(EXAMPLE_XML_2);
 			XMLOutputter serializer = new XMLOutputter();
+			System.out.println(doc.getRootElement().getName());
 			serializer.output(doc, System.out);
 		} catch (JDOMException e) {
 			System.err.println(e);
@@ -59,7 +60,7 @@ public class Main {
 			System.err.println(e);
 		}
 	}
-	
+
 	public static void miniProjekt1() {
 		// mini-projekt 1
 		Expression exampleFromPdf = new DotExpression(new DotExpression(
@@ -95,7 +96,6 @@ public class Main {
 								new StringTerminal("Kowalski"))));
 	}
 
-	
 	public static void miniProjekt2() {
 		QRES_zadanie_1();
 		QRES_zadanie_2();

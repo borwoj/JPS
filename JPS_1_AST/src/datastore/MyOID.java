@@ -10,10 +10,16 @@ public class MyOID implements OID {
 	public long id;
 	public static long idCounter = -1;
 
-	public MyOID() {
+	public static void createOID() {
 		idCounter += 1;
 		if (!OIDs.contains(idCounter))
-			this.id = idCounter;
+			new MyOID(idCounter);
+		else
+			System.out.println("OID ju¿ istnieje!");
+	}
+
+	private MyOID(long OID) {
+		this.id = OID;
 	}
 
 }
