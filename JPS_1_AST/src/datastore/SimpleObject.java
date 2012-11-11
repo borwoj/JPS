@@ -16,6 +16,7 @@ public abstract class SimpleObject<T> extends SBAObject implements
 		super(name);
 		this.value = value;
 		allSimpleObjects.add(this);
+		SBAStore.allObjects.add(this);
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public abstract class SimpleObject<T> extends SBAObject implements
 
 	public String toString() {
 
-		String str = "<i" + getOID().id + ", " + getName() + ", " + getValue()
+		String str = "<" + getOID() + ", " + getName() + ", " + getValue()
 				+ ">";
 		return str;
 	}

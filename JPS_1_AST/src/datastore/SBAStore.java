@@ -1,6 +1,7 @@
 package datastore;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.OID;
 
 public class SBAStore implements ISBAStore {
+	
+	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;

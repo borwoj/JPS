@@ -27,6 +27,7 @@ import datastore.BooleanObject;
 import datastore.ComplexObject;
 import datastore.IntegerObject;
 import datastore.MyOID;
+import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.SimpleObject;
 import edu.pjwstk.jps.result.ISingleResult;
@@ -57,6 +58,11 @@ public class Main {
 		System.out.println("\nWszystkie proste obiekty:");
 		for (SimpleObject so : SimpleObject.allSimpleObjects) {
 			System.out.println(so);
+		}
+		
+		System.out.println("\nWszystkie obiekty:");
+		for (SBAObject sbao : SBAStore.allObjects) {
+			System.out.println(sbao);
 		}
 	}
 
