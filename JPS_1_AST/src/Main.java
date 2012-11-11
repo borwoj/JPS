@@ -10,6 +10,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
+import datastore.SBAStore;
+
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStructResult;
 
@@ -47,18 +49,8 @@ public class Main {
 	}
 
 	public static void miniProjekt3() {
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = null;
-		try {
-			doc = builder.build(EXAMPLE_XML_2);
-			XMLOutputter serializer = new XMLOutputter();
-			System.out.println(doc.getRootElement().getName());
-			serializer.output(doc, System.out);
-		} catch (JDOMException e) {
-			System.err.println(e);
-		} catch (IOException e) {
-			System.err.println(e);
-		}
+		SBAStore store = new SBAStore();
+		store.loadXML(EXAMPLE_XML_2);
 	}
 
 	public static void miniProjekt1() {
