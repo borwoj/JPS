@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -50,12 +51,15 @@ public class SBAStore implements ISBAStore {
 	}
 
 	public void readXML(Element root) {
-		for (Element el : root.getChildren()) {
-			if (Integer.parseInt(el.getValue()) == 10) {
-				IntegerObject intObj = new IntegerObject(el.getName());
-				intObj.value = Integer.parseInt(el.getValue());
+		List<Element> childrenList = root.getChildren();
+		if (childrenList.size() == 0) {
+			StringObject strObj = new StringObject(root.getName());
+			String value = root.getValue();
+			strObj.value = value;
+		} else {
+			for (Element child : childrenList) {
+				readXML(child);
 			}
-			readXML(el);
 		}
 	}
 
