@@ -26,8 +26,13 @@ public class ComplexObject extends SBAObject implements IComplexObject {
 
 		String str = "<i" + getOID().id + ", " + getName() + ", {";
 
+		int i = 0;
 		for (OID oid : childOIDs) {
-			str += oid + ", ";
+			if(i != 0){
+				str += ", ";
+			}
+			str += oid;
+			i++;
 		}
 		str += "}>";
 		return str;
