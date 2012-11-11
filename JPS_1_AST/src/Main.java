@@ -43,6 +43,10 @@ public class Main {
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 
 	public static void main(String[] args) {
+		miniProjekt3();
+	}
+
+	public static void miniProjekt1() {
 		// mini-projekt 1
 		Expression exampleFromPdf = new DotExpression(new DotExpression(
 				new WhereExpression(new NameTerminal("osoba"),
@@ -75,13 +79,9 @@ public class Main {
 				new WhereExpression(new NameTerminal("zatrudnia"),
 						new EqualsExpression(new NameTerminal("nazwisko"),
 								new StringTerminal("Kowalski"))));
+	}
 
-		// mini-projekt 2
-		// QRES_zadanie_1();
-		// QRES_zadanie_2();
-		// QRES_zadanie_3();
-
-		// mini-projekt 3
+	public static void miniProjekt3(){
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = null;
 		try {
@@ -93,6 +93,12 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e);
 		}
+	}
+	
+	public static void miniProjekt2() {
+		QRES_zadanie_1();
+		QRES_zadanie_2();
+		QRES_zadanie_3();
 	}
 
 	public void QRES_example() {
