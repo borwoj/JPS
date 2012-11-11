@@ -8,10 +8,12 @@ public class MyOID implements OID {
 
 	public static ArrayList<Long> OIDs = new ArrayList<Long>();
 	public long id;
+	public static long idCounter = -1;
 
-	public MyOID(long id) {
-		if (!OIDs.contains(id))
-			this.id = id;
+	public MyOID() {
+		idCounter += 1;
+		if (!OIDs.contains(idCounter))
+			this.id = idCounter;
 	}
 
 }
