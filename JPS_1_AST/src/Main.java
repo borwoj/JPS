@@ -33,6 +33,8 @@ import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.SimpleObject;
 import datastore.test_classes.Kierowca;
+import datastore.test_classes.Przesylka;
+import datastore.test_classes.Samochod;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
 
@@ -72,8 +74,13 @@ public class Main {
 	        System.out.println(values);
 	    }*/
 		
-		Kierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true);
-		store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
+		Przesylka przesylka = new Przesylka(123, new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p")));
+		//Samochod samochod = new Samochod("FIAT","126p");
+		//ierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p"));		
+		
+		//store.addJavaObjectOID(samochod, samochod.getClass().getSimpleName());
+		//store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
+		store.addJavaObjectOID(przesylka, przesylka.getClass().getSimpleName());
 		Integer i = 10;
 		store.addJavaObjectOID(i, i.getClass().getSimpleName());
 		String s = "test";

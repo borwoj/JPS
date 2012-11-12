@@ -20,7 +20,7 @@ import edu.pjwstk.jps.datastore.OID;
 public class SBAStore implements ISBAStore {
 
 	public static HashMap<OID, SBAObject> allObjectsMap = new HashMap<OID, SBAObject>();
- 	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
+	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;
@@ -28,14 +28,14 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public ISBAObject retrieve(OID oid) {
-		//return allObjectsMap.get(oid);
+		// return allObjectsMap.get(oid);
 		SBAObject ret = null;
-		for(SBAObject sbao : allObjects){
-			if(oid == sbao.getOID()){
+		for (SBAObject sbao : allObjects) {
+			if (oid == sbao.getOID()) {
 				ret = sbao;
 			}
 		}
-		return ret;	
+		return ret;
 	}
 
 	@Override
@@ -105,65 +105,69 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void addJavaObject(Object o, String objectName) {
-		
-		if(o instanceof Boolean){
+
+		if (o instanceof Boolean) {
 			new BooleanObject(objectName, (Boolean) o);
-		}else if(o instanceof Double){
+		} else if (o instanceof Double) {
 			new DoubleObject(objectName, (Double) o);
-		}else if(o instanceof Integer){
+		} else if (o instanceof Integer) {
 			new IntegerObject(objectName, (Integer) o);
-		}else if(o instanceof String){
+		} else if (o instanceof String) {
 			new StringObject(objectName, (String) o);
-		}else{
+		} else {
 			ComplexObject root = new ComplexObject(objectName);
 
-            for (Field field : o.getClass().getFields()) {
-            	try {
+			for (Field field : o.getClass().getFields()) {
+				try {
 					addJavaObject(field.get(o), field.getName());
-            		//root.getChildOIDs().add(addJavaObject(field.get(o), field.getName()));
+					// root.getChildOIDs().add(addJavaObject(field.get(o),
+					// field.getName()));
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 				}
-            }
+			}
+
 		}
 	}
-	
 
 	public OID addJavaObjectOID(Object o, String objectName) {
-		
+
 		SimpleObject simpleObj;
-		
-		if(o instanceof Boolean){
+
+		if (o instanceof Boolean) {
 			simpleObj = new BooleanObject(objectName, (Boolean) o);
 			return simpleObj.getOID();
-		}else if(o instanceof Double){
+		} else if (o instanceof Double) {
 			simpleObj = new DoubleObject(objectName, (Double) o);
 			return simpleObj.getOID();
-		}else if(o instanceof Integer){
+		} else if (o instanceof Integer) {
 			simpleObj = new IntegerObject(objectName, (Integer) o);
 			return simpleObj.getOID();
-		}else if(o instanceof String){
+		} else if (o instanceof String) {
 			simpleObj = new StringObject(objectName, (String) o);
 			return simpleObj.getOID();
-		}else{
+		} else {
 			ComplexObject root = new ComplexObject(objectName);
 
-            for (Field field : o.getClass().getFields()) {
-            	try {
+			try {
+				for (Field field : o.getClass().getFields()) {
 					//addJavaObject(field.get(o), field.getName());
-            		root.getChildOIDs().add(addJavaObjectOID(field.get(o), field.getName()));
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					root.getChildOIDs().add(
+							addJavaObjectOID(field.get(o), field.getName()));
+					System.out.println(field.get(o)+" "+ field.getName());
 				}
-            }
-            
-            return root.getOID();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			return root.getOID();
 		}
-		
+
 	}
 
 	@Override
