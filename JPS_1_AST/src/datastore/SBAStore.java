@@ -1,6 +1,7 @@
 package datastore;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -114,7 +115,12 @@ public class SBAStore implements ISBAStore {
 		}else if(o instanceof String){
 			new StringObject(objectName, (String) o);
 		}else{
-			
+			ComplexObject io = new ComplexObject(objectName);
+
+            for (Field field : o.getClass().getFields()) {
+            	System.out.println(field);
+                
+            }
 		}
 	}
 
