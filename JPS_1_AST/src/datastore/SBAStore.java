@@ -67,7 +67,7 @@ public class SBAStore implements ISBAStore {
 
 			SimpleObject simpleObj;
 
-			if (value.matches("([\\d]+[.,][\\d]+)")) {
+			if (value.matches("([\\d]+[.][\\d]+)")) {
 				simpleObj = new DoubleObject(root.getName(),
 						Double.parseDouble(value));
 			} else if (value.matches("[\\d]+")) {
@@ -104,8 +104,18 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void addJavaObject(Object o, String objectName) {
-		// TODO Auto-generated method stub
-
+		
+		if(o instanceof Boolean){
+			new BooleanObject(objectName, (Boolean) o);
+		}else if(o instanceof Double){
+			new DoubleObject(objectName, (Double) o);
+		}else if(o instanceof Integer){
+			new IntegerObject(objectName, (Integer) o);
+		}else if(o instanceof String){
+			new StringObject(objectName, (String) o);
+		}else{
+			
+		}
 	}
 
 	@Override

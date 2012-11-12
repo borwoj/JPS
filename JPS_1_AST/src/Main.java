@@ -32,6 +32,7 @@ import datastore.MyOID;
 import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.SimpleObject;
+import datastore.test_classes.Kierowca;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
 
@@ -66,10 +67,23 @@ public class Main {
 		System.out.println("\nWszystkie obiekty:");
 		for (SBAObject sbao : SBAStore.allObjects) {
 			System.out.println(sbao);
-		}   
+		}
 	    /*for (SBAObject values : SBAStore.allObjectsMap.values()) {
 	        System.out.println(values);
 	    }*/
+		
+		Kierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true);
+		store.addJavaObject(kierowca, kierowca.getClass().getSimpleName());
+		Integer i = 10;
+		store.addJavaObject(i, i.getClass().getSimpleName());
+		String s = "test";
+		store.addJavaObject(s, s.getClass().getSimpleName());
+		
+		System.out.println("\nWszystkie obiekty (z obiektami jezyka oprogramowania):");
+		for (SBAObject sbao : SBAStore.allObjects) {
+			System.out.println(sbao);
+		}
+		
 	}
 
 	public static void miniProjekt1() {
