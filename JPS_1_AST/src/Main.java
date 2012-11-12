@@ -75,12 +75,13 @@ public class Main {
 	    }*/
 		
 		Przesylka przesylka = new Przesylka(123, new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p")));
+		store.addJavaObject(przesylka, przesylka.getClass().getSimpleName());
+		
 		//Samochod samochod = new Samochod("FIAT","126p");
 		//ierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p"));		
 		
 		//store.addJavaObjectOID(samochod, samochod.getClass().getSimpleName());
 		//store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
-		store.addJavaObjectOID(przesylka, przesylka.getClass().getSimpleName());
 		/*Integer i = 10;
 		store.addJavaObjectOID(i, i.getClass().getSimpleName());
 		String s = "test";
@@ -95,7 +96,7 @@ public class Main {
 		
 		store.addJavaCollection(lista_przesylek, "lista_przesylek");
 		
-		System.out.println("\nWszystkie obiekty (z obiektami jezyka oprogramowania):");
+		System.out.println("\nWszystkie obiekty");
 		for (SBAObject sbao : SBAStore.allObjects) {
 			System.out.println(sbao);
 		}

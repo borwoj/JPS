@@ -105,35 +105,19 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void addJavaObject(Object o, String objectName) {
+		identifyType(o, objectName);
+	}
 
-		if (o instanceof Boolean) {
-			new BooleanObject(objectName, (Boolean) o);
-		} else if (o instanceof Double) {
-			new DoubleObject(objectName, (Double) o);
-		} else if (o instanceof Integer) {
-			new IntegerObject(objectName, (Integer) o);
-		} else if (o instanceof String) {
-			new StringObject(objectName, (String) o);
-		} else {
-			ComplexObject root = new ComplexObject(objectName);
-
-			for (Field field : o.getClass().getFields()) {
-				try {
-					addJavaObject(field.get(o), field.getName());
-					// root.getChildOIDs().add(addJavaObject(field.get(o),
-					// field.getName()));
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-
+	@Override
+	public void addJavaCollection(Collection o, String collectionName) {
+		ComplexObject root = new ComplexObject(collectionName);
+		for (Object e : o) {
+			root.getChildOIDs().add(
+					identifyType(e, e.getClass().getSimpleName()));
 		}
 	}
 
-	public OID addJavaObjectOID(Object o, String objectName) {
-
+	public OID identifyType(Object o, String objectName) {
 		SimpleObject simpleObj;
 
 		if (o instanceof Boolean) {
@@ -153,25 +137,15 @@ public class SBAStore implements ISBAStore {
 
 			try {
 				for (Field field : o.getClass().getFields()) {
-					//addJavaObject(field.get(o), field.getName());
 					root.getChildOIDs().add(
-							addJavaObjectOID(field.get(o), field.getName()));
+							identifyType(field.get(o), field.getName()));
 				}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-			} 
+			}
 			return root.getOID();
-		}
-
-	}
-
-	@Override
-	public void addJavaCollection(Collection o, String collectionName) {
-		ComplexObject root = new ComplexObject(collectionName);
-		for(Object e : o){
-			root.getChildOIDs().add(addJavaObjectOID(e, e.getClass().getSimpleName()));
 		}
 	}
 
