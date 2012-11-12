@@ -19,6 +19,9 @@ import edu.pjwstk.jps.datastore.OID;
 
 public class SBAStore implements ISBAStore {
 
+	// TODO ArrayLista czy HashMapa - hashmapa nie trzyma kolejnosci (potrzeba
+	// metoda do porownywania OID przy wypisywaniu), ale lepiej z niej wyciagac
+	// obiekty po OID
 	public static HashMap<OID, SBAObject> allObjectsMap = new HashMap<OID, SBAObject>();
 	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
@@ -40,7 +43,7 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public OID getEntryOID() {
-		// TODO Auto-generated method stub
+		// TODO zaimplementowanie metody
 		System.out.println("Entry element name: "
 				+ doc.getRootElement().getName());
 		return null;
@@ -48,6 +51,7 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void loadXML(String filePath) {
+		// TODO ta metoda nie ma sensu, polaczenie z readXML albo cos
 		try {
 			doc = builder.build(filePath);
 			System.out.println("Za³adowano XML:");
@@ -89,6 +93,8 @@ public class SBAStore implements ISBAStore {
 		else {
 			ComplexObject comObj = new ComplexObject(root.getName());
 
+			// TODO bez tego ifa nie dodawalo prawidlowo Complexów do Complexów,
+			// sprawdzic czy ma to sens
 			if (parent != null) {
 				parent.getChildOIDs().add(comObj.getOID());
 			}
