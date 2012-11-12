@@ -120,14 +120,14 @@ public class SBAStore implements ISBAStore {
 	public OID identifyType(Object o, String objectName) {
 		SimpleObject simpleObj;
 
-		if (o instanceof Boolean) {
-			simpleObj = new BooleanObject(objectName, (Boolean) o);
-			return simpleObj.getOID();
-		} else if (o instanceof Double) {
+		if (o instanceof Double) {
 			simpleObj = new DoubleObject(objectName, (Double) o);
 			return simpleObj.getOID();
 		} else if (o instanceof Integer) {
 			simpleObj = new IntegerObject(objectName, (Integer) o);
+			return simpleObj.getOID();
+		} else if (o instanceof Boolean) {
+			simpleObj = new BooleanObject(objectName, (Boolean) o);
 			return simpleObj.getOID();
 		} else if (o instanceof String) {
 			simpleObj = new StringObject(objectName, (String) o);
