@@ -73,11 +73,11 @@ public class Main {
 	    }*/
 		
 		Kierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true);
-		store.addJavaObject(kierowca, kierowca.getClass().getSimpleName());
+		store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
 		Integer i = 10;
-		store.addJavaObject(i, i.getClass().getSimpleName());
+		store.addJavaObjectOID(i, i.getClass().getSimpleName());
 		String s = "test";
-		store.addJavaObject(s, s.getClass().getSimpleName());
+		store.addJavaObjectOID(s, s.getClass().getSimpleName());
 		
 		System.out.println("\nWszystkie obiekty (z obiektami jezyka oprogramowania):");
 		for (SBAObject sbao : SBAStore.allObjects) {
