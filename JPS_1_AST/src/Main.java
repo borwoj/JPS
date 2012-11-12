@@ -56,7 +56,7 @@ public class Main {
 		Element entryElement = store.getDoc().getRootElement();
 		store.readXML(entryElement, null);
 
-		System.out.println("\nWszystkie zlozone obiekty:");
+		/*System.out.println("\nWszystkie zlozone obiekty:");
 		for (ComplexObject co : ComplexObject.allComplexObjects) {
 			System.out.println(co);
 		}
@@ -69,7 +69,7 @@ public class Main {
 		System.out.println("\nWszystkie obiekty:");
 		for (SBAObject sbao : SBAStore.allObjects) {
 			System.out.println(sbao);
-		}
+		}*/
 	    /*for (SBAObject values : SBAStore.allObjectsMap.values()) {
 	        System.out.println(values);
 	    }*/
@@ -81,10 +81,19 @@ public class Main {
 		//store.addJavaObjectOID(samochod, samochod.getClass().getSimpleName());
 		//store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
 		store.addJavaObjectOID(przesylka, przesylka.getClass().getSimpleName());
-		Integer i = 10;
+		/*Integer i = 10;
 		store.addJavaObjectOID(i, i.getClass().getSimpleName());
 		String s = "test";
-		store.addJavaObjectOID(s, s.getClass().getSimpleName());
+		store.addJavaObjectOID(s, s.getClass().getSimpleName());*/
+		
+		Przesylka przesylka_2 = new Przesylka(234, new Kierowca("Lukasz", "Kobylinski", 67, true, new Samochod("Deawoo","Tico")));
+		Przesylka przesylka_3 = new Przesylka(345, new Kierowca("Stanislaw", "Iksinski", 67, true, new Samochod("FIAT","Cinquecento")));
+
+		ArrayList<Object> lista_przesylek = new ArrayList<Object>();
+		lista_przesylek.add(przesylka_2);
+		lista_przesylek.add(przesylka_3);
+		
+		store.addJavaCollection(lista_przesylek, "lista_przesylek");
 		
 		System.out.println("\nWszystkie obiekty (z obiektami jezyka oprogramowania):");
 		for (SBAObject sbao : SBAStore.allObjects) {

@@ -156,15 +156,12 @@ public class SBAStore implements ISBAStore {
 					//addJavaObject(field.get(o), field.getName());
 					root.getChildOIDs().add(
 							addJavaObjectOID(field.get(o), field.getName()));
-					System.out.println(field.get(o)+" "+ field.getName());
 				}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
+			} 
 			return root.getOID();
 		}
 
@@ -172,8 +169,10 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void addJavaCollection(Collection o, String collectionName) {
-		// TODO Auto-generated method stub
-
+		ComplexObject root = new ComplexObject(collectionName);
+		for(Object e : o){
+			root.getChildOIDs().add(addJavaObjectOID(e, e.getClass().getSimpleName()));
+		}
 	}
 
 	public SAXBuilder getBuilder() {
