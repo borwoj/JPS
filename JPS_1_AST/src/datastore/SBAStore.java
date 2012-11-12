@@ -118,8 +118,13 @@ public class SBAStore implements ISBAStore {
 			ComplexObject io = new ComplexObject(objectName);
 
             for (Field field : o.getClass().getFields()) {
-            	System.out.println(field);
-                
+            	try {
+					addJavaObject(field.get(o), field.getName());
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
             }
 		}
 	}
