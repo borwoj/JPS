@@ -9,14 +9,14 @@ public abstract class SBAObject implements ISBAObject {
 
 	public MyOID OID;
 	public String name;
-	public static HashMap<Long, SBAObject> allObjects = new HashMap<Long, SBAObject>();
+	//public static HashMap<Long, SBAObject> allObjects = new HashMap<Long, SBAObject>();
 
 	public SBAObject(String name) {
 		this.name = name;
 		this.OID = MyOID.createOID();
-		allObjects.put(this.OID.id, this);
+		//allObjects.put(this.OID.id, this);
 		
-		SBAStore.allObjects.add(this);
+		//SBAStore.allObjects.add(this);
 		SBAStore.allObjectsMap.put(OID, this);
 	}
 

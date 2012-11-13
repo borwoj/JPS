@@ -10,11 +10,11 @@ import edu.pjwstk.jps.datastore.OID;
 public class ComplexObject extends SBAObject implements IComplexObject {
 
 	List<OID> childOIDs = new ArrayList<OID>();
-	public static ArrayList<ComplexObject> allComplexObjects = new ArrayList<ComplexObject>();
+	//public static ArrayList<ComplexObject> allComplexObjects = new ArrayList<ComplexObject>();
 
 	public ComplexObject(String name) {
 		super(name);
-		allComplexObjects.add(this);
+		//allComplexObjects.add(this);
 		//SBAStore.allObjects.add(this);
 	}
 

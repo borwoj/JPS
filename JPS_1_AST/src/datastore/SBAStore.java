@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -19,39 +20,34 @@ import edu.pjwstk.jps.datastore.OID;
 
 public class SBAStore implements ISBAStore {
 
-	// TODO ArrayLista czy HashMapa - hashmapa nie trzyma kolejnosci (potrzeba
-	// metoda do porownywania OID przy wypisywaniu), ale lepiej z niej wyciagac
-	// obiekty po OID
-	public static HashMap<OID, SBAObject> allObjectsMap = new HashMap<OID, SBAObject>();
-	public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
+	public static LinkedHashMap<OID, SBAObject> allObjectsMap = new LinkedHashMap<OID, SBAObject>();
+	//public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;
 	XMLOutputter serializer = new XMLOutputter();
+	
+	OID entryOID;
 
 	@Override
 	public ISBAObject retrieve(OID oid) {
-		// return allObjectsMap.get(oid);
-		SBAObject ret = null;
-		for (SBAObject sbao : allObjects) {
-			if (oid == sbao.getOID()) {
-				ret = sbao;
-			}
-		}
-		return ret;
+		return allObjectsMap.get(oid);
+		// SBAObject ret = null;
+		// for (SBAObject sbao : allObjects) {
+		// if (oid == sbao.getOID()) {
+		// ret = sbao;
+		// }
+		// }
+		// return ret;
 	}
 
 	@Override
 	public OID getEntryOID() {
-		// TODO zaimplementowanie metody
-		System.out.println("Entry element name: "
-				+ doc.getRootElement().getName());
-		return null;
+		return entryOID;
 	}
 
 	@Override
-	public void loadXML(String filePath) {
-		// TODO ta metoda nie ma sensu, polaczenie z readXML albo cos
+	public void loadXML(String filePath) { // << TODO: readXML
 		try {
 			doc = builder.build(filePath);
 			System.out.println("Za³adowano XML:");
@@ -65,6 +61,7 @@ public class SBAStore implements ISBAStore {
 	}
 
 	public void readXML(Element root, ComplexObject parent) {
+
 		List<Element> childrenList = root.getChildren();
 		if (childrenList.size() == 0) {
 
@@ -72,10 +69,10 @@ public class SBAStore implements ISBAStore {
 
 			SimpleObject simpleObj;
 
-			if (value.matches("([\\d]+[.][\\d]+)")) {
+			if (value.matches("([\\d]+[.,][\\d]+)")) { 
 				simpleObj = new DoubleObject(root.getName(),
 						Double.parseDouble(value));
-			} else if (value.matches("[\\d]+")) {
+			} else if (value.matches("[\\d]+")) { // TODO ujemny
 				simpleObj = new IntegerObject(root.getName(),
 						Integer.parseInt(value));
 			} else if (value.matches("(true)|(false)")) {
@@ -87,17 +84,18 @@ public class SBAStore implements ISBAStore {
 
 			if (parent != null) {
 				parent.getChildOIDs().add(simpleObj.getOID());
-			}
+			} else
+				entryOID = simpleObj.getOID();
 		}
 
 		else {
 			ComplexObject comObj = new ComplexObject(root.getName());
 
-			// TODO bez tego ifa nie dodawalo prawidlowo Complexów do Complexów,
-			// sprawdzic czy ma to sens
 			if (parent != null) {
 				parent.getChildOIDs().add(comObj.getOID());
-			}
+			} else
+				entryOID = comObj.getOID();
+
 			for (Element child : childrenList) {
 				readXML(child, comObj);
 			}
@@ -111,12 +109,16 @@ public class SBAStore implements ISBAStore {
 
 	@Override
 	public void addJavaObject(Object o, String objectName) {
-		identifyType(o, objectName);
+		OID moid = identifyType(o, objectName);
+		if (allObjectsMap.size() == 1)
+			entryOID = moid;
 	}
 
 	@Override
 	public void addJavaCollection(Collection o, String collectionName) {
 		ComplexObject root = new ComplexObject(collectionName);
+		if (allObjectsMap.size() == 1)
+			entryOID = root.getOID();
 		for (Object e : o) {
 			root.getChildOIDs().add(
 					identifyType(e, e.getClass().getSimpleName()));
@@ -124,7 +126,7 @@ public class SBAStore implements ISBAStore {
 	}
 
 	public OID identifyType(Object o, String objectName) {
-		SimpleObject simpleObj;
+		SimpleObject simpleObj; // czy kolekcja
 
 		if (o instanceof Double) {
 			simpleObj = new DoubleObject(objectName, (Double) o);

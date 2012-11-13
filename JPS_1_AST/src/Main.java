@@ -52,55 +52,66 @@ public class Main {
 
 	public static void miniProjekt3() {
 		SBAStore store = new SBAStore();
-		store.loadXML(EXAMPLE_XML);
+		/*store.loadXML(EXAMPLE_XML_2);
 		Element entryElement = store.getDoc().getRootElement();
 		store.readXML(entryElement, null);
+		System.out.println("Entry element OID: " + store.getEntryOID());*/
 
-		/*System.out.println("\nWszystkie zlozone obiekty:");
-		for (ComplexObject co : ComplexObject.allComplexObjects) {
-			System.out.println(co);
-		}
+		/*
+		 * System.out.println("\nWszystkie zlozone obiekty:"); for
+		 * (ComplexObject co : ComplexObject.allComplexObjects) {
+		 * System.out.println(co); }
+		 * 
+		 * System.out.println("\nWszystkie proste obiekty:"); for (SimpleObject
+		 * so : SimpleObject.allSimpleObjects) { System.out.println(so); }
+		 * 
+		 * System.out.println("\nWszystkie obiekty:"); for (SBAObject sbao :
+		 * SBAStore.allObjects) { System.out.println(sbao); }
+		 */
+		/*
+		 * for (SBAObject values : SBAStore.allObjectsMap.values()) {
+		 * System.out.println(values); }
+		 */
 
-		System.out.println("\nWszystkie proste obiekty:");
-		for (SimpleObject so : SimpleObject.allSimpleObjects) {
-			System.out.println(so);
-		}
-		
-		System.out.println("\nWszystkie obiekty:");
-		for (SBAObject sbao : SBAStore.allObjects) {
-			System.out.println(sbao);
-		}*/
-	    /*for (SBAObject values : SBAStore.allObjectsMap.values()) {
-	        System.out.println(values);
-	    }*/
-		
-		Przesylka przesylka = new Przesylka(123, new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p")));
-		store.addJavaObject(przesylka, przesylka.getClass().getSimpleName());
-		
-		//Samochod samochod = new Samochod("FIAT","126p");
-		//ierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true, new Samochod("FIAT","126p"));		
-		
-		//store.addJavaObjectOID(samochod, samochod.getClass().getSimpleName());
-		//store.addJavaObjectOID(kierowca, kierowca.getClass().getSimpleName());
-		/*Integer i = 10;
-		store.addJavaObjectOID(i, i.getClass().getSimpleName());
-		String s = "test";
-		store.addJavaObjectOID(s, s.getClass().getSimpleName());*/
-		
-		Przesylka przesylka_2 = new Przesylka(234, new Kierowca("Lukasz", "Kobylinski", 67, true, new Samochod("Deawoo","Tico")));
-		Przesylka przesylka_3 = new Przesylka(345, new Kierowca("Stanislaw", "Iksinski", 67, true, new Samochod("FIAT","Cinquecento")));
+//		Przesylka przesylka = new Przesylka(123, new Kierowca("Borys",
+//				"Wojciechowski", 67, true, new Samochod("FIAT", "126p")));
+//		store.addJavaObject(przesylka, przesylka.getClass().getSimpleName());
 
+		// Samochod samochod = new Samochod("FIAT","126p");
+		// Kierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true,
+		// new Samochod("FIAT","126p"));
+
+		// store.addJavaObjectOID(samochod,
+		// samochod.getClass().getSimpleName());
+		// store.addJavaObjectOID(kierowca,
+		// kierowca.getClass().getSimpleName());
+		/*
+		 * Integer i = 10; store.addJavaObjectOID(i,
+		 * i.getClass().getSimpleName()); String s = "test";
+		 * store.addJavaObjectOID(s, s.getClass().getSimpleName());
+		 */
+
+		Przesylka przesylka_2 = new Przesylka(234, new Kierowca("Lukasz",
+				"Kobylinski", 60, true, new Samochod("Deawoo", "Tico")));
+		Przesylka przesylka_3 = new Przesylka(345, new Kierowca("Stanislaw",
+				"Iksinski", 85, true, new Samochod("FIAT", "Cinquecento")));
+
+		//TODO: fikcyjny root object (nie ma polaczenia)
 		ArrayList<Object> lista_przesylek = new ArrayList<Object>();
 		lista_przesylek.add(przesylka_2);
 		lista_przesylek.add(przesylka_3);
-		
+
 		store.addJavaCollection(lista_przesylek, "lista_przesylek");
-		
+
 		System.out.println("\nWszystkie obiekty");
-		for (SBAObject sbao : SBAStore.allObjects) {
-			System.out.println(sbao);
+		// for (SBAObject sbao : SBAStore.allObjects) {
+		// System.out.println(sbao);
+		// }
+		for (SBAObject values : SBAStore.allObjectsMap.values()) {
+			System.out.println(values);
 		}
-		
+
+		System.out.println("Entry element OID: " + store.getEntryOID());		
 	}
 
 	public static void miniProjekt1() {
