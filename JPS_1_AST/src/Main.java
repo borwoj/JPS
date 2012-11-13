@@ -37,6 +37,8 @@ import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
+import envs.ENVS;
+import envs.ENVSFrame;
 
 /**
  * @author £ukasz Kobyliñski (s6709)
@@ -47,15 +49,29 @@ public class Main {
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 
 	public static void main(String[] args) {
-		miniProjekt3();
+		miniProjekt4();
+	}
+
+	public static void miniProjekt4() {
+		ENVS envs = new ENVS();
+		
+		ENVSFrame frame_1 = new ENVSFrame();
+		ENVSFrame frame_2 = new ENVSFrame();
+		
+		envs.push(frame_1);
+		envs.push(frame_2);
+		
+		envs.pop();
+		
 	}
 
 	public static void miniProjekt3() {
 		SBAStore store = new SBAStore();
-		/*store.loadXML(EXAMPLE_XML_2);
-		Element entryElement = store.getDoc().getRootElement();
-		store.readXML(entryElement, null);
-		System.out.println("Entry element OID: " + store.getEntryOID());*/
+		/*
+		 * store.loadXML(EXAMPLE_XML_2); Element entryElement =
+		 * store.getDoc().getRootElement(); store.readXML(entryElement, null);
+		 * System.out.println("Entry element OID: " + store.getEntryOID());
+		 */
 
 		/*
 		 * System.out.println("\nWszystkie zlozone obiekty:"); for
@@ -73,9 +89,9 @@ public class Main {
 		 * System.out.println(values); }
 		 */
 
-//		Przesylka przesylka = new Przesylka(123, new Kierowca("Borys",
-//				"Wojciechowski", 67, true, new Samochod("FIAT", "126p")));
-//		store.addJavaObject(przesylka, przesylka.getClass().getSimpleName());
+		// Przesylka przesylka = new Przesylka(123, new Kierowca("Borys",
+		// "Wojciechowski", 67, true, new Samochod("FIAT", "126p")));
+		// store.addJavaObject(przesylka, przesylka.getClass().getSimpleName());
 
 		// Samochod samochod = new Samochod("FIAT","126p");
 		// Kierowca kierowca = new Kierowca("Borys", "Wojciechowski", 67, true,
@@ -96,7 +112,7 @@ public class Main {
 		Przesylka przesylka_3 = new Przesylka(345, new Kierowca("Stanislaw",
 				"Iksinski", 85, true, new Samochod("FIAT", "Cinquecento")));
 
-		//TODO: fikcyjny root object (nie ma polaczenia)
+		// TODO: fikcyjny root object (nie ma polaczenia)
 		ArrayList<Object> lista_przesylek = new ArrayList<Object>();
 		lista_przesylek.add(przesylka_2);
 		lista_przesylek.add(przesylka_3);
@@ -111,7 +127,7 @@ public class Main {
 			System.out.println(values);
 		}
 
-		System.out.println("Entry element OID: " + store.getEntryOID());		
+		System.out.println("Entry element OID: " + store.getEntryOID());
 	}
 
 	public static void miniProjekt1() {
