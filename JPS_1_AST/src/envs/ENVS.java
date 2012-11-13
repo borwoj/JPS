@@ -12,7 +12,7 @@ public class ENVS implements IENVS {
 	@Override
 	public void init(OID rootOID, ISBAStore store) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class ENVS implements IENVS {
 	@Override
 	public void push(IENVSFrame frame) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

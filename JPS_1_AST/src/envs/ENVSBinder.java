@@ -5,16 +5,22 @@ import edu.pjwstk.jps.result.IAbstractQueryResult;
 
 public class ENVSBinder implements IENVSBinder {
 
+	public String name;
+	public IAbstractQueryResult value;
+
+	public ENVSBinder(String name, IAbstractQueryResult value) {
+		this.name = name;
+		this.value = value;
+	}
+
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public IAbstractQueryResult getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return value;
 	}
 
 }
