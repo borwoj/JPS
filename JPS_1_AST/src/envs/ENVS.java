@@ -2,12 +2,16 @@ package envs;
 
 import java.util.ArrayList;
 
+import qres.collection.BagResult;
+
 import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.interpreter.envs.IENVS;
+import edu.pjwstk.jps.interpreter.envs.IENVSBinder;
 import edu.pjwstk.jps.interpreter.envs.IENVSFrame;
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
+import edu.pjwstk.jps.result.ISingleResult;
 
 public class ENVS implements IENVS {
 
@@ -33,8 +37,22 @@ public class ENVS implements IENVS {
 
 	@Override
 	public IBagResult bind(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		BagResult bag = new BagResult();
+		boolean found = false;
+
+		for (int i = stack.size() - 1; i > 0; i--) {
+			IENVSFrame frame = stack.get(i);
+			for (IENVSBinder bg : frame.getElements()) {
+				if (name == bg.getName()) {
+					bag.add((ISingleResult) bg.getValue());
+					found = true;
+				}
+			}
+			if (found) {
+				break;
+			}
+		}
+		return bag;
 	}
 
 	@Override
