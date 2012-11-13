@@ -10,6 +10,10 @@ public class ENVSFrame implements IENVSFrame {
 
 	public ArrayList<IENVSBinder> elements = new ArrayList<IENVSBinder>();
 
+	public void add(IENVSBinder element){
+		elements.add(element);
+	}
+	
 	@Override
 	public Collection<IENVSBinder> getElements() {
 		return elements;

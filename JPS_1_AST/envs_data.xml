@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<integerNumber>10</integerNumber>
+	<emp>
+		<number>s0000</number>
+		<fName>Anna</fName>
+		<lName>Kowalska</lName>
+		<address>
+		<street>al. Jerozolimskie</street>
+		<number>50</number>
+		<zip>00-111</zip>
+		<city>Warszawa</city>
+		</address>
+		<married>true</married>
+		<book>
+		<author>Adam Mickiewicz</author>
+		<title>Pan Tadeusz</title>
+		</book>
+	</emp>
+	<emp>
+		<number>s0001</number>
+		<fName>Maciej</fName>
+		<lName>Nowak</lName>
+		<address>
+		<street>Koszykowa</street>
+		<number>86</number>
+		<zip>00-222</zip>
+		<city>Warszawa</city>
+		</address>
+		<married>false</married>
+	</emp>
+	<realNumber>234,35</realNumber>
+</root>
