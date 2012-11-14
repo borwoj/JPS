@@ -342,34 +342,9 @@ public class Main {
 		StructResult struct6 = (StructResult) qres.pop();
 		BagResult b2 = (BagResult) qres.pop();
 
-		List<ISingleResult> list_2 = struct6.elements(); // struct
-		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) b2
-				.getElements(); // bag
+		qres.push(iloczynKartezjanski(b2, struct6)); // 12
 
-		StructResult b3res = new StructResult();
-		StructResult b3res2 = new StructResult();
-		StructResult b4res = new StructResult();
-
-		b3res.add(arr1.get(0));
-		b3res.add(list_2.get(0));
-		b3res.add(list_2.get(1));
-
-		b3res2.add(arr1.get(1));
-		b3res2.add(list_2.get(0));
-		b3res2.add(list_2.get(1));
-
-		b4res.add(arr1.get(2));
-		b4res.add(list_2.get(0));
-		b4res.add(list_2.get(1));
-
-		BagResult b5 = new BagResult();
-		b5.add(b3res);
-		b5.add(b3res2);
-		b5.add(b4res);
-
-		qres.push(b5); // 12
-
-		System.out.println(b5);
+		System.out.println(iloczynKartezjanski(b2, struct6));
 	}
 
 	public static void QRES_zadanie_3() {
@@ -431,9 +406,9 @@ public class Main {
 
 	public static BagResult iloczynKartezjanski(BagResult bag_1, BagResult bag_2) {
 
-		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) bag_2
+		ArrayList<ISingleResult> bag_list_1 = (ArrayList<ISingleResult>) bag_2
 				.getElements();
-		ArrayList<ISingleResult> arr2 = (ArrayList<ISingleResult>) bag_1
+		ArrayList<ISingleResult> bag_list_2 = (ArrayList<ISingleResult>) bag_1
 				.getElements();
 
 		StructResult sr_1 = new StructResult();
@@ -441,24 +416,54 @@ public class Main {
 		StructResult sr_3 = new StructResult();
 		StructResult sr_4 = new StructResult();
 
-		sr_1.add(arr1.get(0));
-		sr_1.add(arr2.get(0));
+		sr_1.add(bag_list_1.get(0));
+		sr_1.add(bag_list_2.get(0));
 
-		sr_2.add(arr1.get(0));
-		sr_2.add(arr2.get(1));
+		sr_2.add(bag_list_1.get(0));
+		sr_2.add(bag_list_2.get(1));
 
-		sr_3.add(arr1.get(1));
-		sr_3.add(arr2.get(0));
+		sr_3.add(bag_list_1.get(1));
+		sr_3.add(bag_list_2.get(0));
 
-		sr_4.add(arr1.get(1));
-		sr_4.add(arr2.get(1));
+		sr_4.add(bag_list_1.get(1));
+		sr_4.add(bag_list_2.get(1));
 
-		BagResult b5 = new BagResult();
-		b5.add(sr_1);
-		b5.add(sr_2);
-		b5.add(sr_3);
-		b5.add(sr_4);
+		BagResult bagResult = new BagResult();
+		bagResult.add(sr_1);
+		bagResult.add(sr_2);
+		bagResult.add(sr_3);
+		bagResult.add(sr_4);
 
-		return b5;
+		return bagResult;
+	}
+
+	public static BagResult iloczynKartezjanski(BagResult bag,
+			StructResult struct) {
+		List<ISingleResult> struct_list = struct.elements();
+		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bag
+				.getElements();
+
+		StructResult sr_1 = new StructResult();
+		StructResult sr_2 = new StructResult();
+		StructResult sr_3 = new StructResult();
+
+		sr_1.add(bag_list.get(0));
+		sr_1.add(struct_list.get(0));
+		sr_1.add(struct_list.get(1));
+
+		sr_2.add(bag_list.get(1));
+		sr_2.add(struct_list.get(0));
+		sr_2.add(struct_list.get(1));
+
+		sr_3.add(bag_list.get(2));
+		sr_3.add(struct_list.get(0));
+		sr_3.add(struct_list.get(1));
+
+		BagResult bagResult = new BagResult();
+		bagResult.add(sr_1);
+		bagResult.add(sr_2);
+		bagResult.add(sr_3);
+
+		return bagResult;
 	}
 }
