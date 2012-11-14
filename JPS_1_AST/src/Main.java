@@ -54,15 +54,19 @@ public class Main {
 
 	public static void miniProjekt4() {
 		ENVS envs = new ENVS();
-		
+
 		ENVSFrame frame_1 = new ENVSFrame();
 		ENVSFrame frame_2 = new ENVSFrame();
-		
+
 		envs.push(frame_1);
 		envs.push(frame_2);
-		
+
 		envs.pop();
-		
+
+		// ((emp where married).book.author) union (realNumber)
+
+		// ((emp.address) where number>20).(street, city)
+
 	}
 
 	public static void miniProjekt3() {
@@ -244,41 +248,12 @@ public class Main {
 
 		System.out.println(b2);
 
-		// iloczyn kartezjanski
 		BagResult b3 = (BagResult) qres1.pop();
 		BagResult b4 = (BagResult) qres1.pop();
 
-		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) b4
-				.getElements();
-		ArrayList<ISingleResult> arr2 = (ArrayList<ISingleResult>) b3
-				.getElements();
+		qres1.push(iloczynKartezjanski(b3, b4)); // 11
 
-		StructResult b3res = new StructResult();
-		StructResult b3res2 = new StructResult();
-		StructResult b4res = new StructResult();
-		StructResult b4res2 = new StructResult();
-
-		b3res.add(arr1.get(0));
-		b3res.add(arr2.get(0));
-
-		b3res2.add(arr1.get(0));
-		b3res2.add(arr2.get(1));
-
-		b4res.add(arr1.get(1));
-		b4res.add(arr2.get(0));
-
-		b4res2.add(arr1.get(1));
-		b4res2.add(arr2.get(1));
-
-		BagResult b5 = new BagResult();
-		b5.add(b3res);
-		b5.add(b3res2);
-		b5.add(b4res);
-		b5.add(b4res2);
-
-		qres1.push(b5); // 11
-
-		System.out.println(b5);
+		System.out.println(iloczynKartezjanski(b3, b4));
 
 		BagResult b6 = (BagResult) qres1.pop();
 		ArrayList<ISingleResult> arr3 = (ArrayList<ISingleResult>) b6
@@ -452,5 +427,38 @@ public class Main {
 		qres.push(struct5); // 9
 
 		System.out.println(struct5);
+	}
+
+	public static BagResult iloczynKartezjanski(BagResult bag_1, BagResult bag_2) {
+
+		ArrayList<ISingleResult> arr1 = (ArrayList<ISingleResult>) bag_2
+				.getElements();
+		ArrayList<ISingleResult> arr2 = (ArrayList<ISingleResult>) bag_1
+				.getElements();
+
+		StructResult sr_1 = new StructResult();
+		StructResult sr_2 = new StructResult();
+		StructResult sr_3 = new StructResult();
+		StructResult sr_4 = new StructResult();
+
+		sr_1.add(arr1.get(0));
+		sr_1.add(arr2.get(0));
+
+		sr_2.add(arr1.get(0));
+		sr_2.add(arr2.get(1));
+
+		sr_3.add(arr1.get(1));
+		sr_3.add(arr2.get(0));
+
+		sr_4.add(arr1.get(1));
+		sr_4.add(arr2.get(1));
+
+		BagResult b5 = new BagResult();
+		b5.add(sr_1);
+		b5.add(sr_2);
+		b5.add(sr_3);
+		b5.add(sr_4);
+
+		return b5;
 	}
 }
