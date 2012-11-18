@@ -21,12 +21,13 @@ import edu.pjwstk.jps.datastore.OID;
 public class SBAStore implements ISBAStore {
 
 	public static LinkedHashMap<OID, SBAObject> allObjectsMap = new LinkedHashMap<OID, SBAObject>();
-	//public static ArrayList<SBAObject> allObjects = new ArrayList<SBAObject>();
+	// public static ArrayList<SBAObject> allObjects = new
+	// ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;
 	XMLOutputter serializer = new XMLOutputter();
-	
+
 	OID entryOID;
 
 	@Override
@@ -69,9 +70,9 @@ public class SBAStore implements ISBAStore {
 
 			SimpleObject simpleObj;
 
-			if (value.matches("([\\d]+[.,][\\d]+)")) { 
+			if (value.matches("([\\d]+[.|,][\\d]+)")) {
 				simpleObj = new DoubleObject(root.getName(),
-						Double.parseDouble(value));
+						Double.parseDouble(value.replace(",", ".")));
 			} else if (value.matches("[\\d]+")) { // TODO ujemny
 				simpleObj = new IntegerObject(root.getName(),
 						Integer.parseInt(value));
