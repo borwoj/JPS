@@ -18,5 +18,18 @@ public class ENVSFrame implements IENVSFrame {
 	public Collection<IENVSBinder> getElements() {
 		return elements;
 	}
+	
+	public String toString() {
+		String str = "";
+		int i = 0;
+		for (IENVSBinder binder : elements) {
+			if (i != 0) {
+				str += ", ";
+			}
+			str += binder;
+			i++;
+		}
+		return str;
+	}
 
 }

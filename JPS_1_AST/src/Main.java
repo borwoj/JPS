@@ -47,6 +47,7 @@ import envs.ENVSFrame;
 public class Main {
 	private static final String EXAMPLE_XML = "example.xml";
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
+	private static final String ENVS_DATA = "envs_data.xml";
 
 	public static void main(String[] args) {
 		miniProjekt4();
@@ -54,16 +55,21 @@ public class Main {
 
 	public static void miniProjekt4() {
 		ENVS envs = new ENVS();
-
-		ENVSFrame frame_1 = new ENVSFrame();
-		ENVSFrame frame_2 = new ENVSFrame();
-
-		envs.push(frame_1);
-		envs.push(frame_2);
-
-		envs.pop();
+		SBAStore store = new SBAStore();
+		
+		//TODO: polaczenie loadXML i readXML
+		store.loadXML(ENVS_DATA);
+		Element entryElement = store.getDoc().getRootElement();
+		store.readXML(entryElement, null);
 
 		// ((emp where married).book.author) union (realNumber)
+		envs.init(store.getEntryOID(), store);
+		QResStack qres = new QResStack();
+		
+		System.out.println(envs);
+
+		//qres.push(envs.bind("emp"));
+		//BagResult bag_1 = (BagResult) qres.pop();
 
 		// ((emp.address) where number>20).(street, city)
 

@@ -3,11 +3,9 @@ package envs;
 import java.util.ArrayList;
 
 import datastore.ComplexObject;
-import datastore.SBAObject;
 import datastore.SimpleObject;
 
 import qres.collection.BagResult;
-import qres.collection.SequenceResult;
 import qres.single.BinderResult;
 import qres.single.BooleanResult;
 import qres.single.DoubleResult;
@@ -33,7 +31,19 @@ public class ENVS implements IENVS {
 
 	@Override
 	public void init(OID rootOID, ISBAStore store) {
-		// TODO Auto-generated method stub
+
+		ComplexObject root = (ComplexObject) store.retrieve(rootOID);
+		ENVSFrame frame = new ENVSFrame();
+
+		if (root != null) {
+			for (OID oid : root.getChildOIDs()) {
+				ISBAObject object = store.retrieve(oid);
+				ENVSBinder binder = new ENVSBinder(object.getName(),
+						new ReferenceResult(oid));
+				frame.add(binder);
+			}
+			stack.add(frame);
+		}
 
 	}
 
@@ -83,7 +93,8 @@ public class ENVS implements IENVS {
 
 				for (OID oid : ((ComplexObject) sbao).getChildOIDs()) {
 					ISBAObject object = store.retrieve(oid);
-					ENVSBinder binder = new ENVSBinder(object.getName(), new ReferenceResult(oid));
+					ENVSBinder binder = new ENVSBinder(object.getName(),
+							new ReferenceResult(oid));
 					frame.add(binder);
 				}
 
@@ -115,6 +126,19 @@ public class ENVS implements IENVS {
 
 		return frame;
 
+	}
+
+	public String toString() {
+		String str = "";
+		int i = 0;
+		for (IENVSFrame frame : stack) {
+			if (i != 0) {
+				str += ", ";
+			}
+			str += frame;
+			i++;
+		}
+		return str;
 	}
 
 }

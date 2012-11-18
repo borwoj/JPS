@@ -23,4 +23,8 @@ public class ENVSBinder implements IENVSBinder {
 		return value;
 	}
 
+	public String toString() {
+		return name + "(" + value + ")";
+	}
+
 }
