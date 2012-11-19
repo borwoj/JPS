@@ -76,7 +76,7 @@ public class ENVS implements IENVS {
 				break;
 			}
 		}
-		
+
 		return bag;
 	}
 
@@ -132,13 +132,11 @@ public class ENVS implements IENVS {
 		String str = "";
 		int i = 0;
 		for (IENVSFrame frame : stack) {
-			str += "[ ";
 			if (i != 0) {
 				str += ", ";
 			}
 			str += frame;
 			i++;
-			str += " ] ";
 		}
 		return str;
 	}
