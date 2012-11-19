@@ -59,10 +59,7 @@ public class Main {
 		ENVS envs = new ENVS();
 		SBAStore store = new SBAStore();
 		
-		//TODO: polaczenie loadXML i readXML
 		store.loadXML(ENVS_DATA);
-		Element entryElement = store.getDoc().getRootElement();
-		store.readXML(entryElement, null);
 
 		// ((emp where married).book.author) union (realNumber)
 		envs.init(store.getEntryOID(), store);

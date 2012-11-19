@@ -48,7 +48,7 @@ public class SBAStore implements ISBAStore {
 	}
 
 	@Override
-	public void loadXML(String filePath) { // << TODO: readXML
+	public void loadXML(String filePath) { 
 		try {
 			doc = builder.build(filePath);
 			System.out.println("Za³adowano XML:");
@@ -58,6 +58,9 @@ public class SBAStore implements ISBAStore {
 		} catch (IOException e) {
 			System.err.println(e);
 		}
+		
+		Element entryElement = getDoc().getRootElement();
+		readXML(entryElement, null);
 
 	}
 
