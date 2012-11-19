@@ -64,7 +64,7 @@ public class ENVS implements IENVS {
 		BagResult bag = new BagResult();
 		boolean found = false;
 
-		for (int i = stack.size() - 1; i > 0; i--) {
+		for (int i = stack.size() - 1; i >= 0; i--) {
 			IENVSFrame frame = stack.get(i);
 			for (IENVSBinder bg : frame.getElements()) {
 				if (name == bg.getName()) {
@@ -76,6 +76,7 @@ public class ENVS implements IENVS {
 				break;
 			}
 		}
+		
 		return bag;
 	}
 
@@ -85,7 +86,6 @@ public class ENVS implements IENVS {
 		ENVSFrame frame = new ENVSFrame();
 
 		if (result instanceof ReferenceResult) {
-
 			ISBAObject sbao = store.retrieve(((ReferenceResult) result)
 					.getOIDValue());
 
@@ -132,11 +132,13 @@ public class ENVS implements IENVS {
 		String str = "";
 		int i = 0;
 		for (IENVSFrame frame : stack) {
+			str += "[ ";
 			if (i != 0) {
 				str += ", ";
 			}
 			str += frame;
 			i++;
+			str += " ] ";
 		}
 		return str;
 	}

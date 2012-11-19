@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import qres.single.BinderResult;
 import qres.single.BooleanResult;
 import qres.single.DoubleResult;
 import qres.single.IntegerResult;
+import qres.single.ReferenceResult;
 import qres.single.StringResult;
 import qres.single.StructResult;
 import ast.Expression;
@@ -67,6 +69,21 @@ public class Main {
 		QResStack qres = new QResStack();
 		
 		System.out.println(envs);
+		
+		BagResult bag_1 = (BagResult) envs.bind("emp");
+		qres.push(bag_1);
+		BagResult bag_2 = (BagResult) qres.pop();
+		
+		//envs.push(envs.nested(bag_2, store));
+		
+		
+		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bag_2
+				.getElements();
+		
+		envs.push(envs.nested(bag_list.get(0), store));
+		
+		System.out.println(envs);
+		
 
 		//qres.push(envs.bind("emp"));
 		//BagResult bag_1 = (BagResult) qres.pop();
