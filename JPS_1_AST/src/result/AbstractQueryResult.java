@@ -1,4 +1,4 @@
-package qres;
+package result;
 
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 

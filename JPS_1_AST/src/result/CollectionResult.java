@@ -1,6 +1,5 @@
-package qres.collection;
+package result;
 
-import qres.AbstractQueryResult;
 import edu.pjwstk.jps.result.ICollectionResult;
 
 public abstract class CollectionResult extends AbstractQueryResult implements

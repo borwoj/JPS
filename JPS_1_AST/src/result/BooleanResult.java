@@ -1,4 +1,4 @@
-package qres.single;
+package result;
 
 import edu.pjwstk.jps.result.IBooleanResult;
 

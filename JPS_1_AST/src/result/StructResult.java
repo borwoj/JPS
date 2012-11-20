@@ -1,10 +1,9 @@
-package qres.single;
+package result;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import qres.AbstractQueryResult;
 
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStructResult;

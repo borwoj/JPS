@@ -1,4 +1,4 @@
-package envs;
+package interpreter.envs;
 
 import java.util.ArrayList;
 import java.util.Collection;

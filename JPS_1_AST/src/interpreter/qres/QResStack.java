@@ -1,4 +1,4 @@
-package qres;
+package interpreter.qres;
 
 import java.util.Stack;
 

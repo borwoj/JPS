@@ -1,4 +1,4 @@
-package envs;
+package interpreter.envs;
 
 import edu.pjwstk.jps.interpreter.envs.IENVSBinder;
 import edu.pjwstk.jps.result.IAbstractQueryResult;

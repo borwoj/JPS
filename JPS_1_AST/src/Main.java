@@ -1,3 +1,7 @@
+import interpreter.envs.ENVS;
+import interpreter.envs.ENVSFrame;
+import interpreter.qres.QResStack;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -6,15 +10,14 @@ import java.util.Map;
 
 import org.jdom2.Element;
 
-import qres.QResStack;
-import qres.collection.BagResult;
-import qres.single.BinderResult;
-import qres.single.BooleanResult;
-import qres.single.DoubleResult;
-import qres.single.IntegerResult;
-import qres.single.ReferenceResult;
-import qres.single.StringResult;
-import qres.single.StructResult;
+import result.BagResult;
+import result.BinderResult;
+import result.BooleanResult;
+import result.DoubleResult;
+import result.IntegerResult;
+import result.ReferenceResult;
+import result.StringResult;
+import result.StructResult;
 import ast.Expression;
 import ast.binary.CommaExpression;
 import ast.binary.DotExpression;
@@ -39,8 +42,6 @@ import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
-import envs.ENVS;
-import envs.ENVSFrame;
 
 /**
  * @author £ukasz Kobyliñski (s6709)

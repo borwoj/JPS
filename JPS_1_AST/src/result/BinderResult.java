@@ -1,6 +1,5 @@
-package qres.single;
+package result;
 
-import qres.AbstractQueryResult;
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBinderResult;
 

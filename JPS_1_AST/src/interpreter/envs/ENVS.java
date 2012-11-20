@@ -1,19 +1,20 @@
-package envs;
+package interpreter.envs;
+
 
 import java.util.ArrayList;
 
 import datastore.ComplexObject;
 import datastore.SimpleObject;
 
-import qres.collection.BagResult;
-import qres.single.BinderResult;
-import qres.single.BooleanResult;
-import qres.single.DoubleResult;
-import qres.single.IntegerResult;
-import qres.single.ReferenceResult;
-import qres.single.SimpleResult;
-import qres.single.StringResult;
-import qres.single.StructResult;
+import result.BagResult;
+import result.BinderResult;
+import result.BooleanResult;
+import result.DoubleResult;
+import result.IntegerResult;
+import result.ReferenceResult;
+import result.SimpleResult;
+import result.StringResult;
+import result.StructResult;
 
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.ISBAStore;

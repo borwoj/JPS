@@ -1,8 +1,9 @@
-package qres.collection;
+package result;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.ISingleResult;

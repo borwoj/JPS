@@ -1,7 +1,8 @@
-package qres.collection;
+package result;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import edu.pjwstk.jps.result.ISequenceResult;
 import edu.pjwstk.jps.result.ISingleResult;
