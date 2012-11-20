@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStructResult;
 

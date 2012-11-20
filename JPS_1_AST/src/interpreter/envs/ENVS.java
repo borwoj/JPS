@@ -3,9 +3,6 @@ package interpreter.envs;
 
 import java.util.ArrayList;
 
-import datastore.ComplexObject;
-import datastore.SimpleObject;
-
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
@@ -15,7 +12,8 @@ import result.ReferenceResult;
 import result.SimpleResult;
 import result.StringResult;
 import result.StructResult;
-
+import datastore.ComplexObject;
+import datastore.SimpleObject;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.OID;

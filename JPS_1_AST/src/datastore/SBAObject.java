@@ -1,9 +1,6 @@
 package datastore;
 
-import java.util.HashMap;
-
 import edu.pjwstk.jps.datastore.ISBAObject;
-import edu.pjwstk.jps.datastore.OID;
 
 public abstract class SBAObject implements ISBAObject {
 

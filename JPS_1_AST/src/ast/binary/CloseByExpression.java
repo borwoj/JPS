@@ -1,13 +1,12 @@
 package ast.binary;
 
 import ast.Expression;
-import edu.pjwstk.jps.ast.binary.IEqualsExpression;
+import edu.pjwstk.jps.ast.binary.ICloseByExpression;
 import edu.pjwstk.jps.visitor.ASTVisitor;
 
-public class EqualsExpression extends BinaryExpression implements
-		IEqualsExpression {
+public class CloseByExpression extends BinaryExpression implements ICloseByExpression {
 
-	public EqualsExpression(Expression expLeft, Expression expRight) {
+	public CloseByExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
 		// TODO Auto-generated constructor stub
 	}

@@ -1,21 +1,14 @@
 import interpreter.envs.ENVS;
-import interpreter.envs.ENVSFrame;
 import interpreter.qres.QResStack;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.jdom2.Element;
 
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
-import result.ReferenceResult;
 import result.StringResult;
 import result.StructResult;
 import ast.Expression;
@@ -30,17 +23,11 @@ import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import ast.unary.CountExpression;
-import datastore.BooleanObject;
-import datastore.ComplexObject;
-import datastore.IntegerObject;
-import datastore.MyOID;
 import datastore.SBAObject;
 import datastore.SBAStore;
-import datastore.SimpleObject;
 import datastore.test_classes.Kierowca;
 import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
-import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
 
 /**

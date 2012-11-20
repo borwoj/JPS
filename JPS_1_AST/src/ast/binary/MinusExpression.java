@@ -1,13 +1,13 @@
 package ast.binary;
 
 import ast.Expression;
-import edu.pjwstk.jps.ast.binary.IEqualsExpression;
+import edu.pjwstk.jps.ast.binary.IMinusExpression;
 import edu.pjwstk.jps.visitor.ASTVisitor;
 
-public class EqualsExpression extends BinaryExpression implements
-		IEqualsExpression {
+public class MinusExpression extends BinaryExpression implements
+		IMinusExpression {
 
-	public EqualsExpression(Expression expLeft, Expression expRight) {
+	public MinusExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
 		// TODO Auto-generated constructor stub
 	}

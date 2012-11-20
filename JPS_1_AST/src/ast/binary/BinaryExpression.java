@@ -1,7 +1,6 @@
 package ast.binary;
 
 import ast.Expression;
-import ast.terminal.NameTerminal;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.binary.IBinaryExpression;
 

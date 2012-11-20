@@ -1,13 +1,12 @@
 package ast.binary;
 
 import ast.Expression;
-import edu.pjwstk.jps.ast.binary.IEqualsExpression;
+import edu.pjwstk.jps.ast.binary.IXORExpression;
 import edu.pjwstk.jps.visitor.ASTVisitor;
 
-public class EqualsExpression extends BinaryExpression implements
-		IEqualsExpression {
+public class XORExpression extends BinaryExpression implements IXORExpression {
 
-	public EqualsExpression(Expression expLeft, Expression expRight) {
+	public XORExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
 		// TODO Auto-generated constructor stub
 	}

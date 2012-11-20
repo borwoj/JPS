@@ -1,10 +1,6 @@
 package datastore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import edu.pjwstk.jps.datastore.ISimpleObject;
-import edu.pjwstk.jps.datastore.OID;
 
 public abstract class SimpleObject<T> extends SBAObject implements
 		ISimpleObject<T> {
