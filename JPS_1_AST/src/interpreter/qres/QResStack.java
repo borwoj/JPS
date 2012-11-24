@@ -18,5 +18,18 @@ public class QResStack implements IQResStack {
 	public void push(IAbstractQueryResult value) {
 		stack.push(value);
 	}
+	
+	public String toString(){
+		String str = "";
+		int i = 0;
+		for (IAbstractQueryResult result : stack) {
+			if (i != 0) {
+				str += ", ";
+			}
+			str += result;
+			i++;
+		}
+		return str;
+	}
 
 }

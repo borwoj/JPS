@@ -9,6 +9,7 @@ import result.BinderResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.ReferenceResult;
 import result.StringResult;
 import result.StructResult;
 import ast.Expression;
@@ -23,11 +24,16 @@ import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import ast.unary.CountExpression;
+import datastore.BooleanObject;
 import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.test_classes.Kierowca;
 import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
+import edu.pjwstk.jps.datastore.ISBAObject;
+import edu.pjwstk.jps.datastore.OID;
+import edu.pjwstk.jps.interpreter.envs.IENVS;
+import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.ISingleResult;
 
 /**
@@ -40,41 +46,58 @@ public class Main {
 	private static final String ENVS_DATA = "envs_data.xml";
 
 	public static void main(String[] args) {
-		miniProjekt4();
+		ENVS_zadanie_1();
+		//miniProjekt4();
 	}
 
-	public static void miniProjekt4() {
+	public static void ENVS_zadanie_1(){
+		// ((emp where married).book.author) union (realNumber)
+		
 		ENVS envs = new ENVS();
 		SBAStore store = new SBAStore();
-		
+
 		store.loadXML(ENVS_DATA);
 
-		// ((emp where married).book.author) union (realNumber)
 		envs.init(store.getEntryOID(), store);
 		QResStack qres = new QResStack();
 		
 		System.out.println(envs);
 		
-		BagResult bag_1 = (BagResult) envs.bind("emp");
+		BagResult whereres = new BagResult();
+		
+		BagResult bag_1 = (BagResult) envs.bind("emp"); //eval
 		qres.push(bag_1);
-		BagResult bag_2 = (BagResult) qres.pop();
-		
-		//envs.push(envs.nested(bag_2, store));
-		
+		//bag(0 = i2 , 1 = i15)
+		BagResult bag_2 = (BagResult) qres.pop(); //q1res
 		
 		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bag_2
 				.getElements();
-		
 		envs.push(envs.nested(bag_list.get(0), store));
 		
 		System.out.println(envs);
 		
-
-		//qres.push(envs.bind("emp"));
-		//BagResult bag_1 = (BagResult) qres.pop();
-
-		// ((emp.address) where number>20).(street, city)
-
+		BagResult bag_3 = (BagResult) envs.bind("married"); //eval
+		qres.push(bag_3);
+		qres.push(new BooleanResult(true));
+		System.out.println(qres); // bag(0 = i11), true
+		
+		BooleanResult boolres = (BooleanResult) qres.pop(); 
+		BagResult bag_4 = (BagResult) qres.pop();
+		
+		ArrayList<ISingleResult> bag_list_2 = (ArrayList<ISingleResult>) bag_4
+				.getElements();
+		
+		BooleanObject boolObj = (BooleanObject) deref(bag_list_2.get(0), store);
+		
+		if(boolres.getValue() == boolObj.getValue()){
+			//whereres.push();
+			System.out.println("married == true");
+		}
+		
+	}
+	
+	public static ISBAObject deref(ISingleResult rr, SBAStore store){
+		return store.retrieve((OID) ((ReferenceResult) rr).getOIDValue());
 	}
 
 	public static void miniProjekt3() {
