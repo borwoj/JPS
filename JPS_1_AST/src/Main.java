@@ -47,12 +47,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		ENVS_zadanie_1();
-		//miniProjekt4();
+		// miniProjekt4();
 	}
 
-	public static void ENVS_zadanie_1(){
+	public static void ENVS_zadanie_1() {
 		// ((emp where married).book.author) union (realNumber)
-		
+
 		ENVS envs = new ENVS();
 		SBAStore store = new SBAStore();
 
@@ -60,43 +60,70 @@ public class Main {
 
 		envs.init(store.getEntryOID(), store);
 		QResStack qres = new QResStack();
-		
-		System.out.println(envs);
-		
+
+		printStacks(envs, qres);
+
 		BagResult whereres = new BagResult();
-		
-		BagResult bag_1 = (BagResult) envs.bind("emp"); //eval
+
+		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
 		qres.push(bag_1);
-		//bag(0 = i2 , 1 = i15)
-		BagResult bag_2 = (BagResult) qres.pop(); //q1res
-		
-		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bag_2
-				.getElements();
-		envs.push(envs.nested(bag_list.get(0), store));
-		
-		System.out.println(envs);
-		
-		BagResult bag_3 = (BagResult) envs.bind("married"); //eval
+		BagResult bag_2 = (BagResult) qres.pop(); // q1res
+
+		envs.push(envs.nested(getBagElement(bag_2, 0), store)); // zawartosc emp(i2)
+
+		printStacks(envs, qres);
+
+		BagResult bag_3 = (BagResult) envs.bind("married"); // eval
 		qres.push(bag_3);
 		qres.push(new BooleanResult(true));
-		System.out.println(qres); // bag(0 = i11), true
-		
-		BooleanResult boolres = (BooleanResult) qres.pop(); 
+		printStacks(envs, qres);
+
+		BooleanResult boolres = (BooleanResult) qres.pop();
 		BagResult bag_4 = (BagResult) qres.pop();
-		
-		ArrayList<ISingleResult> bag_list_2 = (ArrayList<ISingleResult>) bag_4
-				.getElements();
-		
-		BooleanObject boolObj = (BooleanObject) deref(bag_list_2.get(0), store);
-		
-		if(boolres.getValue() == boolObj.getValue()){
-			//whereres.push();
-			System.out.println("married == true");
+
+		BooleanObject boolObj = (BooleanObject) deref(getBagElement(bag_4, 0), store);
+
+		if (boolres.getValue() == boolObj.getValue()) {
+			whereres.add(getBagElement(bag_2, 0));
 		}
+
+		envs.pop();
+		printStacks(envs, qres);
+			
+		//emp(i15)
 		
+		envs.push(envs.nested(getBagElement(bag_2, 1), store)); // zawartosc emp(i15)
+		printStacks(envs, qres);
+		
+		BagResult bag_5 = (BagResult) envs.bind("married"); // eval
+		qres.push(bag_5);
+		qres.push(new BooleanResult(true));
+		printStacks(envs, qres);
+
+		BooleanResult boolres_2 = (BooleanResult) qres.pop();
+		BagResult bag_6 = (BagResult) qres.pop();
+
+		BooleanObject boolObj_2 = (BooleanObject) deref(getBagElement(bag_6, 0), store);
+
+		if (boolres_2.getValue() == boolObj_2.getValue()) {
+			whereres.add(getBagElement(bag_2, 1));
+		}
+
+		envs.pop();
+		printStacks(envs, qres);
 	}
-	
-	public static ISBAObject deref(ISingleResult rr, SBAStore store){
+
+	public static void printStacks(ENVS envs, QResStack qres){
+		System.out.println("ENVS: "+envs);
+		System.out.println("QRES: "+qres);
+	}
+	public static ISingleResult getBagElement(BagResult bagres, int index) {
+		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bagres
+				.getElements();
+		return bag_list.get(index);
+	}
+
+	public static ISBAObject deref(ISingleResult rr, SBAStore store) {
 		return store.retrieve((OID) ((ReferenceResult) rr).getOIDValue());
 	}
 
