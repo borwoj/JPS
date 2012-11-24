@@ -110,13 +110,70 @@ public class Main {
 		}
 
 		envs.pop();
+		qres.push(whereres);
 		printStacks(envs, qres);
+		
+		BagResult dotres_1 = new BagResult();
+		
+		// brak takiej sytuacji w przykladach, wyciagniecie z QRES wyniku (emp where married)
+		// i wlozenie na ENVS
+		BagResult bag_7 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_7, 0), store));
+		printStacks(envs, qres);
+		//
+		
+		BagResult bag_8 = (BagResult) envs.bind("book"); // eval
+		qres.push(bag_8);		
+		BagResult bag_9 = (BagResult) qres.pop(); 
+		
+		dotres_1.add(getBagElement(bag_9, 0));
+		
+		envs.pop();
+		qres.push(dotres_1);
+		printStacks(envs, qres);
+		
+		BagResult dotres_2 = new BagResult();
+		
+		// taki sam komentarz j/w
+		BagResult bag_10 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_10, 0), store));
+		printStacks(envs, qres);
+		
+		BagResult bag_11 = (BagResult) envs.bind("author"); // eval
+		qres.push(bag_11);		
+		BagResult bag_12 = (BagResult) qres.pop(); 
+		
+		dotres_2.add(getBagElement(bag_12, 0));
+		
+		envs.pop();
+		qres.push(dotres_2);
+		printStacks(envs, qres);
+		
+		// j/w
+		//BagResult bag_13 = (BagResult) qres.pop();
+		//envs.push(envs.nested(getBagElement(bag_13, 0), store));
+		//printStacks(envs, qres);
+		
+		BagResult bag_14 = (BagResult) envs.bind("realNumber"); // eval
+		qres.push(bag_14);	
+		printStacks(envs, qres);
+		
+		BagResult bag_15 = (BagResult) qres.pop(); // i25
+		BagResult bag_16 = (BagResult) qres.pop(); // i13
+		
+		BagResult UNION = new BagResult();
+		UNION.add(getBagElement(bag_15, 0));
+		UNION.add(getBagElement(bag_16, 0));
+		
+		qres.push(UNION);
+		
 	}
 
 	public static void printStacks(ENVS envs, QResStack qres){
 		System.out.println("ENVS: "+envs);
 		System.out.println("QRES: "+qres);
 	}
+	
 	public static ISingleResult getBagElement(BagResult bagres, int index) {
 		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bagres
 				.getElements();
