@@ -47,7 +47,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ENVS_zadanie_1();
-		// miniProjekt4();
+		ENVS_zadanie_2();
 	}
 
 	public static void ENVS_zadanie_1() {
@@ -166,6 +166,56 @@ public class Main {
 		UNION.add(getBagElement(bag_16, 0));
 		
 		qres.push(UNION);
+		
+	}
+	
+	public static void ENVS_zadanie_2() {
+		// ((emp.address) where number > 20).(street,city)
+
+		ENVS envs = new ENVS();
+		SBAStore store = new SBAStore();
+
+		store.loadXML(ENVS_DATA);
+
+		envs.init(store.getEntryOID(), store);
+		QResStack qres = new QResStack();
+
+		printStacks(envs, qres);
+		
+		BagResult dotres_1 = new BagResult();
+		
+		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
+		qres.push(bag_1);
+		BagResult bag_2 = (BagResult) qres.pop();
+
+		envs.push(envs.nested(getBagElement(bag_2, 0), store)); // zawartosc emp(i28)
+
+		printStacks(envs, qres);
+		
+		BagResult bag_3 = (BagResult) envs.bind("address"); // eval
+		qres.push(bag_3);
+		printStacks(envs, qres);
+		BagResult bag_4 = (BagResult) qres.pop(); 
+		
+		dotres_1.add(getBagElement(bag_4, 0));
+		envs.pop();
+		
+		printStacks(envs, qres);
+		
+		envs.push(envs.nested(getBagElement(bag_2, 1), store)); // zawartosc emp(i41)
+
+		printStacks(envs, qres);
+		
+		BagResult bag_5 = (BagResult) envs.bind("address"); // eval
+		qres.push(bag_5);
+		printStacks(envs, qres);
+		BagResult bag_6 = (BagResult) qres.pop(); 
+		
+		dotres_1.add(getBagElement(bag_6, 0)); // bag(i32, i45); - adresy
+		envs.pop();
+		
+
+		
 		
 	}
 
