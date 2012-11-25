@@ -25,6 +25,7 @@ import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import ast.unary.CountExpression;
 import datastore.BooleanObject;
+import datastore.IntegerObject;
 import datastore.SBAObject;
 import datastore.SBAStore;
 import datastore.test_classes.Kierowca;
@@ -182,6 +183,7 @@ public class Main {
 
 		printStacks(envs, qres);
 		
+		BagResult whereres = new BagResult();
 		BagResult dotres_1 = new BagResult();
 		
 		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
@@ -198,6 +200,28 @@ public class Main {
 		BagResult bag_4 = (BagResult) qres.pop(); 
 		
 		dotres_1.add(getBagElement(bag_4, 0));
+		qres.push(dotres_1);
+		envs.pop();
+		
+		// ?
+		BagResult bag_5 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_5, 0), store));
+		printStacks(envs, qres);
+		
+		BagResult bag_6 = (BagResult) envs.bind("number"); // eval
+		qres.push(bag_6);
+		qres.push(new IntegerResult(20));
+		printStacks(envs, qres);
+		IntegerResult intres = (IntegerResult) qres.pop();
+		BagResult bag_7 = (BagResult) qres.pop();
+		
+		IntegerObject intObj_1 = (IntegerObject) deref(getBagElement(bag_7, 0), store);
+		
+		if(intObj_1.getValue() > intres.getValue()){
+			whereres.add(getBagElement(bag_3, 0)); // dodanie emp.address
+		}
+		//
+		
 		envs.pop();
 		
 		printStacks(envs, qres);
@@ -206,15 +230,42 @@ public class Main {
 
 		printStacks(envs, qres);
 		
-		BagResult bag_5 = (BagResult) envs.bind("address"); // eval
-		qres.push(bag_5);
+		BagResult bag_8 = (BagResult) envs.bind("address"); // eval
+		qres.push(bag_8);
 		printStacks(envs, qres);
-		BagResult bag_6 = (BagResult) qres.pop(); 
+		BagResult bag_9 = (BagResult) qres.pop(); 
 		
-		dotres_1.add(getBagElement(bag_6, 0)); // bag(i32, i45); - adresy
+		dotres_1.add(getBagElement(bag_9, 0)); // bag(i32, i45); - adresy
+		qres.push(dotres_1);
 		envs.pop();
 		
-
+		// ?
+		BagResult bag_10 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_10, 1), store));
+		printStacks(envs, qres);
+				
+		BagResult bag_11 = (BagResult) envs.bind("number"); // eval
+		qres.push(bag_11);
+		qres.push(new IntegerResult(20));
+		printStacks(envs, qres);
+		IntegerResult intres_2 = (IntegerResult) qres.pop();
+		BagResult bag_12 = (BagResult) qres.pop();
+				
+		IntegerObject intObj_2 = (IntegerObject) deref(getBagElement(bag_12, 0), store);
+				
+		if(intObj_2.getValue() > intres_2.getValue()){
+			whereres.add(getBagElement(bag_8, 0)); // dodanie emp.address
+		}
+		
+		envs.pop();
+		
+		printStacks(envs, qres);
+		System.out.println(whereres);
+		
+		BagResult dotres_2 = new BagResult();
+		
+		
+		
 		
 		
 	}
