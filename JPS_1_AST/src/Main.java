@@ -262,11 +262,61 @@ public class Main {
 		printStacks(envs, qres);
 		System.out.println(whereres);
 		
+		qres.push(whereres);
+		
 		BagResult dotres_2 = new BagResult();
 		
+		// ?
+		BagResult bag_13 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_13, 0), store)); // address(i32)
+		printStacks(envs, qres);
+
+		BagResult commares_1 = new BagResult();
+		
+		BagResult bag_14 = (BagResult) envs.bind("street"); // eval
+		qres.push(bag_14);
+		
+		BagResult bag_15 = (BagResult) envs.bind("city"); // eval
+		qres.push(bag_15);
+		
+		printStacks(envs, qres);
+		
+		StructResult structres_1 = new StructResult();
+		structres_1.add(getBagElement((BagResult) qres.pop(), 0));
+		structres_1.add(getBagElement((BagResult) qres.pop(), 0));
+		
+		commares_1.add(structres_1);
+		envs.pop();
+		
+		System.out.println( commares_1);
+		printStacks(envs, qres);
 		
 		
+		////////////
 		
+		// ?
+		envs.push(envs.nested(getBagElement(bag_13, 1), store)); // address(i32)
+		printStacks(envs, qres);
+
+		BagResult commares_2 = new BagResult();
+				
+		BagResult bag_16 = (BagResult) envs.bind("street"); // eval
+		qres.push(bag_16);
+				
+		BagResult bag_17 = (BagResult) envs.bind("city"); // eval
+		qres.push(bag_17);
+				
+		printStacks(envs, qres);
+				
+		StructResult structres_2 = new StructResult();
+		structres_2.add(getBagElement((BagResult) qres.pop(), 0));
+		structres_2.add(getBagElement((BagResult) qres.pop(), 0));
+				
+		commares_2.add(structres_2);
+		envs.pop();
+				
+		System.out.println( commares_2);
+		printStacks(envs, qres);
 		
 	}
 
