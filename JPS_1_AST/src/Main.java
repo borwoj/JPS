@@ -46,7 +46,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ENVS_zadanie_1();
-		ENVS_zadanie_2();
+		ENVS_zadanie_2_old();
 	}
 
 	public static void ENVS_zadanie_1() {
