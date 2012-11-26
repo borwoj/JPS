@@ -1,6 +1,5 @@
 package interpreter.envs;
 
-
 import java.util.ArrayList;
 
 import result.BagResult;
@@ -13,7 +12,6 @@ import result.SimpleResult;
 import result.StringResult;
 import result.StructResult;
 import datastore.ComplexObject;
-import datastore.SimpleObject;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.OID;
@@ -65,6 +63,7 @@ public class ENVS implements IENVS {
 
 		for (int i = stack.size() - 1; i >= 0; i--) {
 			IENVSFrame frame = stack.get(i);
+			// TODO: potrzebna druga opcja: iterowanie baga (group as)
 			for (IENVSBinder bg : frame.getElements()) {
 				if (name == bg.getName()) {
 					bag.add((ISingleResult) bg.getValue());
@@ -97,11 +96,9 @@ public class ENVS implements IENVS {
 					frame.add(binder);
 				}
 
-			} else if (sbao instanceof SimpleObject) {
-				ENVSBinder binder = new ENVSBinder(sbao.getName(),
-						new ReferenceResult(sbao.getOID()));
-				frame.add(binder);
-			}
+			} /*
+			 * else if (sbao instanceof Obiekt Referencyjny) { } TODO
+			 */
 
 		} else if (result instanceof BinderResult) {
 			ENVSBinder binder = new ENVSBinder(
@@ -110,6 +107,7 @@ public class ENVS implements IENVS {
 			frame.add(binder);
 		} else if (result instanceof StructResult) {
 			for (ISingleResult s : ((StructResult) result).elements()) {
+				// TODO: dodanie do frame'a
 				nested(s, store);
 			}
 		} else if (result instanceof BooleanResult

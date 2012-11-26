@@ -33,8 +33,6 @@ import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.OID;
-import edu.pjwstk.jps.interpreter.envs.IENVS;
-import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.ISingleResult;
 
 /**
@@ -56,9 +54,7 @@ public class Main {
 
 		ENVS envs = new ENVS();
 		SBAStore store = new SBAStore();
-
 		store.loadXML(ENVS_DATA);
-
 		envs.init(store.getEntryOID(), store);
 		QResStack qres = new QResStack();
 
@@ -68,10 +64,107 @@ public class Main {
 
 		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
 		qres.push(bag_1);
-		BagResult bag_2 = (BagResult) qres.pop(); // q1res
+		BagResult bag_2 = (BagResult) qres.pop();
 
-		envs.push(envs.nested(getBagElement(bag_2, 0), store)); // zawartosc emp(i2)
+		for (ISingleResult emp : bag_2.getElements()) {
+			envs.push(envs.nested(emp, store));
 
+			BagResult bag_3 = (BagResult) envs.bind("married"); // eval
+			qres.push(bag_3);
+			qres.push(new BooleanResult(true));
+
+			BooleanResult boolres = (BooleanResult) qres.pop();
+			BagResult bag_4 = (BagResult) qres.pop();
+			System.out.println(bag_4);
+
+			BooleanObject boolObj = (BooleanObject) deref(
+					getBagElement(bag_4, 0), store);
+
+			// TODO: get boolean
+			if (boolres.getValue() == boolObj.getValue()) 
+				whereres.add(emp);
+
+			printStacks(envs, qres);
+			envs.pop();
+		}
+
+		qres.push(whereres);
+
+		BagResult dotres_1 = new BagResult();
+
+		BagResult bag_7 = (BagResult) qres.pop();
+
+		for (ISingleResult element : bag_7.getElements()) {
+			envs.push(envs.nested(element, store));
+
+			BagResult bag_8 = (BagResult) envs.bind("book");
+			qres.push(bag_8);
+			BagResult bag_9 = (BagResult) qres.pop();
+
+			for (ISingleResult element2 : bag_9.getElements()) {
+				dotres_1.add(element2);
+			}
+			printStacks(envs, qres);
+			envs.pop();
+		}
+
+		qres.push(dotres_1);
+
+		BagResult dotres_2 = new BagResult();
+
+		BagResult bag_10 = (BagResult) qres.pop();
+
+		for (ISingleResult element : bag_10.getElements()) {
+			envs.push(envs.nested(element, store));
+
+			BagResult bag_11 = (BagResult) envs.bind("author");
+			qres.push(bag_11);
+			BagResult bag_12 = (BagResult) qres.pop();
+
+			for (ISingleResult element2 : bag_12.getElements()) {
+				dotres_2.add(element2);
+			}
+			printStacks(envs, qres);
+			envs.pop();
+		}
+
+		qres.push(dotres_2);
+
+		BagResult bag_14 = (BagResult) envs.bind("realNumber"); // eval
+		qres.push(bag_14);
+		printStacks(envs, qres);
+
+		BagResult bag_15 = (BagResult) qres.pop();
+		BagResult bag_16 = (BagResult) qres.pop();
+
+		BagResult UNION = new BagResult();
+		UNION.add(getBagElement(bag_16, 0));
+		UNION.add(getBagElement(bag_15, 0));
+
+		qres.push(UNION);
+
+		printStacks(envs, qres);
+
+	}
+
+	public static void ENVS_zadanie_1_old() {
+		// ((emp where married).book.author) union (realNumber)
+
+		ENVS envs = new ENVS();
+		SBAStore store = new SBAStore();
+		store.loadXML(ENVS_DATA);
+		envs.init(store.getEntryOID(), store);
+		QResStack qres = new QResStack();
+
+		printStacks(envs, qres);
+
+		BagResult whereres = new BagResult();
+
+		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
+		qres.push(bag_1);
+		BagResult bag_2 = (BagResult) qres.pop();
+
+		envs.push(envs.nested(getBagElement(bag_2, 0), store));
 		printStacks(envs, qres);
 
 		BagResult bag_3 = (BagResult) envs.bind("married"); // eval
@@ -82,7 +175,8 @@ public class Main {
 		BooleanResult boolres = (BooleanResult) qres.pop();
 		BagResult bag_4 = (BagResult) qres.pop();
 
-		BooleanObject boolObj = (BooleanObject) deref(getBagElement(bag_4, 0), store);
+		BooleanObject boolObj = (BooleanObject) deref(getBagElement(bag_4, 0),
+				store);
 
 		if (boolres.getValue() == boolObj.getValue()) {
 			whereres.add(getBagElement(bag_2, 0));
@@ -90,12 +184,10 @@ public class Main {
 
 		envs.pop();
 		printStacks(envs, qres);
-			
-		//emp(i15)
-		
-		envs.push(envs.nested(getBagElement(bag_2, 1), store)); // zawartosc emp(i15)
+
+		envs.push(envs.nested(getBagElement(bag_2, 1), store));
 		printStacks(envs, qres);
-		
+
 		BagResult bag_5 = (BagResult) envs.bind("married"); // eval
 		qres.push(bag_5);
 		qres.push(new BooleanResult(true));
@@ -104,7 +196,8 @@ public class Main {
 		BooleanResult boolres_2 = (BooleanResult) qres.pop();
 		BagResult bag_6 = (BagResult) qres.pop();
 
-		BooleanObject boolObj_2 = (BooleanObject) deref(getBagElement(bag_6, 0), store);
+		BooleanObject boolObj_2 = (BooleanObject) deref(
+				getBagElement(bag_6, 0), store);
 
 		if (boolres_2.getValue() == boolObj_2.getValue()) {
 			whereres.add(getBagElement(bag_2, 1));
@@ -113,63 +206,55 @@ public class Main {
 		envs.pop();
 		qres.push(whereres);
 		printStacks(envs, qres);
-		
+
 		BagResult dotres_1 = new BagResult();
-		
-		// brak takiej sytuacji w przykladach, wyciagniecie z QRES wyniku (emp where married)
-		// i wlozenie na ENVS
+
 		BagResult bag_7 = (BagResult) qres.pop();
 		envs.push(envs.nested(getBagElement(bag_7, 0), store));
 		printStacks(envs, qres);
 		//
-		
+
 		BagResult bag_8 = (BagResult) envs.bind("book"); // eval
-		qres.push(bag_8);		
-		BagResult bag_9 = (BagResult) qres.pop(); 
-		
+		qres.push(bag_8);
+		BagResult bag_9 = (BagResult) qres.pop();
+
 		dotres_1.add(getBagElement(bag_9, 0));
-		
+
 		envs.pop();
 		qres.push(dotres_1);
 		printStacks(envs, qres);
-		
+
 		BagResult dotres_2 = new BagResult();
-		
-		// taki sam komentarz j/w
+
 		BagResult bag_10 = (BagResult) qres.pop();
 		envs.push(envs.nested(getBagElement(bag_10, 0), store));
 		printStacks(envs, qres);
-		
+
 		BagResult bag_11 = (BagResult) envs.bind("author"); // eval
-		qres.push(bag_11);		
-		BagResult bag_12 = (BagResult) qres.pop(); 
-		
+		qres.push(bag_11);
+		BagResult bag_12 = (BagResult) qres.pop();
+
 		dotres_2.add(getBagElement(bag_12, 0));
-		
+
 		envs.pop();
 		qres.push(dotres_2);
 		printStacks(envs, qres);
-		
-		// j/w
-		//BagResult bag_13 = (BagResult) qres.pop();
-		//envs.push(envs.nested(getBagElement(bag_13, 0), store));
-		//printStacks(envs, qres);
-		
+
 		BagResult bag_14 = (BagResult) envs.bind("realNumber"); // eval
-		qres.push(bag_14);	
+		qres.push(bag_14);
 		printStacks(envs, qres);
-		
+
 		BagResult bag_15 = (BagResult) qres.pop(); // i25
 		BagResult bag_16 = (BagResult) qres.pop(); // i13
-		
+
 		BagResult UNION = new BagResult();
 		UNION.add(getBagElement(bag_15, 0));
 		UNION.add(getBagElement(bag_16, 0));
-		
+
 		qres.push(UNION);
-		
+
 	}
-	
+
 	public static void ENVS_zadanie_2() {
 		// ((emp.address) where number > 20).(street,city)
 
@@ -182,149 +267,269 @@ public class Main {
 		QResStack qres = new QResStack();
 
 		printStacks(envs, qres);
-		
+
 		BagResult whereres = new BagResult();
 		BagResult dotres_1 = new BagResult();
-		
+
 		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
 		qres.push(bag_1);
 		BagResult bag_2 = (BagResult) qres.pop();
 
-		envs.push(envs.nested(getBagElement(bag_2, 0), store)); // zawartosc emp(i28)
+		for (ISingleResult emp : bag_2.getElements()) {
+			envs.push(envs.nested(emp, store));
+
+			BagResult bag_3 = (BagResult) envs.bind("address");
+			qres.push(bag_3);
+			BagResult bag_4 = (BagResult) qres.pop();
+
+			for (ISingleResult address : bag_4.getElements()) {
+				dotres_1.add(address);
+				qres.push(dotres_1);
+
+				BagResult bag_5 = (BagResult) qres.pop();
+				envs.push(envs.nested(getBagElement(bag_5, 0), store));
+				printStacks(envs, qres);
+
+				BagResult bag_6 = (BagResult) envs.bind("number"); // eval
+				qres.push(bag_6);
+				qres.push(new IntegerResult(20));
+				printStacks(envs, qres);
+				IntegerResult intres = (IntegerResult) qres.pop();
+				BagResult bag_7 = (BagResult) qres.pop();
+
+				IntegerObject intObj_1 = (IntegerObject) deref(
+						getBagElement(bag_7, 0), store);
+
+				if (intObj_1.getValue() > intres.getValue()) {
+					whereres.add(address);
+				}
+
+				envs.pop();
+			}
+			qres.push(whereres);
+			envs.pop();
+		}
+
+		qres.push(dotres_1);
+
+		BagResult dotres_2 = new BagResult();
+
+		BagResult bag_13 = (BagResult) qres.pop();
+
+		for (ISingleResult address : bag_13.getElements()) {
+			BagResult commares_1 = new BagResult();
+
+			BagResult bag_14 = (BagResult) envs.bind("street"); // eval
+			qres.push(bag_14);
+
+			BagResult bag_15 = (BagResult) envs.bind("city"); // eval
+			qres.push(bag_15);
+
+			printStacks(envs, qres);
+
+			StructResult structres_1 = new StructResult();
+			BagResult comma_1_temp = (BagResult) qres.pop();
+			BagResult comma_2_temp = (BagResult) qres.pop();
+			structres_1.add(getBagElement(comma_2_temp, 0));
+			structres_1.add(getBagElement(comma_1_temp, 0));
+
+			commares_1.add(structres_1);
+			envs.pop();
+
+			dotres_2.add(structres_1);
+
+			printStacks(envs, qres);
+
+			envs.push(envs.nested(getBagElement(bag_13, 1), store)); // address(i32)
+			printStacks(envs, qres);
+		}
+
+		// BagResult bag_13 = (BagResult) qres.pop();
+		envs.push(envs.nested(getBagElement(bag_13, 0), store)); // address(i32)
+		printStacks(envs, qres);
+
+		BagResult commares_2 = new BagResult();
+
+		BagResult bag_16 = (BagResult) envs.bind("street"); // eval
+		qres.push(bag_16);
+
+		BagResult bag_17 = (BagResult) envs.bind("city"); // eval
+		qres.push(bag_17);
 
 		printStacks(envs, qres);
-		
+
+		StructResult structres_2 = new StructResult();
+		BagResult comma_3_temp = (BagResult) qres.pop();
+		BagResult comma_4_temp = (BagResult) qres.pop();
+		structres_2.add(getBagElement(comma_4_temp, 0));
+		structres_2.add(getBagElement(comma_3_temp, 0));
+
+		commares_2.add(structres_2);
+		envs.pop();
+
+		dotres_2.add(structres_2);
+
+		qres.push(dotres_2);
+
+		printStacks(envs, qres);
+
+	}
+
+	public static void ENVS_zadanie_2_old() {
+		// ((emp.address) where number > 20).(street,city)
+
+		ENVS envs = new ENVS();
+		SBAStore store = new SBAStore();
+		store.loadXML(ENVS_DATA);
+		envs.init(store.getEntryOID(), store);
+		QResStack qres = new QResStack();
+
+		printStacks(envs, qres);
+
+		BagResult whereres = new BagResult();
+		BagResult dotres_1 = new BagResult();
+
+		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
+		qres.push(bag_1);
+		BagResult bag_2 = (BagResult) qres.pop();
+
+		envs.push(envs.nested(getBagElement(bag_2, 0), store));
+
+		printStacks(envs, qres);
+
 		BagResult bag_3 = (BagResult) envs.bind("address"); // eval
 		qres.push(bag_3);
 		printStacks(envs, qres);
-		BagResult bag_4 = (BagResult) qres.pop(); 
-		
+		BagResult bag_4 = (BagResult) qres.pop();
+
 		dotres_1.add(getBagElement(bag_4, 0));
 		qres.push(dotres_1);
 		envs.pop();
-		
-		// ?
+
 		BagResult bag_5 = (BagResult) qres.pop();
 		envs.push(envs.nested(getBagElement(bag_5, 0), store));
 		printStacks(envs, qres);
-		
+
 		BagResult bag_6 = (BagResult) envs.bind("number"); // eval
 		qres.push(bag_6);
 		qres.push(new IntegerResult(20));
 		printStacks(envs, qres);
 		IntegerResult intres = (IntegerResult) qres.pop();
 		BagResult bag_7 = (BagResult) qres.pop();
-		
-		IntegerObject intObj_1 = (IntegerObject) deref(getBagElement(bag_7, 0), store);
-		
-		if(intObj_1.getValue() > intres.getValue()){
-			whereres.add(getBagElement(bag_3, 0)); // dodanie emp.address
+
+		IntegerObject intObj_1 = (IntegerObject) deref(getBagElement(bag_7, 0),
+				store);
+
+		if (intObj_1.getValue() > intres.getValue()) {
+			whereres.add(getBagElement(bag_3, 0));
 		}
-		//
-		
+
 		envs.pop();
-		
-		printStacks(envs, qres);
-		
-		envs.push(envs.nested(getBagElement(bag_2, 1), store)); // zawartosc emp(i41)
 
 		printStacks(envs, qres);
-		
+
+		envs.push(envs.nested(getBagElement(bag_2, 1), store));
+
+		printStacks(envs, qres);
+
 		BagResult bag_8 = (BagResult) envs.bind("address"); // eval
 		qres.push(bag_8);
 		printStacks(envs, qres);
-		BagResult bag_9 = (BagResult) qres.pop(); 
-		
-		dotres_1.add(getBagElement(bag_9, 0)); // bag(i32, i45); - adresy
+		BagResult bag_9 = (BagResult) qres.pop();
+
+		dotres_1.add(getBagElement(bag_9, 0));
 		qres.push(dotres_1);
 		envs.pop();
-		
-		// ?
+
 		BagResult bag_10 = (BagResult) qres.pop();
 		envs.push(envs.nested(getBagElement(bag_10, 1), store));
 		printStacks(envs, qres);
-				
+
 		BagResult bag_11 = (BagResult) envs.bind("number"); // eval
 		qres.push(bag_11);
 		qres.push(new IntegerResult(20));
 		printStacks(envs, qres);
 		IntegerResult intres_2 = (IntegerResult) qres.pop();
 		BagResult bag_12 = (BagResult) qres.pop();
-				
-		IntegerObject intObj_2 = (IntegerObject) deref(getBagElement(bag_12, 0), store);
-				
-		if(intObj_2.getValue() > intres_2.getValue()){
-			whereres.add(getBagElement(bag_8, 0)); // dodanie emp.address
+
+		IntegerObject intObj_2 = (IntegerObject) deref(
+				getBagElement(bag_12, 0), store);
+
+		if (intObj_2.getValue() > intres_2.getValue()) {
+			whereres.add(getBagElement(bag_8, 0));
 		}
-		
+
 		envs.pop();
-		
+
 		printStacks(envs, qres);
 		System.out.println(whereres);
-		
+
 		qres.push(whereres);
-		
+
 		BagResult dotres_2 = new BagResult();
-		
-		// ?
+
 		BagResult bag_13 = (BagResult) qres.pop();
-		envs.push(envs.nested(getBagElement(bag_13, 0), store)); // address(i32)
+		envs.push(envs.nested(getBagElement(bag_13, 0), store));
 		printStacks(envs, qres);
 
 		BagResult commares_1 = new BagResult();
-		
+
 		BagResult bag_14 = (BagResult) envs.bind("street"); // eval
 		qres.push(bag_14);
-		
+
 		BagResult bag_15 = (BagResult) envs.bind("city"); // eval
 		qres.push(bag_15);
-		
+
 		printStacks(envs, qres);
-		
+
 		StructResult structres_1 = new StructResult();
-		structres_1.add(getBagElement((BagResult) qres.pop(), 0));
-		structres_1.add(getBagElement((BagResult) qres.pop(), 0));
-		
+		BagResult comma_1_temp = (BagResult) qres.pop();
+		BagResult comma_2_temp = (BagResult) qres.pop();
+		structres_1.add(getBagElement(comma_2_temp, 0));
+		structres_1.add(getBagElement(comma_1_temp, 0));
+
 		commares_1.add(structres_1);
 		envs.pop();
-		
-		System.out.println( commares_1);
+
+		dotres_2.add(structres_1);
+
 		printStacks(envs, qres);
-		
-		
-		////////////
-		
-		// ?
+
 		envs.push(envs.nested(getBagElement(bag_13, 1), store)); // address(i32)
 		printStacks(envs, qres);
 
 		BagResult commares_2 = new BagResult();
-				
+
 		BagResult bag_16 = (BagResult) envs.bind("street"); // eval
 		qres.push(bag_16);
-				
+
 		BagResult bag_17 = (BagResult) envs.bind("city"); // eval
 		qres.push(bag_17);
-				
+
 		printStacks(envs, qres);
-				
+
 		StructResult structres_2 = new StructResult();
-		structres_2.add(getBagElement((BagResult) qres.pop(), 0));
-		structres_2.add(getBagElement((BagResult) qres.pop(), 0));
-				
+		BagResult comma_3_temp = (BagResult) qres.pop();
+		BagResult comma_4_temp = (BagResult) qres.pop();
+		structres_2.add(getBagElement(comma_4_temp, 0));
+		structres_2.add(getBagElement(comma_3_temp, 0));
+
 		commares_2.add(structres_2);
 		envs.pop();
-				
-		System.out.println( commares_2);
+
+		dotres_2.add(structres_2);
+
+		qres.push(dotres_2);
+
 		printStacks(envs, qres);
-		
+
 	}
 
-	public static void printStacks(ENVS envs, QResStack qres){
-		System.out.println("ENVS: "+envs);
-		System.out.println("QRES: "+qres);
+	public static void printStacks(ENVS envs, QResStack qres) {
+		System.out.println("ENVS: " + envs);
+		System.out.println("QRES: " + qres);
 	}
-	
+
 	public static ISingleResult getBagElement(BagResult bagres, int index) {
 		ArrayList<ISingleResult> bag_list = (ArrayList<ISingleResult>) bagres
 				.getElements();
