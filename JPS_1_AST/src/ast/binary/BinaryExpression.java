@@ -7,9 +7,10 @@ import edu.pjwstk.jps.ast.binary.IBinaryExpression;
 public abstract class BinaryExpression extends Expression implements
 		IBinaryExpression {
 
-	Expression expLeft, expRight;
+	private Expression expLeft, expRight;
 
 	public BinaryExpression(Expression expLeft, Expression expRight) {
+		super();
 		this.expLeft = expLeft;
 		this.expRight = expRight;
 	}

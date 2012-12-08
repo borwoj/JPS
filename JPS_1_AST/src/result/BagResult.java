@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.ISingleResult;
 
@@ -16,8 +17,20 @@ public class BagResult extends CollectionResult implements IBagResult {
 		return list;
 	}
 
-	public void add(ISingleResult result) { // TODO
+	public void add(IAbstractQueryResult res) {
+		if (res instanceof ISingleResult) {
+			add((ISingleResult) res);
+		} else if (res instanceof IBagResult) {
+			add((IBagResult) res);
+		}
+	}
+
+	public void add(ISingleResult result) {
 		list.add(result);
+	}
+
+	public void add(IBagResult bagRes) {
+		list.addAll(bagRes.getElements());
 	}
 
 	public String toString() {

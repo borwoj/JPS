@@ -9,12 +9,11 @@ public class MinusExpression extends BinaryExpression implements
 
 	public MinusExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitMinusExpression(this);
 
 	}
 
