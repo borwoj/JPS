@@ -1,6 +1,5 @@
 package interpreter.envs;
 
-import operatory.InterpreterUtils;
 import result.BagResult;
 import result.DoubleResult;
 import result.IntegerResult;
@@ -217,9 +216,25 @@ public class Interpreter implements IInterpreter {
 			Double result = lInt - rDouble;
 			DoubleResult res = new DoubleResult(result);
 			qres.push(res);
-
-		} else // wszystkie kombinacje int + double
-		{
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rInt = rightInt.getValue();
+			Double result = lDouble - rInt;
+			DoubleResult res = new DoubleResult(result);
+			qres.push(res);
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IDoubleResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Double rDouble = rightDouble.getValue();
+			Double result = lDouble - rDouble;
+			DoubleResult res = new DoubleResult(result);
+			qres.push(res);
+		} else {
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 		}
