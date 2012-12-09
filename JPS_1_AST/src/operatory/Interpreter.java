@@ -66,6 +66,7 @@ import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStringResult;
+import edu.pjwstk.jps.result.IStructResult;
 
 public class Interpreter implements IInterpreter {
 	private IQResStack qres;
@@ -799,7 +800,18 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitBagExpression(IBagExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+
+		IAbstractQueryResult innerRes = qres.pop();
+		IStructResult structRes = (IStructResult) innerRes;
+
+		BagResult bagRes = new BagResult();
+
+		for (IAbstractQueryResult el : structRes.elements()) {
+			bagRes.add(el);
+		}
+
+		qres.push(bagRes);
 
 	}
 
