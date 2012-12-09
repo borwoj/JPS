@@ -686,7 +686,64 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitMinusSetExpression(IMinusSetExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
+		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
+
+		BagResult bagRes = new BagResult();
+
+		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
+			leftEl = InterpreterUtils.toSingleResult(leftEl);
+			leftEl = InterpreterUtils.deref(leftEl, store);
+			boolean containsLeftEl = false;
+			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
+				rightEl = InterpreterUtils.toSingleResult(rightEl);
+				rightEl = InterpreterUtils.deref(rightEl, store);
+
+				if (leftEl instanceof IIntegerResult
+						&& rightEl instanceof IIntegerResult) {
+					IIntegerResult leftInt = (IIntegerResult) leftEl;
+					IIntegerResult rightInt = (IIntegerResult) rightEl;
+					Integer lInt = leftInt.getValue();
+					Integer rInt = rightInt.getValue();
+					if (lInt.equals(rInt)) {
+						containsLeftEl = true;
+						break;
+					}
+
+				} else if (leftEl instanceof IDoubleResult
+						&& rightEl instanceof IDoubleResult) {
+					IDoubleResult leftDouble = (IDoubleResult) leftEl;
+					IDoubleResult rightDouble = (IDoubleResult) rightEl;
+					Double lDouble = leftDouble.getValue();
+					Double rDouble = rightDouble.getValue();
+					if (lDouble.equals(rDouble)) {
+						containsLeftEl = true;
+						break;
+					}
+
+				} else if (leftEl instanceof IStringResult
+						&& rightEl instanceof IStringResult) {
+					IStringResult leftString = (IStringResult) leftEl;
+					IStringResult rightString = (IStringResult) rightEl;
+					String lStr = leftString.getValue();
+					String rStr = rightString.getValue();
+					if (lStr.equals(rStr)) {
+						containsLeftEl = true;
+						break;
+					}
+				}
+
+			}
+			if (containsLeftEl == false)
+				bagRes.add(leftRes);
+		}
+
+		qres.push(bagRes);
 
 	}
 
