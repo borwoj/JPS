@@ -424,8 +424,63 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitInExpression(IInExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
 
+		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
+		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
+
+		BooleanResult boolRes;
+
+		boolean containsAll = false;
+		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
+			boolean containsLeftEl = false;
+			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
+				leftEl = InterpreterUtils.toSingleResult(leftEl);
+				leftEl = InterpreterUtils.deref(leftEl, store);
+				rightEl = InterpreterUtils.toSingleResult(rightEl);
+				rightEl = InterpreterUtils.deref(rightEl, store);
+
+				if (leftEl instanceof IIntegerResult
+						&& rightEl instanceof IIntegerResult) {
+					IIntegerResult leftInt = (IIntegerResult) leftEl;
+					IIntegerResult rightInt = (IIntegerResult) rightEl;
+					Integer lInt = leftInt.getValue();
+					Integer rInt = rightInt.getValue();
+					if (lInt.equals(rInt)) {
+						containsLeftEl = true;
+
+					}
+				} else if (leftEl instanceof IDoubleResult
+						&& rightEl instanceof IDoubleResult) {
+					IDoubleResult leftDouble = (IDoubleResult) leftEl;
+					IDoubleResult rightDouble = (IDoubleResult) rightEl;
+					Double lDouble = leftDouble.getValue();
+					Double rDouble = rightDouble.getValue();
+					if (lDouble.equals(rDouble)) {
+						containsLeftEl = true;
+					}
+				} else if (leftEl instanceof IStringResult
+						&& rightEl instanceof IStringResult) {
+					IStringResult leftString = (IStringResult) leftEl;
+					IStringResult rightString = (IStringResult) rightEl;
+					String lStr = leftString.getValue();
+					String rStr = rightString.getValue();
+					if (lStr.equals(rStr)) {
+						containsLeftEl = true;
+					}
+				}
+
+			}
+			containsAll = containsLeftEl;
+			if (containsAll == false) {
+				boolRes = new BooleanResult(containsAll);
+				qres.push(boolRes);
+				break;
+			}
+		}
 	}
 
 	@Override
