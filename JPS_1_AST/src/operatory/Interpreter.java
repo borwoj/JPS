@@ -127,7 +127,33 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitAnyExpression(IForAnyExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+
+		IAbstractQueryResult leftRes = qres.pop();
+		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
+
+		BooleanResult boolRes;
+		boolean forAny = false;
+
+		for (ISingleResult leftEl : leftBag.getElements()) {
+			envs.nested(leftEl, store);
+			expr.getRightExpression().accept(this);
+			IAbstractQueryResult rightRes = qres.pop();
+			rightRes = InterpreterUtils.toSingleResult(rightRes);
+			rightRes = InterpreterUtils.deref(rightRes, store);
+
+			if (rightRes instanceof IBooleanResult) {
+				if (((IBooleanResult) rightRes).getValue() == true) {
+					forAny = true;
+					break;
+
+				}
+			}
+			envs.pop();
+		}
+
+		boolRes = new BooleanResult(forAny);
+		qres.push(boolRes);
 
 	}
 
