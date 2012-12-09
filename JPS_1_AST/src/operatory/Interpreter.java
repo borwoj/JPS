@@ -81,8 +81,17 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitAsExpression(IAsExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
 
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult bag = InterpreterUtils.toBag(innerRes);
+
+		for (ISingleResult el : bag.getElements()) {
+			el = new BinderResult(expr.getAuxiliaryName(),
+					(AbstractQueryResult) el);
+		}
+
+		qres.push(bag);
 	}
 
 	@Override
