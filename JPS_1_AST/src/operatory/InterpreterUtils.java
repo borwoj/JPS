@@ -1,14 +1,19 @@
 package operatory;
 
-import javax.management.RuntimeErrorException;
-
 import result.BagResult;
+import result.BooleanResult;
+import result.DoubleResult;
 import result.IntegerResult;
+import result.StringResult;
+import datastore.BooleanObject;
+import datastore.StringObject;
+import edu.pjwstk.jps.datastore.IBooleanObject;
 import edu.pjwstk.jps.datastore.IDoubleObject;
 import edu.pjwstk.jps.datastore.IIntegerObject;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.ISBAStore;
 import edu.pjwstk.jps.datastore.ISimpleObject;
+import edu.pjwstk.jps.datastore.IStringObject;
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.IBinderResult;
@@ -49,11 +54,16 @@ public class InterpreterUtils {
 					IIntegerObject iobj = (IIntegerObject) obj;
 					res = new IntegerResult(iobj.getValue());
 				} else if (obj instanceof IDoubleObject) {
-					// IIntegerObject iobj = (IIntegerObject) obj;
-					// res = new IntegerResult(iobj.getValue());
-
+					IDoubleObject iobj = (IDoubleObject) obj;
+					res = new DoubleResult(iobj.getValue());
+				} else if (obj instanceof BooleanObject) {
+					IBooleanObject iobj = (IBooleanObject) obj;
+					res = new BooleanResult(iobj.getValue());
+				} else if (obj instanceof StringObject) {
+					IStringObject iobj = (IStringObject) obj;
+					res = new StringResult(iobj.getValue());
 				}
-				// /...
+
 			} else {
 				throw new RuntimeException("excepted single object got: "
 						+ obj.getClass());
