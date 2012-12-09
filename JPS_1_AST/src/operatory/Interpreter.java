@@ -1,10 +1,11 @@
-package interpreter.envs;
+package operatory;
 
 import result.BagResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.StringResult;
+import interpreter.envs.ENVS;
 import interpreter.qres.QResStack;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.auxname.IAsExpression;
