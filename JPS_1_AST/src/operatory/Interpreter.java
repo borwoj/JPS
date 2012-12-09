@@ -285,7 +285,44 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitGreaterThanExpression(IGreaterThanExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		leftRes = InterpreterUtils.toSingleResult(leftRes);
+		leftRes = InterpreterUtils.deref(leftRes, store);
+		rightRes = InterpreterUtils.toSingleResult(rightRes);
+		rightRes = InterpreterUtils.deref(rightRes, store);
+
+		if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IIntegerResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Integer lInt = leftInt.getValue();
+			Integer rInt = rightInt.getValue();
+			Boolean result = false;
+			if (lInt > rInt) {
+				result = true;
+			}
+			BooleanResult res = new BooleanResult(result);
+			qres.push(res);
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IDoubleResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Double rDouble = rightDouble.getValue();
+			Boolean result = false;
+			if (lDouble > rDouble) {
+				result = true;
+			}
+			BooleanResult res = new BooleanResult(result);
+			qres.push(res);
+		} else {
+			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
+					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
+		}
 
 	}
 
