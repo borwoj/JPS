@@ -767,8 +767,23 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitUnionExpression(IUnionExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
 
+		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
+		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
+
+		BagResult bagRes = new BagResult();
+
+		for (IAbstractQueryResult el : leftBag.getElements()) {
+			bagRes.add(el);
+		}
+		for (IAbstractQueryResult el : rightBag.getElements()) {
+			bagRes.add(el);
+		}
+		qres.push(bagRes);
 	}
 
 	@Override
