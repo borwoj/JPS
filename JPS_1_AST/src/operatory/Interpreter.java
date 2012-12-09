@@ -978,13 +978,15 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitBooleanTerminal(IBooleanTerminal expr) {
-		// TODO Auto-generated method stub
+		Boolean value = expr.getValue();
+		qres.push(new BooleanResult(value));
 
 	}
 
 	@Override
 	public void visitDoubleTerminal(IDoubleTerminal expr) {
-		// TODO Auto-generated method stub
+		Double value = expr.getValue();
+		qres.push(new DoubleResult(value));
 
 	}
 
@@ -996,13 +998,15 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitNameTerminal(INameTerminal expr) {
-		// TODO Auto-generated method stub
+		String value = (String) expr.getValue(); // ?
+		qres.push(new StringResult(value));
 
 	}
 
 	@Override
 	public void visitStringTerminal(IStringTerminal expr) {
-		// TODO Auto-generated method stub
+		String value = expr.getValue();
+		qres.push(new StringResult(value));
 
 	}
 
