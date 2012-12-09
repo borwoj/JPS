@@ -110,7 +110,11 @@ public class Interpreter implements IInterpreter {
 					break;
 
 				}
-			}
+			} else
+				throw new RuntimeException(
+						"nieprawidlowe typy rezultatow, lewy="
+								+ leftRes.getClass() + " prawy="
+								+ rightRes.getClass());
 			envs.pop();
 		}
 
@@ -121,7 +125,33 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitAndExpression(IAndExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		leftRes = InterpreterUtils.toSingleResult(leftRes);
+		leftRes = InterpreterUtils.deref(leftRes, store);
+		rightRes = InterpreterUtils.toSingleResult(rightRes);
+		rightRes = InterpreterUtils.deref(rightRes, store);
+
+		BooleanResult boolRes;
+
+		if (leftRes instanceof BooleanResult
+				&& rightRes instanceof BooleanResult) {
+			BooleanResult left = (BooleanResult) leftRes;
+			BooleanResult right = (BooleanResult) rightRes;
+
+			if (left.getValue() && right.getValue()) {
+				boolRes = new BooleanResult(true);
+				qres.push(boolRes);
+			} else {
+				boolRes = new BooleanResult(false);
+				qres.push(boolRes);
+			}
+		} else
+			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
+					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 
 	}
 
@@ -149,6 +179,13 @@ public class Interpreter implements IInterpreter {
 
 				}
 			}
+
+			else
+				throw new RuntimeException(
+						"nieprawidlowe typy rezultatow, lewy="
+								+ leftRes.getClass() + " prawy="
+								+ rightRes.getClass());
+
 			envs.pop();
 		}
 
