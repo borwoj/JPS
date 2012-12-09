@@ -1,18 +1,19 @@
 package ast.terminal;
 
-import operatory.Interpreter;
 import edu.pjwstk.jps.ast.terminal.IBooleanTerminal;
+import edu.pjwstk.jps.visitor.ASTVisitor;
 
-public class BooleanTerminal extends TerminalExpression<Boolean> implements IBooleanTerminal {
+public class BooleanTerminal extends TerminalExpression<Boolean> implements
+		IBooleanTerminal {
 
 	public BooleanTerminal(Boolean value) {
 		super(value);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	public void accept(Interpreter t) {
-		t.visitBooleanTerminal(this);
+	public void accept(ASTVisitor visitor) {
+		visitor.visitBooleanTerminal(this);
 	}
 
 }

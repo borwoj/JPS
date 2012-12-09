@@ -1,7 +1,7 @@
 package ast.terminal;
 
-import operatory.Interpreter;
 import edu.pjwstk.jps.ast.terminal.IStringTerminal;
+import edu.pjwstk.jps.visitor.ASTVisitor;
 
 public class StringTerminal extends TerminalExpression<String> implements
 		IStringTerminal {
@@ -11,8 +11,8 @@ public class StringTerminal extends TerminalExpression<String> implements
 	}
 
 	@Override
-	public void accept(Interpreter t) {
-		t.visitStringTerminal(this);
+	public void accept(ASTVisitor visitor) {
+		visitor.visitStringTerminal(this);
 	}
 
 }

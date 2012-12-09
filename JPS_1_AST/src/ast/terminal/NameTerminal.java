@@ -1,7 +1,7 @@
 package ast.terminal;
 
-import operatory.Interpreter;
 import edu.pjwstk.jps.ast.terminal.INameTerminal;
+import edu.pjwstk.jps.visitor.ASTVisitor;
 
 public class NameTerminal extends TerminalExpression implements INameTerminal {
 
@@ -14,8 +14,8 @@ public class NameTerminal extends TerminalExpression implements INameTerminal {
 	}
 
 	@Override
-	public void accept(Interpreter t) {
-		t.visitNameTerminal(this);
+	public void accept(ASTVisitor visitor) {
+		visitor.visitNameTerminal(this);
 	}
 
 }

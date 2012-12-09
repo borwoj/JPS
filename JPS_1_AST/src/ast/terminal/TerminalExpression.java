@@ -1,8 +1,8 @@
 package ast.terminal;
 
-import operatory.Interpreter;
 import ast.Expression;
 import edu.pjwstk.jps.ast.terminal.ITerminalExpression;
+import edu.pjwstk.jps.visitor.ASTVisitor;
 
 public abstract class TerminalExpression<T> extends Expression implements
 		ITerminalExpression<T> {
@@ -17,7 +17,7 @@ public abstract class TerminalExpression<T> extends Expression implements
 		return value;
 	}
 
-	public void accept(Interpreter i) {
+	public void accept(ASTVisitor visitor) {
 
 	}
 }

@@ -56,19 +56,13 @@ public class Main {
 
 	public static void operatory_1() {
 		SBAStore store = new SBAStore();
-		store.loadXML(ENVS_DATA);
-
+		store.loadXML(OPERATORS_DATA);
 		Interpreter i = new Interpreter(store);
 
-		// ???
-		IntegerTerminal it = new IntegerTerminal(1);
-		it.accept(i);	
-		BooleanTerminal bt = new BooleanTerminal(true);
-		bt.accept(i);
-		
 		ForAllExpression all = new ForAllExpression(new IntegerTerminal(1),
 				new BooleanTerminal(true));
 		all.accept(i);
+
 		// wypisanie qresa z interpretera dla testu
 		System.out.println(i);
 

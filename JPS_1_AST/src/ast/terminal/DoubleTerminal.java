@@ -1,7 +1,7 @@
 package ast.terminal;
 
-import operatory.Interpreter;
 import edu.pjwstk.jps.ast.terminal.IDoubleTerminal;
+import edu.pjwstk.jps.visitor.ASTVisitor;
 
 public class DoubleTerminal extends TerminalExpression<Double> implements
 		IDoubleTerminal {
@@ -11,8 +11,8 @@ public class DoubleTerminal extends TerminalExpression<Double> implements
 	}
 
 	@Override
-	public void accept(Interpreter t) {
-		t.visitDoubleTerminal(this);
+	public void accept(ASTVisitor visitor) {
+		visitor.visitDoubleTerminal(this);
 	}
 
 }

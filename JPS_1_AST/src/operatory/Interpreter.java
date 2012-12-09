@@ -110,7 +110,7 @@ public class Interpreter implements IInterpreter {
 	@Override
 	public void visitAllExpression(IForAllExpression expr) {
 		expr.getLeftExpression().accept(this);
-
+		System.out.println(qres);
 		IAbstractQueryResult leftRes = qres.pop();
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 
