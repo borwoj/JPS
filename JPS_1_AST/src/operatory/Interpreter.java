@@ -884,7 +884,31 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitSumExpression(ISumExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
+
+		DoubleResult doubleRes;
+
+		double sum = 0;
+
+		for (ISingleResult element : innerBag.getElements()) {
+			if (element instanceof IIntegerResult) {
+				IntegerResult iRes = (IntegerResult) element;
+				sum += (double) iRes.getValue();
+			} else if (element instanceof IDoubleResult) {
+				DoubleResult dRes = (DoubleResult) element;
+				sum += dRes.getValue();
+			} else
+				throw new RuntimeException(
+						"nieprawidlowe typy rezultatow, inner="
+								+ innerRes.getClass());
+
+		}
+
+		doubleRes = new DoubleResult(sum);
+		qres.push(doubleRes);
 
 	}
 
