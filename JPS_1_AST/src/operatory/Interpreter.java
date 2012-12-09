@@ -9,6 +9,7 @@ import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.StringResult;
+import result.StructResult;
 import interpreter.envs.ENVS;
 import interpreter.qres.QResStack;
 import edu.pjwstk.jps.ast.IExpression;
@@ -221,8 +222,40 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitCommaExpression(ICommaExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
 
+		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
+		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
+
+		BagResult bagRes = new BagResult();
+
+		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
+			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
+				StructResult structRes = new StructResult();
+				if (leftEl instanceof IStructResult) {
+					IStructResult polaStruktury = new StructResult();
+					for (IAbstractQueryResult pole : polaStruktury.elements()) {
+						structRes.add((ISingleResult) pole);
+					}
+				} else
+					structRes.add((ISingleResult) leftEl);
+
+				if (rightEl instanceof IStructResult) {
+					IStructResult polaStruktury = new StructResult();
+					for (IAbstractQueryResult pole : polaStruktury.elements()) {
+						structRes.add((ISingleResult) pole);
+					}
+				} else
+					structRes.add((ISingleResult) rightEl);
+
+				bagRes.add(structRes);
+			}
+		}
+
+		qres.push(bagRes);
 	}
 
 	@Override
