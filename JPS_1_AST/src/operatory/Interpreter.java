@@ -1192,5 +1192,9 @@ public class Interpreter implements IInterpreter {
 		queryTreeRoot.accept(this);
 		return qres.pop();
 	}
+	
+	public String toString(){
+		return ""+qres;
+	}
 
 }

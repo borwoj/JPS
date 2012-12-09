@@ -1,5 +1,6 @@
 package ast.terminal;
 
+import operatory.Interpreter;
 import ast.Expression;
 import edu.pjwstk.jps.ast.terminal.ITerminalExpression;
 
@@ -14,5 +15,9 @@ public abstract class TerminalExpression<T> extends Expression implements
 
 	public T getValue() {
 		return value;
+	}
+
+	public void accept(Interpreter i) {
+
 	}
 }
