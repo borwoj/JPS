@@ -256,10 +256,10 @@ public class Interpreter implements IInterpreter {
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Double lInt = leftDouble.getValue();
-			Double rInt = rightDouble.getValue();
+			Double lDouble = leftDouble.getValue();
+			Double rDouble = rightDouble.getValue();
 			Boolean result = false;
-			if (lInt.equals(rInt)) {
+			if (lDouble.equals(rDouble)) {
 				result = true;
 			}
 			BooleanResult res = new BooleanResult(result);
@@ -268,10 +268,10 @@ public class Interpreter implements IInterpreter {
 				&& rightRes instanceof IStringResult) {
 			IStringResult leftString = (IStringResult) leftRes;
 			IStringResult rightString = (IStringResult) rightRes;
-			String lInt = leftString.getValue();
-			String rInt = rightString.getValue();
+			String lStr = leftString.getValue();
+			String rStr = rightString.getValue();
 			Boolean result = false;
-			if (lInt.equals(rInt)) {
+			if (lStr.equals(rStr)) {
 				result = true;
 			}
 			BooleanResult res = new BooleanResult(result);
