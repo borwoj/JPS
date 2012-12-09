@@ -14,7 +14,7 @@ public class DivideExpression extends BinaryExpression implements
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitDivideExpression(this);
 
 	}
 

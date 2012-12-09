@@ -4,6 +4,8 @@ import interpreter.qres.QResStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import operatory.Interpreter;
+
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
@@ -16,9 +18,11 @@ import ast.Expression;
 import ast.binary.CommaExpression;
 import ast.binary.DotExpression;
 import ast.binary.EqualsExpression;
+import ast.binary.ForAllExpression;
 import ast.binary.GreaterThanExpression;
 import ast.binary.InExpression;
 import ast.binary.WhereExpression;
+import ast.terminal.BooleanTerminal;
 import ast.terminal.IntegerTerminal;
 import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
@@ -31,6 +35,7 @@ import datastore.SBAStore;
 import datastore.test_classes.Kierowca;
 import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
+import edu.pjwstk.jps.ast.binary.IForAllExpression;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;
@@ -43,10 +48,24 @@ public class Main {
 	private static final String EXAMPLE_XML = "example.xml";
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 	private static final String ENVS_DATA = "envs_data.xml";
+	private static final String OPERATORS_DATA = "operators_data.xml";
 
 	public static void main(String[] args) {
-		ENVS_zadanie_1();
-		ENVS_zadanie_2_old();
+		operatory_1();
+	}
+
+	public static void operatory_1() {
+		SBAStore store = new SBAStore();
+		store.loadXML(OPERATORS_DATA);
+
+		Interpreter i = new Interpreter(store);
+
+		// ???
+		ForAllExpression all = new ForAllExpression(new IntegerTerminal(1),
+				new BooleanTerminal(true));
+		all.accept(i);
+		System.out.println(i);
+
 	}
 
 	public static void ENVS_zadanie_1() {
@@ -81,7 +100,7 @@ public class Main {
 					getBagElement(bag_4, 0), store);
 
 			// TODO: get boolean
-			if (boolres.getValue() == boolObj.getValue()) 
+			if (boolres.getValue() == boolObj.getValue())
 				whereres.add(emp);
 
 			printStacks(envs, qres);

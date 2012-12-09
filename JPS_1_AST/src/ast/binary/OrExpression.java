@@ -13,7 +13,7 @@ public class OrExpression extends BinaryExpression implements IOrExpression {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitOrExpression(this);
 
 	}
 

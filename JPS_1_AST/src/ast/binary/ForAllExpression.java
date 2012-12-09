@@ -13,7 +13,7 @@ public class ForAllExpression extends BinaryExpression implements
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitAllExpression(this);
 
 	}
 

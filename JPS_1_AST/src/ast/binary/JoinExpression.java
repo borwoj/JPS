@@ -13,7 +13,7 @@ public class JoinExpression extends BinaryExpression implements IJoinExpression 
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitJoinExpression(this);
 
 	}
 

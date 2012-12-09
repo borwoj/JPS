@@ -13,7 +13,7 @@ public class XORExpression extends BinaryExpression implements IXORExpression {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitXORExpression(this);
 
 	}
 

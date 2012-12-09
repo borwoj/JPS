@@ -13,7 +13,7 @@ public class InExpression extends BinaryExpression implements IInExpression {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitInExpression(this);
 
 	}
 
