@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import result.AbstractQueryResult;
 import result.BagResult;
+import result.BinderResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
@@ -86,7 +87,12 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitGroupAsExpression(IGroupAsExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+
+		IAbstractQueryResult innerRes = qres.pop();
+		BinderResult bindRes = new BinderResult(expr.getAuxiliaryName(),
+				(AbstractQueryResult) innerRes);
+		qres.push(bindRes);
 
 	}
 
