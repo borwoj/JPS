@@ -2,8 +2,10 @@ package operatory;
 
 import result.BagResult;
 import result.BooleanResult;
+import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.SingleResult;
 import result.StringResult;
 import datastore.BooleanObject;
 import datastore.StringObject;
@@ -73,6 +75,17 @@ public class InterpreterUtils {
 			res = binder.getValue();
 		}
 		return res;
+	}
+
+	public static CollectionResult toCollectionResult(IAbstractQueryResult res) {
+		if (res instanceof CollectionResult) {
+			return (CollectionResult) res;
+		} else {
+
+			BagResult br = new BagResult();
+			br.add((SingleResult) res);
+			return br;
+		}
 	}
 
 	public static IBagResult toBag(IAbstractQueryResult res) {

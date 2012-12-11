@@ -7,7 +7,6 @@
 	<booleanValue2>false</booleanValue2>
 	<stringValue>Ala</stringValue>
 	<stringValue2>ma kota</stringValue2>
-
 	<pomidor>Pan pomidor wlazł na tyczkę</pomidor>
 	<pomidor>I przedrzeźnia ogrodniczkę.</pomidor>
 	<pomidor>"Jak pan może,</pomidor>
@@ -21,7 +20,6 @@
  			<napis>napis2</napis>
  		</sub>
  	</sampleComplexObj>
-
 	<emp>
 		<number>s0000</number>
 		<fName>Anna</fName>
@@ -41,7 +39,6 @@
 			<title>Kordian</title>	
 		</book>
 	</emp>
-
 	<emp>
 		<number>s0001</number>
 		<fName>Maciej</fName>
@@ -63,7 +60,4 @@
 		</book>
 		<married>true</married>
 	</emp>
-	
-
-		
 </root>

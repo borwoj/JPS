@@ -49,20 +49,83 @@ public class Main {
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 	private static final String ENVS_DATA = "envs_data.xml";
 	private static final String OPERATORS_DATA = "operators_data.xml";
+	
+	static Interpreter i;
 
 	public static void main(String[] args) {
-		operatory_1();
+		SBAStore store = new SBAStore();
+		store.loadXML(OPERATORS_DATA);
+		i = new Interpreter(store);
+		
+		//OperatorsTest.test_2(new Interpreter(store));
+		//OperatorsTest.test_3(new Interpreter(store));
+		//OperatorsTest.test_4(new Interpreter(store));
+		//OperatorsTest.test_5(new Interpreter(store));
+		//OperatorsTest.test_6(i);
+		//OperatorsTest.test_7(i);
+		//OperatorsTest.test_8(i);
+
+		//OperatorsTest.test_10(i); 
+		//OperatorsTest.test_11(i);
+		//OperatorsTest.test_12(i);
+		//OperatorsTest.test_13(i);
+		//OperatorsTest.test_14(i);
+		//OperatorsTest.test_15(i); 
+		//OperatorsTest.test_16(i); 
+		//OperatorsTest.test_17(i);
+		//OperatorsTest.test_18(i);
+		//OperatorsTest.test_19(i); 
+		
+		//OperatorsTest.test_20(i);
+		//OperatorsTest.test_21(i);
+		//OperatorsTest.test_22(i);
+		//OperatorsTest.test_23(i);
+		//OperatorsTest.test_24(i);
+		//OperatorsTest.test_25(i);
+		//OperatorsTest.test_26(i);
+		
+		//OperatorsTest.test_31(i);
+		//OperatorsTest.test_32(i);
+		//OperatorsTest.test_33(i);
+		//OperatorsTest.test_34(i);
+		//OperatorsTest.test_35(i);
+		//OperatorsTest.test_36(i);
+		//OperatorsTest.test_37(i);
+		//OperatorsTest.test_38(i);
+		//OperatorsTest.test_39(i);
+		
+		//OperatorsTest.test_40(i);
+		//OperatorsTest.test_41(i);
+		//OperatorsTest.test_42(i);
+		//OperatorsTest.test_43(i);
+		//OperatorsTest.test_44(i);
+		//OperatorsTest.test_45(i);
+		//OperatorsTest.test_46(i);
+		//OperatorsTest.test_47(i);
+		//OperatorsTest.test_48(i);
+		//OperatorsTest.test_49(i);
+		
+		//OperatorsTest.test_50(i);
+		//OperatorsTest.test_51(i);
+		//OperatorsTest.test_52(i);
+		//OperatorsTest.test_53(i);
+		//OperatorsTest.test_54(i);
+		OperatorsTest.test_55(i);
 	}
 
 	public static void operatory_1() {
 		SBAStore store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		Interpreter i = new Interpreter(store);
-
+		
+		System.out.println(i);
+		i.eval(new StringTerminal("emp"));
+		System.out.println(i);
 		ForAllExpression all = new ForAllExpression(new IntegerTerminal(1),
 				new BooleanTerminal(true));
 		all.accept(i);
 
+		
 		// wypisanie qresa z interpretera dla testu
 		System.out.println(i);
 

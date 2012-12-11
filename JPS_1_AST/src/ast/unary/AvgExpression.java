@@ -13,7 +13,7 @@ public class AvgExpression extends UnaryExpression implements IAvgExpression {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitAvgExpression(this);
 
 	}
 

@@ -1,17 +1,16 @@
 package operatory;
 
-import java.util.ArrayList;
-
+import interpreter.envs.ENVS;
+import interpreter.qres.QResStack;
 import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
+import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.StringResult;
 import result.StructResult;
-import interpreter.envs.ENVS;
-import interpreter.qres.QResStack;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.auxname.IAsExpression;
 import edu.pjwstk.jps.ast.auxname.IGroupAsExpression;
@@ -81,6 +80,7 @@ public class Interpreter implements IInterpreter {
 		envs.init(store.getEntryOID(), store);
 	}
 
+	// fixed
 	@Override
 	public void visitAsExpression(IAsExpression expr) {
 		expr.getInnerExpression().accept(this);
@@ -88,12 +88,15 @@ public class Interpreter implements IInterpreter {
 		IAbstractQueryResult innerRes = qres.pop();
 		IBagResult bag = InterpreterUtils.toBag(innerRes);
 
+		BagResult bagRes = new BagResult();
+
 		for (ISingleResult el : bag.getElements()) {
-			el = new BinderResult(expr.getAuxiliaryName(),
-					(AbstractQueryResult) el);
+			bagRes.add(new BinderResult(expr.getAuxiliaryName(),
+					(AbstractQueryResult) el));
+
 		}
 
-		qres.push(bag);
+		qres.push(bagRes);
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class Interpreter implements IInterpreter {
 	@Override
 	public void visitAllExpression(IForAllExpression expr) {
 		expr.getLeftExpression().accept(this);
-		System.out.println(qres);
+		// System.out.println(qres);
 		IAbstractQueryResult leftRes = qres.pop();
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 
@@ -118,7 +121,7 @@ public class Interpreter implements IInterpreter {
 		boolean forAll = true;
 
 		for (ISingleResult leftEl : leftBag.getElements()) {
-			envs.nested(leftEl, store);
+			envs.push(envs.nested(leftEl, store));
 			expr.getRightExpression().accept(this);
 			IAbstractQueryResult rightRes = qres.pop();
 			rightRes = InterpreterUtils.toSingleResult(rightRes);
@@ -186,7 +189,7 @@ public class Interpreter implements IInterpreter {
 		boolean forAny = false;
 
 		for (ISingleResult leftEl : leftBag.getElements()) {
-			envs.nested(leftEl, store);
+			envs.push(envs.nested(leftEl, store));
 			expr.getRightExpression().accept(this);
 			IAbstractQueryResult rightRes = qres.pop();
 			rightRes = InterpreterUtils.toSingleResult(rightRes);
@@ -271,7 +274,7 @@ public class Interpreter implements IInterpreter {
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 		BagResult dotRes = new BagResult();
 		for (ISingleResult leftEl : leftBag.getElements()) {
-			envs.nested(leftEl, store);
+			envs.push(envs.nested(leftEl, store));
 			expr.getRightExpression().accept(this);
 			IAbstractQueryResult rightRes = qres.pop();
 			dotRes.add(rightRes);
@@ -347,34 +350,53 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
+		boolean result = false;
 		if (leftRes instanceof IIntegerResult
 				&& rightRes instanceof IIntegerResult) {
 			IIntegerResult leftInt = (IIntegerResult) leftRes;
 			IIntegerResult rightInt = (IIntegerResult) rightRes;
 			Integer lInt = leftInt.getValue();
 			Integer rInt = rightInt.getValue();
-			Boolean result = false;
 			if (lInt > rInt) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
 		} else if (leftRes instanceof IDoubleResult
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
 			Double lDouble = leftDouble.getValue();
 			Double rDouble = rightDouble.getValue();
-			Boolean result = false;
 			if (lDouble > rDouble) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
-		} else {
+
+		} else if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IDoubleResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Integer lDouble = leftInt.getValue();
+			Double rDouble = rightDouble.getValue();
+			if (lDouble > rDouble) {
+				result = true;
+			}
+
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rDouble = rightInt.getValue();
+			if (lDouble > rDouble) {
+				result = true;
+			}
+
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
+
+		BooleanResult res = new BooleanResult(result);
+		qres.push(res);
 
 	}
 
@@ -391,37 +413,57 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
+		boolean result = false;
 		if (leftRes instanceof IIntegerResult
 				&& rightRes instanceof IIntegerResult) {
 			IIntegerResult leftInt = (IIntegerResult) leftRes;
 			IIntegerResult rightInt = (IIntegerResult) rightRes;
 			Integer lInt = leftInt.getValue();
 			Integer rInt = rightInt.getValue();
-			Boolean result = false;
 			if (lInt >= rInt) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
 		} else if (leftRes instanceof IDoubleResult
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
 			Double lDouble = leftDouble.getValue();
 			Double rDouble = rightDouble.getValue();
-			Boolean result = false;
 			if (lDouble >= rDouble) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
-		} else {
+
+		} else if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IDoubleResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Integer lDouble = leftInt.getValue();
+			Double rDouble = rightDouble.getValue();
+			if (lDouble >= rDouble) {
+				result = true;
+			}
+
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rDouble = rightInt.getValue();
+			if (lDouble >= rDouble) {
+				result = true;
+			}
+
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
+
+		BooleanResult res = new BooleanResult(result);
+		qres.push(res);
 
 	}
 
+	// fixed
 	@Override
 	public void visitInExpression(IInExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -434,55 +476,14 @@ public class Interpreter implements IInterpreter {
 
 		BooleanResult boolRes;
 
-		boolean containsAll = false;
-		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
-			leftEl = InterpreterUtils.toSingleResult(leftEl);
-			leftEl = InterpreterUtils.deref(leftEl, store);
-			boolean containsLeftEl = false;
-			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
-				rightEl = InterpreterUtils.toSingleResult(rightEl);
-				rightEl = InterpreterUtils.deref(rightEl, store);
+		boolean contains = leftBag.getElements().retainAll(
+				rightBag.getElements());
 
-				if (leftEl instanceof IIntegerResult
-						&& rightEl instanceof IIntegerResult) {
-					IIntegerResult leftInt = (IIntegerResult) leftEl;
-					IIntegerResult rightInt = (IIntegerResult) rightEl;
-					Integer lInt = leftInt.getValue();
-					Integer rInt = rightInt.getValue();
-					if (lInt.equals(rInt)) {
-						containsLeftEl = true;
-
-					}
-				} else if (leftEl instanceof IDoubleResult
-						&& rightEl instanceof IDoubleResult) {
-					IDoubleResult leftDouble = (IDoubleResult) leftEl;
-					IDoubleResult rightDouble = (IDoubleResult) rightEl;
-					Double lDouble = leftDouble.getValue();
-					Double rDouble = rightDouble.getValue();
-					if (lDouble.equals(rDouble)) {
-						containsLeftEl = true;
-					}
-				} else if (leftEl instanceof IStringResult
-						&& rightEl instanceof IStringResult) {
-					IStringResult leftString = (IStringResult) leftEl;
-					IStringResult rightString = (IStringResult) rightEl;
-					String lStr = leftString.getValue();
-					String rStr = rightString.getValue();
-					if (lStr.equals(rStr)) {
-						containsLeftEl = true;
-					}
-				}
-
-			}
-			containsAll = containsLeftEl;
-			if (containsAll == false) {
-				boolRes = new BooleanResult(containsAll);
-				qres.push(boolRes);
-				break;
-			}
-		}
+		boolRes = new BooleanResult(contains);
+		qres.push(boolRes);
 	}
 
+	// fixed
 	@Override
 	public void visitIntersectExpression(IIntersectExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -493,47 +494,11 @@ public class Interpreter implements IInterpreter {
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
 
-		BagResult bagRes = new BagResult();
+		// BagResult bagRes = new BagResult();
 
-		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
-			leftEl = InterpreterUtils.toSingleResult(leftEl);
-			leftEl = InterpreterUtils.deref(leftEl, store);
-			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
-				rightEl = InterpreterUtils.toSingleResult(rightEl);
-				rightEl = InterpreterUtils.deref(rightEl, store);
+		leftBag.getElements().retainAll(rightBag.getElements());
 
-				if (leftEl instanceof IIntegerResult
-						&& rightEl instanceof IIntegerResult) {
-					IIntegerResult leftInt = (IIntegerResult) leftEl;
-					IIntegerResult rightInt = (IIntegerResult) rightEl;
-					Integer lInt = leftInt.getValue();
-					Integer rInt = rightInt.getValue();
-					if (lInt.equals(rInt)) {
-						bagRes.add(leftEl);
-					}
-				} else if (leftEl instanceof IDoubleResult
-						&& rightEl instanceof IDoubleResult) {
-					IDoubleResult leftDouble = (IDoubleResult) leftEl;
-					IDoubleResult rightDouble = (IDoubleResult) rightEl;
-					Double lDouble = leftDouble.getValue();
-					Double rDouble = rightDouble.getValue();
-					if (lDouble.equals(rDouble)) {
-						bagRes.add(leftEl);
-					}
-				} else if (leftEl instanceof IStringResult
-						&& rightEl instanceof IStringResult) {
-					IStringResult leftString = (IStringResult) leftEl;
-					IStringResult rightString = (IStringResult) rightEl;
-					String lStr = leftString.getValue();
-					String rStr = rightString.getValue();
-					if (lStr.equals(rStr)) {
-						bagRes.add(leftEl);
-					}
-				}
-
-			}
-			qres.push(bagRes);
-		}
+		qres.push(leftBag);
 
 	}
 
@@ -555,34 +520,53 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
+		boolean result = false;
 		if (leftRes instanceof IIntegerResult
 				&& rightRes instanceof IIntegerResult) {
 			IIntegerResult leftInt = (IIntegerResult) leftRes;
 			IIntegerResult rightInt = (IIntegerResult) rightRes;
 			Integer lInt = leftInt.getValue();
 			Integer rInt = rightInt.getValue();
-			Boolean result = false;
 			if (lInt <= rInt) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
 		} else if (leftRes instanceof IDoubleResult
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
 			Double lDouble = leftDouble.getValue();
 			Double rDouble = rightDouble.getValue();
-			Boolean result = false;
 			if (lDouble <= rDouble) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
-		} else {
+
+		} else if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IDoubleResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Integer lDouble = leftInt.getValue();
+			Double rDouble = rightDouble.getValue();
+			if (lDouble <= rDouble) {
+				result = true;
+			}
+
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rDouble = rightInt.getValue();
+			if (lDouble <= rDouble) {
+				result = true;
+			}
+
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
+
+		BooleanResult res = new BooleanResult(result);
+		qres.push(res);
 
 	}
 
@@ -598,34 +582,53 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
+		boolean result = false;
 		if (leftRes instanceof IIntegerResult
 				&& rightRes instanceof IIntegerResult) {
 			IIntegerResult leftInt = (IIntegerResult) leftRes;
 			IIntegerResult rightInt = (IIntegerResult) rightRes;
 			Integer lInt = leftInt.getValue();
 			Integer rInt = rightInt.getValue();
-			Boolean result = false;
 			if (lInt < rInt) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
 		} else if (leftRes instanceof IDoubleResult
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
 			Double lDouble = leftDouble.getValue();
 			Double rDouble = rightDouble.getValue();
-			Boolean result = false;
 			if (lDouble < rDouble) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
-		} else {
+
+		} else if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IDoubleResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Integer lDouble = leftInt.getValue();
+			Double rDouble = rightDouble.getValue();
+			if (lDouble < rDouble) {
+				result = true;
+			}
+
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rDouble = rightInt.getValue();
+			if (lDouble < rDouble) {
+				result = true;
+			}
+
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
+
+		BooleanResult res = new BooleanResult(result);
+		qres.push(res);
 
 	}
 
@@ -684,6 +687,7 @@ public class Interpreter implements IInterpreter {
 
 	}
 
+	// fixed
 	@Override
 	public void visitMinusSetExpression(IMinusSetExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -694,56 +698,11 @@ public class Interpreter implements IInterpreter {
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
 
-		BagResult bagRes = new BagResult();
+		// BagResult bagRes = new BagResult();
 
-		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
-			leftEl = InterpreterUtils.toSingleResult(leftEl);
-			leftEl = InterpreterUtils.deref(leftEl, store);
-			boolean containsLeftEl = false;
-			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
-				rightEl = InterpreterUtils.toSingleResult(rightEl);
-				rightEl = InterpreterUtils.deref(rightEl, store);
+		leftBag.getElements().removeAll(rightBag.getElements());
 
-				if (leftEl instanceof IIntegerResult
-						&& rightEl instanceof IIntegerResult) {
-					IIntegerResult leftInt = (IIntegerResult) leftEl;
-					IIntegerResult rightInt = (IIntegerResult) rightEl;
-					Integer lInt = leftInt.getValue();
-					Integer rInt = rightInt.getValue();
-					if (lInt.equals(rInt)) {
-						containsLeftEl = true;
-						break;
-					}
-
-				} else if (leftEl instanceof IDoubleResult
-						&& rightEl instanceof IDoubleResult) {
-					IDoubleResult leftDouble = (IDoubleResult) leftEl;
-					IDoubleResult rightDouble = (IDoubleResult) rightEl;
-					Double lDouble = leftDouble.getValue();
-					Double rDouble = rightDouble.getValue();
-					if (lDouble.equals(rDouble)) {
-						containsLeftEl = true;
-						break;
-					}
-
-				} else if (leftEl instanceof IStringResult
-						&& rightEl instanceof IStringResult) {
-					IStringResult leftString = (IStringResult) leftEl;
-					IStringResult rightString = (IStringResult) rightEl;
-					String lStr = leftString.getValue();
-					String rStr = rightString.getValue();
-					if (lStr.equals(rStr)) {
-						containsLeftEl = true;
-						break;
-					}
-				}
-
-			}
-			if (containsLeftEl == false)
-				bagRes.add(leftRes);
-		}
-
-		qres.push(bagRes);
+		qres.push(leftBag);
 
 	}
 
@@ -953,7 +912,7 @@ public class Interpreter implements IInterpreter {
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 		BagResult whereRes = new BagResult();
 		for (ISingleResult leftEl : leftBag.getElements()) {
-			envs.nested(leftEl, store);
+			envs.push(envs.nested(leftEl, store));
 			expr.getRightExpression().accept(this);
 			IAbstractQueryResult rightRes = qres.pop();
 			rightRes = InterpreterUtils.toSingleResult(rightRes);
@@ -998,8 +957,7 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitNameTerminal(INameTerminal expr) {
-		String value = (String) expr.getValue(); // ?
-		qres.push(new StringResult(value));
+		qres.push(envs.bind(expr.getName()));
 
 	}
 
@@ -1010,20 +968,23 @@ public class Interpreter implements IInterpreter {
 
 	}
 
+	// TODO
 	@Override
 	public void visitBagExpression(IBagExpression expr) {
 		expr.getInnerExpression().accept(this);
 
-		IAbstractQueryResult innerRes = qres.pop();
-		IStructResult structRes = (IStructResult) innerRes;
+		CollectionResult res = InterpreterUtils.toCollectionResult(qres.pop());
 
-		BagResult bagRes = new BagResult();
-
-		for (IAbstractQueryResult el : structRes.elements()) {
-			bagRes.add(el);
+		BagResult eres = new BagResult();
+		if (res.size() == 1
+				&& res.getElements().iterator().next() instanceof IStructResult) {
+			eres.addElements((IStructResult) res.getElements().iterator()
+					.next());
+		} else {
+			eres.add(res);
 		}
 
-		qres.push(bagRes);
+		qres.push(eres);
 
 	}
 
@@ -1033,10 +994,21 @@ public class Interpreter implements IInterpreter {
 
 	}
 
+	// fixed
 	@Override
 	public void visitExistsExpression(IExistsExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult bagRes = InterpreterUtils.toBag(innerRes);
 
+		BooleanResult boolRes;
+
+		boolean exists = false;
+		if (bagRes.getElements().size() > 0)
+			exists = true;
+
+		boolRes = new BooleanResult(exists);
+		qres.push(boolRes);
 	}
 
 	@Override
@@ -1121,6 +1093,7 @@ public class Interpreter implements IInterpreter {
 
 	}
 
+	// fixed
 	@Override
 	public void visitSumExpression(ISumExpression expr) {
 		expr.getInnerExpression().accept(this);
@@ -1128,15 +1101,15 @@ public class Interpreter implements IInterpreter {
 		IAbstractQueryResult innerRes = qres.pop();
 		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
 
-		DoubleResult doubleRes;
-
 		double sum = 0;
+		boolean foundDouble = false;
 
 		for (ISingleResult element : innerBag.getElements()) {
 			if (element instanceof IIntegerResult) {
 				IntegerResult iRes = (IntegerResult) element;
 				sum += (double) iRes.getValue();
 			} else if (element instanceof IDoubleResult) {
+				foundDouble = true;
 				DoubleResult dRes = (DoubleResult) element;
 				sum += dRes.getValue();
 			} else
@@ -1146,8 +1119,13 @@ public class Interpreter implements IInterpreter {
 
 		}
 
-		doubleRes = new DoubleResult(sum);
-		qres.push(doubleRes);
+		if (foundDouble) {
+			DoubleResult doubleRes = new DoubleResult(sum);
+			qres.push(doubleRes);
+		} else {
+			IntegerResult intRes = new IntegerResult((int) sum);
+			qres.push(intRes);
+		}
 
 	}
 
@@ -1192,9 +1170,9 @@ public class Interpreter implements IInterpreter {
 		queryTreeRoot.accept(this);
 		return qres.pop();
 	}
-	
-	public String toString(){
-		return ""+qres;
+
+	public String toString() {
+		return "" + qres;
 	}
 
 }

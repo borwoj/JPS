@@ -14,7 +14,7 @@ public class ExistsExpression extends UnaryExpression implements
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitExistsExpression(this);
 
 	}
 

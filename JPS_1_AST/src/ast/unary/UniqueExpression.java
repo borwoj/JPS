@@ -14,7 +14,7 @@ public class UniqueExpression extends UnaryExpression implements
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.visitUniqueExpression(this);
 
 	}
 
