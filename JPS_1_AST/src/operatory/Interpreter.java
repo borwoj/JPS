@@ -295,37 +295,54 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
+		BooleanResult boolRes;
+		boolean result = false;
 		if (leftRes instanceof IIntegerResult
 				&& rightRes instanceof IIntegerResult) {
 			IIntegerResult leftInt = (IIntegerResult) leftRes;
 			IIntegerResult rightInt = (IIntegerResult) rightRes;
 			Integer lInt = leftInt.getValue();
 			Integer rInt = rightInt.getValue();
-			Boolean result = false;
-			if (lInt.equals(rInt)) {
+			if (lInt == rInt) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
 		} else if (leftRes instanceof IDoubleResult
 				&& rightRes instanceof IDoubleResult) {
 			IDoubleResult leftDouble = (IDoubleResult) leftRes;
 			IDoubleResult rightDouble = (IDoubleResult) rightRes;
 			Double lDouble = leftDouble.getValue();
 			Double rDouble = rightDouble.getValue();
-			Boolean result = false;
-			if (lDouble.equals(rDouble)) {
+			if (lDouble == rDouble) {
 				result = true;
 			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
+
+		} else if (leftRes instanceof IIntegerResult
+				&& rightRes instanceof IDoubleResult) {
+			IIntegerResult leftInt = (IIntegerResult) leftRes;
+			IDoubleResult rightDouble = (IDoubleResult) rightRes;
+			Integer lInt = leftInt.getValue();
+			Double rDouble = rightDouble.getValue();
+			if ((double) lInt == rDouble) {
+				result = true;
+			}
+
+		} else if (leftRes instanceof IDoubleResult
+				&& rightRes instanceof IIntegerResult) {
+			IDoubleResult leftDouble = (IDoubleResult) leftRes;
+			IIntegerResult rightInt = (IIntegerResult) rightRes;
+			Double lDouble = leftDouble.getValue();
+			Integer rInt = rightInt.getValue();
+			if (lDouble == (double) rInt) {
+				result = true;
+			}
 		} else if (leftRes instanceof IStringResult
 				&& rightRes instanceof IStringResult) {
 			IStringResult leftString = (IStringResult) leftRes;
 			IStringResult rightString = (IStringResult) rightRes;
 			String lStr = leftString.getValue();
 			String rStr = rightString.getValue();
-			Boolean result = false;
+			result = false;
 			if (lStr.equals(rStr)) {
 				result = true;
 			}
@@ -335,7 +352,8 @@ public class Interpreter implements IInterpreter {
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 		}
-
+		boolRes = new BooleanResult(result);
+		qres.push(boolRes);
 	}
 
 	@Override

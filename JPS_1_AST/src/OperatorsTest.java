@@ -1,4 +1,11 @@
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import operatory.Interpreter;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import result.BooleanResult;
 import ast.Expression;
 import ast.auxname.AsExpression;
 import ast.auxname.GroupAsExpression;
@@ -19,401 +26,459 @@ import ast.terminal.IntegerTerminal;
 import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
+import datastore.SBAStore;
 
 public class OperatorsTest {
 
-	/*
-	 * test_x(Interpreter i) gdzie x = linijka w pliku excela
-	 */
+	Interpreter i;
+	SBAStore store;
 
-	public static void test_2(Interpreter i) {
+	private static final String OPERATORS_DATA = "operators_data.xml";
+
+	@Before
+	public void setUp() throws Exception {
+
+		store = new SBAStore();
+		store.loadXML(OPERATORS_DATA);
+		i = new Interpreter(store);
+	}
+
+	@Test
+	public void test_2() {
 		Expression expr = new ForAllExpression(new IntegerTerminal(1),
 				new BooleanTerminal(true));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_3(Interpreter i) {
-	//	try{
-			Expression expr = new ForAllExpression(new AsExpression(
-					new BagExpression(new CommaExpression(new IntegerTerminal(1),
-							new GroupAsExpression(new BagExpression(
-									new CommaExpression(new IntegerTerminal(2),
-											new IntegerTerminal(3))), "wew"))),
-					"num"), new EqualsExpression(new NameTerminal("num"),
-					new IntegerTerminal(2)));
-	
-			System.out.println(i.eval(expr));
-		//}
-	//	catch(Exception e){
-			//System.out.println(e);
-	//	}
+	@Test
+	public void test_3() {
+		Expression expr = new ForAllExpression(new AsExpression(
+				new BagExpression(new CommaExpression(new IntegerTerminal(1),
+						new GroupAsExpression(new BagExpression(
+								new CommaExpression(new IntegerTerminal(2),
+										new IntegerTerminal(3))), "wew"))),
+				"num"), new EqualsExpression(new NameTerminal("num"),
+				new IntegerTerminal(2)));
+
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_4(Interpreter i) {
+	@Test
+	public void test_4() {
 		Expression expr = new ForAllExpression(new NameTerminal("emp"),
 				new NameTerminal("married"));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_5(Interpreter i) {
+	@Test
+	public void test_5() {
 		Expression expr = new AndExpression(new BooleanTerminal(true),
 				new BooleanTerminal(false));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_6(Interpreter i) {
+	@Test
+	public void test_6() {
 		Expression expr = new AndExpression(new NameTerminal("booleanValue"),
 				new BooleanTerminal(true));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_7(Interpreter i) {
+	@Test
+	public void test_7() {
 		Expression expr = new AndExpression(new AndExpression(
 				new BooleanTerminal(false), new BooleanTerminal(true)),
 				new IntegerTerminal(1));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_8(Interpreter i) {
+	@Test
+	public void test_8() {
 		Expression expr = new ForAnyExpression(new IntegerTerminal(1),
 				new BooleanTerminal(true));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_10(Interpreter i) {
+	@Test
+	public void test_10() {
 		Expression expr = new ForAnyExpression(new NameTerminal("emp"),
 				new NameTerminal("married"));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_11(Interpreter i) {
+	@Test
+	public void test_11() {
 		Expression expr = new AsExpression(new IntegerTerminal(1), "liczba");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_12(Interpreter i) {
+	@Test
+	public void test_12() {
 		Expression expr = new AsExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), "num");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_13(Interpreter i) {
+	@Test
+	public void test_13() {
 		Expression expr = new AsExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)), "num");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_14(Interpreter i) {
+	@Test
+	public void test_14() {
 		Expression expr = new BagExpression(new IntegerTerminal(1));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_15(Interpreter i) {
+	@Test
+	public void test_15() {
 		Expression expr = new BagExpression(new CommaExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3)));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_16(Interpreter i) {
+	@Test
+	public void test_16() {
 		Expression expr = new BagExpression(new CommaExpression(
 				new PlusExpression(new IntegerTerminal(1), new IntegerTerminal(
 						2)), new IntegerTerminal(3)));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_17(Interpreter i) {
+	@Test
+	public void test_17() {
 		Expression expr = new BagExpression(new BagExpression(
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_18(Interpreter i) {
+	@Test
+	public void test_18() {
 		Expression expr = new NameTerminal("integerNumber");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_19(Interpreter i) {
+	@Test
+	public void test_19() {
 		Expression expr = new NameTerminal("realNumber");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_20(Interpreter i) {
+	@Test
+	public void test_20() {
 		Expression expr = new NameTerminal("booleanValue");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_21(Interpreter i) {
+	@Test
+	public void test_21() {
 		Expression expr = new NameTerminal("stringValue");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_22(Interpreter i) {
+	@Test
+	public void test_22() {
 		Expression expr = new NameTerminal("pomidor");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_23(Interpreter i) {
+	@Test
+	public void test_23() {
 		Expression expr = new NameTerminal("sampleComplexObj");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_24(Interpreter i) {
+	@Test
+	public void test_24() {
 		Expression expr = new CommaExpression(new IntegerTerminal(1),
 				new IntegerTerminal(2));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_25(Interpreter i) {
+	@Test
+	public void test_25() {
 		Expression expr = new CommaExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new IntegerTerminal(3));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_26(Interpreter i) {
+	@Test
+	public void test_26() {
 		Expression expr = new CommaExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new BagExpression(
 				new CommaExpression(new IntegerTerminal(3),
 						new IntegerTerminal(4))));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_27(Interpreter i) {
+	@Test
+	public void test_27() {
 		Expression expr = new DivideExpression(new IntegerTerminal(10),
 				new IntegerTerminal(5));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_28(Interpreter i) {
+	@Test
+	public void test_28() {
 		Expression expr = new DivideExpression(new IntegerTerminal(5),
 				new DoubleTerminal(3.50));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_29(Interpreter i) {
+	@Test
+	public void test_29() {
 		Expression expr = new DivideExpression(new DoubleTerminal(3.50),
 				new IntegerTerminal(5));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_30(Interpreter i) {
+	@Test
+	public void test_30() {
 		Expression expr = new DivideExpression(new DoubleTerminal(3.50),
 				new DoubleTerminal(5.50));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_31(Interpreter i) {
+	@Test
+	public void test_31() {
 		Expression expr = new DotExpression(new AsExpression(
 				new IntegerTerminal(1), "x"), new NameTerminal("x"));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_32(Interpreter i) {
+	@Test
+	public void test_32() {
 		Expression expr = new DotExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new StringTerminal("Ala"));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_33(Interpreter i) {
+	@Test
+	public void test_33() {
 		Expression expr = new DotExpression(new DotExpression(new NameTerminal(
 				"emp"), new NameTerminal("book")), new NameTerminal("author"));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_34(Interpreter i) {
+	@Test
+	public void test_34() {
 		Expression expr = new DotExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new StringTerminal("Ala"));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_35(Interpreter i) {
+	@Test
+	public void test_35() {
 		Expression expr = new EqualsExpression(new IntegerTerminal(1),
 				new IntegerTerminal(2));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_36(Interpreter i) {
+	@Test
+	public void test_36() {
 		Expression expr = new EqualsExpression(
 				new NameTerminal("integerNumber"), new IntegerTerminal(10));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_37(Interpreter i) {
+	@Test
+	public void test_37() {
 		Expression expr = new EqualsExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new IntegerTerminal(2));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_38(Interpreter i) {
+	@Test
+	public void test_38() {
 		Expression expr = new EqualsExpression(
 				new NameTerminal("booleanValue"), new BooleanTerminal(true));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_39(Interpreter i) {
+	@Test
+	public void test_39() {
 		Expression expr = new EqualsExpression(new NameTerminal("stringValue"),
 				new StringTerminal("Ala"));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_40(Interpreter i) {
+	@Test
+	public void test_40() {
 		Expression expr = new EqualsExpression(new IntegerTerminal(1),
 				new BooleanTerminal(true));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_41(Interpreter i) {
+	@Test
+	public void test_41() {
 		Expression expr = new EqualsExpression(new IntegerTerminal(5),
 				new StringTerminal("5"));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_42(Interpreter i) {
+	@Test
+	public void test_42() {
 		Expression expr = new EqualsExpression(new DoubleTerminal(5.50),
 				new IntegerTerminal(5));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_43(Interpreter i) {
+	@Test
+	public void test_43() {
 		Expression expr = new GreaterThanExpression(new IntegerTerminal(1),
 				new IntegerTerminal(1));
 
-		System.out.println(i.eval(expr));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_44(Interpreter i) {
+	@Test
+	public void test_44() {
 		Expression expr = new GreaterThanExpression(new IntegerTerminal(3),
 				new DoubleTerminal(2.99));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_45(Interpreter i) {
+	@Test
+	public void test_45() {
 		Expression expr = new GreaterThanExpression(new DoubleTerminal(24.35),
 				new DoubleTerminal(24.34));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_46(Interpreter i) {
+	@Test
+	public void test_46() {
 		Expression expr = new GreaterOrEqualThanExpression(new IntegerTerminal(
 				1), new IntegerTerminal(1));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_47(Interpreter i) {
+	@Test
+	public void test_47() {
 		Expression expr = new GreaterOrEqualThanExpression(new IntegerTerminal(
 				3), new DoubleTerminal(2.99));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_48(Interpreter i) {
+	@Test
+	public void test_48() {
 		Expression expr = new GreaterOrEqualThanExpression(new DoubleTerminal(
 				24.35), new DoubleTerminal(24.34));
 
-		System.out.println(i.eval(expr));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
-	public static void test_49(Interpreter i) {
+	@Test
+	public void test_49() {
 		Expression expr = new GroupAsExpression(new BagExpression(
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))),
 				"num");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_50(Interpreter i) {
+	@Test
+	public void test_50() {
 		Expression expr = new GroupAsExpression(new IntegerTerminal(1),
 				"liczba");
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_51(Interpreter i) {
+	@Test
+	public void test_51() {
 		Expression expr = new IntersectExpression(new BagExpression(
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))),
 				new BagExpression(new CommaExpression(new IntegerTerminal(2),
 						new IntegerTerminal(3))));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_52(Interpreter i) {
+	@Test
+	public void test_52() {
 		Expression expr = new IntersectExpression(new IntegerTerminal(1),
 				new IntegerTerminal(1));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_53(Interpreter i) {
+	@Test
+	public void test_53() {
 		Expression expr = new IntersectExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new CommaExpression(new IntegerTerminal(2),
 						new IntegerTerminal(3)));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_54(Interpreter i) {
+	@Test
+	public void test_54() {
 		Expression expr = new IntersectExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
-	public static void test_55(Interpreter i) {
+	@Test
+	public void test_55() {
 		Expression expr = new IntersectExpression(
 				new BagExpression(new CommaExpression(new CommaExpression(
 						new StringTerminal("ala"), new IntegerTerminal(2)),
@@ -421,7 +486,7 @@ public class OperatorsTest {
 						new CommaExpression(new IntegerTerminal(2),
 								new DoubleTerminal(3.40))));
 
-		System.out.println(i.eval(expr));
+		i.eval(expr);
 	}
 
 }
