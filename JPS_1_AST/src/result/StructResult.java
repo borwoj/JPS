@@ -8,21 +8,33 @@ import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStructResult;
 
 public class StructResult extends SingleResult implements IStructResult {
-	
-	List<ISingleResult> list = new ArrayList<ISingleResult>();
+
+	List<ISingleResult> elements = new ArrayList<ISingleResult>();
 
 	@Override
 	public List<ISingleResult> elements() {
-		return list;
+		return elements;
 	}
 
 	public void add(ISingleResult element) { // TODO czy jest struktura
-		list.add(element);
+		elements.add(element);
 	}
-	
-	public String toString(){
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof IStructResult) {
+			IStructResult structRes = (IStructResult) obj;
+			if (structRes.elements().containsAll(elements)
+					&& structRes.elements().size() == elements.size())
+				return true;
+
+		}
+		return false;
+	}
+
+	public String toString() {
 		String str = "struct(";
-		Iterator<ISingleResult> itr = list.iterator();
+		Iterator<ISingleResult> itr = elements.iterator();
 		int i = 0;
 		while (itr.hasNext()) {
 			ISingleResult element = itr.next();
@@ -31,8 +43,8 @@ public class StructResult extends SingleResult implements IStructResult {
 				str += " , ";
 			}
 			i++;
-		}	
-	    str = str + ")";
+		}
+		str = str + ")";
 		return str;
 	}
 

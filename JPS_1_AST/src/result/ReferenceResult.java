@@ -16,6 +16,14 @@ public class ReferenceResult extends SingleResult implements IReferenceResult {
 		return value;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ReferenceResult
+				&& ((ReferenceResult) obj).getOIDValue() == getOIDValue())
+			return true;
+		return false;
+	}
+
 	public String toString() {
 		return "" + value;
 	}

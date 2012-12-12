@@ -23,8 +23,16 @@ public class BinderResult extends SingleResult implements IBinderResult {
 		return value;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof IBinderResult
+				&& ((IBinderResult) obj).getValue().equals(getValue())) 
+			return true;
+		return false;
+	}
+
 	public String toString() {
-		return "binder(name = " + name + " , value = " + value+")";
+		return "binder(name = " + name + " , value = " + value + ")";
 	}
 
 }
