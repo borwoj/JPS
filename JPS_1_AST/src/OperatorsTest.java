@@ -1,11 +1,10 @@
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import operatory.Interpreter;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import result.BooleanResult;
+import result.*;
 import ast.Expression;
 import ast.auxname.AsExpression;
 import ast.auxname.GroupAsExpression;
@@ -228,6 +227,7 @@ public class OperatorsTest {
 						new IntegerTerminal(2))), new IntegerTerminal(3));
 
 		i.eval(expr);
+
 	}
 
 	@Test
@@ -246,7 +246,8 @@ public class OperatorsTest {
 		Expression expr = new DivideExpression(new IntegerTerminal(10),
 				new IntegerTerminal(5));
 
-		i.eval(expr);
+		assertEquals(2, ((DoubleResult) i.eval(expr)).getValue().doubleValue(),
+				0.001);
 	}
 
 	@Test
@@ -254,7 +255,8 @@ public class OperatorsTest {
 		Expression expr = new DivideExpression(new IntegerTerminal(5),
 				new DoubleTerminal(3.50));
 
-		i.eval(expr);
+		assertEquals(1.4285714285714286, ((DoubleResult) i.eval(expr))
+				.getValue().doubleValue(), 0.001);
 	}
 
 	@Test
@@ -262,7 +264,8 @@ public class OperatorsTest {
 		Expression expr = new DivideExpression(new DoubleTerminal(3.50),
 				new IntegerTerminal(5));
 
-		i.eval(expr);
+		assertEquals(0.7, ((DoubleResult) i.eval(expr)).getValue()
+				.doubleValue(), 0.001);
 	}
 
 	@Test
@@ -270,7 +273,8 @@ public class OperatorsTest {
 		Expression expr = new DivideExpression(new DoubleTerminal(3.50),
 				new DoubleTerminal(5.50));
 
-		i.eval(expr);
+		assertEquals(0.63636363636364, ((DoubleResult) i.eval(expr)).getValue()
+				.doubleValue(), 0.001);
 	}
 
 	@Test
@@ -278,7 +282,8 @@ public class OperatorsTest {
 		Expression expr = new DotExpression(new AsExpression(
 				new IntegerTerminal(1), "x"), new NameTerminal("x"));
 
-		i.eval(expr);
+		assertEquals(1, ((DoubleResult) i.eval(expr)).getValue().doubleValue(),
+				0.001);
 	}
 
 	@Test
