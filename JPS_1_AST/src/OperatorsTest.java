@@ -1,5 +1,5 @@
 import static org.junit.Assert.*;
-import operatory.Interpreter;
+import interpreter.envs.Interpreter;
 
 import org.junit.Before;
 import org.junit.Test;

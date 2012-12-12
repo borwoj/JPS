@@ -1,6 +1,5 @@
-package operatory;
+package interpreter.envs;
 
-import interpreter.envs.ENVS;
 import interpreter.qres.QResStack;
 import result.AbstractQueryResult;
 import result.BagResult;

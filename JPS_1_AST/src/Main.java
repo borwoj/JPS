@@ -1,10 +1,10 @@
 import interpreter.envs.ENVS;
+import interpreter.envs.Interpreter;
 import interpreter.qres.QResStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import operatory.Interpreter;
 
 import result.BagResult;
 import result.BinderResult;

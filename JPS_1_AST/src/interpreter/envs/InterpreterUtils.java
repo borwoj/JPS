@@ -1,4 +1,4 @@
-package operatory;
+package interpreter.envs;
 
 import result.BagResult;
 import result.BooleanResult;
