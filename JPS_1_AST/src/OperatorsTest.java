@@ -1,8 +1,10 @@
 import static org.junit.Assert.*;
+import org.junit.*;
 import interpreter.envs.Interpreter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import result.*;
 import ast.Expression;
@@ -28,11 +30,13 @@ import ast.unary.BagExpression;
 import datastore.SBAStore;
 
 public class OperatorsTest {
+	private static final String OPERATORS_DATA = "operators_data.xml";
 
 	Interpreter i;
 	SBAStore store;
 
-	private static final String OPERATORS_DATA = "operators_data.xml";
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
 	@Before
 	public void setUp() throws Exception {
@@ -292,7 +296,7 @@ public class OperatorsTest {
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new StringTerminal("Ala"));
 
-		i.eval(expr);
+		assertEquals("Ala", ((StringResult) i.eval(expr)).getValue());
 	}
 
 	@Test
@@ -333,6 +337,8 @@ public class OperatorsTest {
 		Expression expr = new EqualsExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new IntegerTerminal(2));
+
+		exception.expect(RuntimeException.class);
 
 		i.eval(expr);
 	}

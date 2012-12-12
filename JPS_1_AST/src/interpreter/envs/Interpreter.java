@@ -294,64 +294,7 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
-		BooleanResult boolRes;
-		boolean result = false;
-		if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IIntegerResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Integer rInt = rightInt.getValue();
-			if (lInt == rInt) {
-				result = true;
-			}
-
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IDoubleResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Double rDouble = rightDouble.getValue();
-			if (lDouble == rDouble) {
-				result = true;
-			}
-
-		} else if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IDoubleResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Double rDouble = rightDouble.getValue();
-			if ((double) lInt == rDouble) {
-				result = true;
-			}
-
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IIntegerResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Integer rInt = rightInt.getValue();
-			if (lDouble == (double) rInt) {
-				result = true;
-			}
-		} else if (leftRes instanceof IStringResult
-				&& rightRes instanceof IStringResult) {
-			IStringResult leftString = (IStringResult) leftRes;
-			IStringResult rightString = (IStringResult) rightRes;
-			String lStr = leftString.getValue();
-			String rStr = rightString.getValue();
-			result = false;
-			if (lStr.equals(rStr)) {
-				result = true;
-			}
-			BooleanResult res = new BooleanResult(result);
-			qres.push(res);
-		} else {
-			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
-					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
-		boolRes = new BooleanResult(result);
+		BooleanResult boolRes = new BooleanResult(leftRes.equals(rightRes));
 		qres.push(boolRes);
 	}
 
