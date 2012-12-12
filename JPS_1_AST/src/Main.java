@@ -50,23 +50,6 @@ public class Main {
 	private static final String ENVS_DATA = "envs_data.xml";
 	private static final String OPERATORS_DATA = "operators_data.xml";
 
-	public static void operatory_1() {
-		SBAStore store = new SBAStore();
-		store.loadXML(OPERATORS_DATA);
-		Interpreter i = new Interpreter(store);
-
-		System.out.println(i);
-		i.eval(new StringTerminal("emp"));
-		System.out.println(i);
-		ForAllExpression all = new ForAllExpression(new IntegerTerminal(1),
-				new BooleanTerminal(true));
-		all.accept(i);
-
-		// wypisanie qresa z interpretera dla testu
-		System.out.println(i);
-
-	}
-
 	public static void ENVS_zadanie_1() {
 		// ((emp where married).book.author) union (realNumber)
 
