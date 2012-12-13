@@ -147,8 +147,8 @@ public class OperatorsTest {
 		Expression expr = new BagExpression(new IntegerTerminal(1));
 		BagResult expected = new BagResult();
 		expected.add(new IntegerResult(1));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -160,8 +160,7 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(1));
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-		// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -174,8 +173,7 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(1));
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-		// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -190,8 +188,7 @@ public class OperatorsTest {
 		inner.add(new IntegerResult(3));
 		BagResult expected = new BagResult();
 		expected.add(inner);
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-		// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test

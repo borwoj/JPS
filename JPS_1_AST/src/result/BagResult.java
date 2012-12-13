@@ -3,39 +3,44 @@ package result;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.ISingleResult;
+import edu.pjwstk.jps.result.IStructResult;
 
 public class BagResult extends CollectionResult implements IBagResult {
+	public BagResult(ISingleResult... elements) {
+		super(elements);
+	}
 
-	public Collection<ISingleResult> list = new ArrayList<ISingleResult>();
+	public BagResult(List<ISingleResult> elements) {
+		super(elements);
+	}
 
 	@Override
 	public Collection<ISingleResult> getElements() {
-		return list;
+		return elements;
 	}
 
-	public void add(IAbstractQueryResult res) {
-		if (res instanceof ISingleResult) {
-			add((ISingleResult) res);
-		} else if (res instanceof IBagResult) {
-			add((IBagResult) res);
+	/**
+	 * Metoda tylko w celach testowych.
+	 */
+	public boolean equalsForJUnit(Object obj) {
+		if (obj instanceof BagResult) {
+			BagResult bagRes = (BagResult) obj;
+			if (bagRes.getElements().containsAll(elements)
+					&& bagRes.getElements().size() == elements.size())
+				return true;
+
 		}
-	}
-
-	public void add(ISingleResult result) {
-		list.add(result);
-	}
-
-	public void add(IBagResult bagRes) {
-		list.addAll(bagRes.getElements());
+		return false;
 	}
 
 	public String toString() {
 		String str = "bag(";
-		Iterator<ISingleResult> itr = list.iterator();
+		Iterator<ISingleResult> itr = elements.iterator();
 		int i = 0;
 		while (itr.hasNext()) {
 			ISingleResult element = itr.next();
