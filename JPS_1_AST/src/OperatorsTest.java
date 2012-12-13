@@ -121,8 +121,11 @@ public class OperatorsTest {
 	@Test
 	public void test_11() {
 		Expression expr = new AsExpression(new IntegerTerminal(1), "liczba");
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		expected.add(new BinderResult("liczba", new IntegerResult(1)));
+
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -130,16 +133,26 @@ public class OperatorsTest {
 		Expression expr = new AsExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), "num");
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		expected.add(new BinderResult("num", new IntegerResult(1)));
+		expected.add(new BinderResult("num", new IntegerResult(2)));
+
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_13() {
 		Expression expr = new AsExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)), "num");
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		expected.add(new BinderResult("num", struct));
+
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
