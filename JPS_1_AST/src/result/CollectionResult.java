@@ -49,5 +49,5 @@ public abstract class CollectionResult extends AbstractQueryResult implements IC
 	public Collection<ISingleResult> getElements(){
 		return elements;
 	}
-		
+
 }

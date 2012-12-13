@@ -28,6 +28,8 @@ import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import datastore.SBAStore;
+import edu.pjwstk.jps.result.IAbstractQueryResult;
+import edu.pjwstk.jps.result.IBagResult;
 
 public class OperatorsTest {
 	private static final String OPERATORS_DATA = "operators_data.xml";
@@ -119,7 +121,7 @@ public class OperatorsTest {
 	@Test
 	public void test_11() {
 		Expression expr = new AsExpression(new IntegerTerminal(1), "liczba");
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -128,7 +130,7 @@ public class OperatorsTest {
 		Expression expr = new AsExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), "num");
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -136,15 +138,17 @@ public class OperatorsTest {
 	public void test_13() {
 		Expression expr = new AsExpression(new CommaExpression(
 				new IntegerTerminal(1), new IntegerTerminal(2)), "num");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_14() {
 		Expression expr = new BagExpression(new IntegerTerminal(1));
-
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 	@Test
@@ -152,8 +156,12 @@ public class OperatorsTest {
 		Expression expr = new BagExpression(new CommaExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3)));
-
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
+		expected.add(new IntegerResult(3));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+		// dziala
 	}
 
 	@Test
@@ -162,7 +170,12 @@ public class OperatorsTest {
 				new PlusExpression(new IntegerTerminal(1), new IntegerTerminal(
 						2)), new IntegerTerminal(3)));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
+		expected.add(new IntegerResult(3));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+		// dziala
 	}
 
 	@Test
@@ -171,48 +184,55 @@ public class OperatorsTest {
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))));
 
-		i.eval(expr);
+		BagResult inner = new BagResult();
+		inner.add(new IntegerResult(1));
+		inner.add(new IntegerResult(2));
+		inner.add(new IntegerResult(3));
+		BagResult expected = new BagResult();
+		expected.add(inner);
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+		// dziala
 	}
 
 	@Test
 	public void test_18() {
 		Expression expr = new NameTerminal("integerNumber");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_19() {
 		Expression expr = new NameTerminal("realNumber");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_20() {
 		Expression expr = new NameTerminal("booleanValue");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_21() {
 		Expression expr = new NameTerminal("stringValue");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_22() {
 		Expression expr = new NameTerminal("pomidor");
-
+		// TODO
 		i.eval(expr);
 	}
 
 	@Test
 	public void test_23() {
 		Expression expr = new NameTerminal("sampleComplexObj");
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -220,7 +240,7 @@ public class OperatorsTest {
 	public void test_24() {
 		Expression expr = new CommaExpression(new IntegerTerminal(1),
 				new IntegerTerminal(2));
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -229,7 +249,7 @@ public class OperatorsTest {
 		Expression expr = new CommaExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new IntegerTerminal(3));
-
+		// TODO
 		i.eval(expr);
 
 	}
@@ -241,7 +261,7 @@ public class OperatorsTest {
 						new IntegerTerminal(2))), new BagExpression(
 				new CommaExpression(new IntegerTerminal(3),
 						new IntegerTerminal(4))));
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -303,7 +323,7 @@ public class OperatorsTest {
 	public void test_33() {
 		Expression expr = new DotExpression(new DotExpression(new NameTerminal(
 				"emp"), new NameTerminal("book")), new NameTerminal("author"));
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -313,7 +333,11 @@ public class OperatorsTest {
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new StringTerminal("Ala"));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new StringResult("Ala"));
+		expected.add(new StringResult("Ala"));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 	@Test
@@ -437,7 +461,7 @@ public class OperatorsTest {
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))),
 				"num");
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -445,7 +469,7 @@ public class OperatorsTest {
 	public void test_50() {
 		Expression expr = new GroupAsExpression(new IntegerTerminal(1),
 				"liczba");
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -457,7 +481,11 @@ public class OperatorsTest {
 				new BagExpression(new CommaExpression(new IntegerTerminal(2),
 						new IntegerTerminal(3))));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(2));
+		expected.add(new IntegerResult(3));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 	@Test
@@ -465,7 +493,10 @@ public class OperatorsTest {
 		Expression expr = new IntersectExpression(new IntegerTerminal(1),
 				new IntegerTerminal(1));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 	@Test
@@ -475,7 +506,9 @@ public class OperatorsTest {
 				new CommaExpression(new IntegerTerminal(2),
 						new IntegerTerminal(3)));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 	@Test
@@ -484,7 +517,7 @@ public class OperatorsTest {
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)));
-
+		// TODO
 		i.eval(expr);
 	}
 
@@ -497,7 +530,10 @@ public class OperatorsTest {
 						new CommaExpression(new IntegerTerminal(2),
 								new DoubleTerminal(3.40))));
 
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(2));
+		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
+															// dziala
 	}
 
 }
