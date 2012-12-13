@@ -250,8 +250,12 @@ public class OperatorsTest {
 	public void test_24() {
 		Expression expr = new CommaExpression(new IntegerTerminal(1),
 				new IntegerTerminal(2));
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		expected.add(struct);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -259,8 +263,16 @@ public class OperatorsTest {
 		Expression expr = new CommaExpression(new BagExpression(
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2))), new IntegerTerminal(3));
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		StructResult struct1 = new StructResult();
+		struct1.add(new IntegerResult(1));
+		struct1.add(new IntegerResult(3));
+		StructResult struct2 = new StructResult();
+		struct2.add(new IntegerResult(2));
+		struct2.add(new IntegerResult(3));
+		expected.add(struct1);
+		expected.add(struct2);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 
 	}
 
@@ -271,8 +283,24 @@ public class OperatorsTest {
 						new IntegerTerminal(2))), new BagExpression(
 				new CommaExpression(new IntegerTerminal(3),
 						new IntegerTerminal(4))));
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		StructResult struct1 = new StructResult();
+		struct1.add(new IntegerResult(1));
+		struct1.add(new IntegerResult(3));
+		StructResult struct2 = new StructResult();
+		struct2.add(new IntegerResult(1));
+		struct2.add(new IntegerResult(4));
+		StructResult struct3 = new StructResult();
+		struct3.add(new IntegerResult(2));
+		struct3.add(new IntegerResult(3));
+		StructResult struct4 = new StructResult();
+		struct4.add(new IntegerResult(2));
+		struct4.add(new IntegerResult(4));
+		expected.add(struct1);
+		expected.add(struct2);
+		expected.add(struct3);
+		expected.add(struct4);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
