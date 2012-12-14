@@ -2,7 +2,6 @@ package result;
 
 import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
-import edu.pjwstk.jps.result.ISingleResult;
 
 public class DoubleResult extends SimpleResult<Double> implements IDoubleResult {
 

@@ -1,10 +1,8 @@
 import interpreter.envs.ENVS;
-import interpreter.envs.Interpreter;
 import interpreter.qres.QResStack;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import result.BagResult;
 import result.BinderResult;
@@ -18,11 +16,9 @@ import ast.Expression;
 import ast.binary.CommaExpression;
 import ast.binary.DotExpression;
 import ast.binary.EqualsExpression;
-import ast.binary.ForAllExpression;
 import ast.binary.GreaterThanExpression;
 import ast.binary.InExpression;
 import ast.binary.WhereExpression;
-import ast.terminal.BooleanTerminal;
 import ast.terminal.IntegerTerminal;
 import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
@@ -35,7 +31,6 @@ import datastore.SBAStore;
 import datastore.test_classes.Kierowca;
 import datastore.test_classes.Przesylka;
 import datastore.test_classes.Samochod;
-import edu.pjwstk.jps.ast.binary.IForAllExpression;
 import edu.pjwstk.jps.datastore.ISBAObject;
 import edu.pjwstk.jps.datastore.OID;
 import edu.pjwstk.jps.result.ISingleResult;

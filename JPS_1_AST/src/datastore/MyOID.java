@@ -34,7 +34,7 @@ public class MyOID implements OID {
 	/**
 	 * W celach testowych.
 	 */
-	public static void resetCounter() {
+	public static void resetCounterForJUnit() {
 		idCounter = -1;
 	}
 

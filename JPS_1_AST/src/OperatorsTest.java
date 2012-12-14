@@ -83,7 +83,7 @@ public class OperatorsTest {
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
-		MyOID.resetCounter();
+		MyOID.resetCounterForJUnit();
 	}
 
 	@Test

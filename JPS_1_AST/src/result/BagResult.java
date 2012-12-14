@@ -1,14 +1,11 @@
 package result;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.ISingleResult;
-import edu.pjwstk.jps.result.IStructResult;
 
 public class BagResult extends CollectionResult implements IBagResult {
 	public BagResult(ISingleResult... elements) {
