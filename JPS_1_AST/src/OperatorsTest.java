@@ -1,12 +1,20 @@
-import static org.junit.Assert.*;
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import interpreter.envs.Interpreter;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import result.*;
+import result.BagResult;
+import result.BinderResult;
+import result.BooleanResult;
+import result.DoubleResult;
+import result.IntegerResult;
+import result.StringResult;
+import result.StructResult;
 import ast.Expression;
 import ast.auxname.AsExpression;
 import ast.auxname.GroupAsExpression;
@@ -28,8 +36,6 @@ import ast.terminal.NameTerminal;
 import ast.terminal.StringTerminal;
 import ast.unary.BagExpression;
 import datastore.SBAStore;
-import edu.pjwstk.jps.result.IAbstractQueryResult;
-import edu.pjwstk.jps.result.IBagResult;
 
 public class OperatorsTest {
 	private static final String OPERATORS_DATA = "operators_data.xml";
@@ -586,6 +592,10 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -594,6 +604,10 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new BinderResult("n", new IntegerResult(1)));
+		struct.add(new IntegerResult(1));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -617,240 +631,221 @@ public class OperatorsTest {
 	public void test_60() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_61() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
+
 	}
 
 	@Test
 	public void test_62() {
 		Expression expr = null;
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_63() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
+
 	}
 
 	@Test
 	public void test_64() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
+
 	}
 
 	@Test
 	public void test_65() {
 		Expression expr = null;
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_66() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_67() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(3.35, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_68() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_69() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1.01, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_70() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(5,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_71() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_72() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(-1.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_73() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(-2, ((IntegerResult) i.eval(expr)).getValue()
+				.doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_74() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(0,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_75() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_76() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_77() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_78() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(50, ((IntegerResult) i.eval(expr)).getValue()
+				.doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_79() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_80() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_81() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_82() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_83() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_84() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_85() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(15, ((IntegerResult) i.eval(expr)).getValue()
+				.doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_86() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_87() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_88() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(9,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_89() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals("3Ala", ((StringResult) i.eval(expr)).getValue());
 	}
 
 	@Test
@@ -858,23 +853,21 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals("3.5Ala", ((StringResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_91() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals("Ala3.7", ((StringResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_92() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals("trueAla", ((StringResult) i.eval(expr)).getValue());
 	}
 
 	@Test
@@ -882,6 +875,9 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -890,6 +886,11 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		struct.add(new IntegerResult(3));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -898,6 +899,10 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(3));
+		struct.add(new IntegerResult(3));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -906,6 +911,11 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		struct.add(new IntegerResult(3));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -914,6 +924,8 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -922,6 +934,10 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
+		expected.add(new IntegerResult(3));
+		expected.add(new IntegerResult(4));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -930,6 +946,15 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct1 = new StructResult();
+		struct1.add(new IntegerResult(1));
+		struct1.add(new IntegerResult(2));
+		StructResult struct2 = new StructResult();
+		struct2.add(new IntegerResult(3));
+		struct2.add(new IntegerResult(4));
+		expected.add(struct1);
+		expected.add(struct2);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -938,6 +963,8 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -946,6 +973,9 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new DoubleResult(1.01));
+		expected.add(new IntegerResult(2));
+		expected.add(new StringResult("ala"));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -954,6 +984,8 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		expected.add(new IntegerResult(2));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -962,13 +994,14 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new BinderResult("n", new IntegerResult(1)));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_104() {
 		Expression expr = null;
-
+		// TODO
 		BagResult expected = new BagResult();
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
@@ -977,184 +1010,165 @@ public class OperatorsTest {
 	public void test_105() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+
 	}
 
 	@Test
 	public void test_106() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(6.36, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
 	}
 
 	@Test
 	public void test_107() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_108() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(3,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_109() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertEquals(1,
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
 	}
 
 	@Test
 	public void test_110() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_111() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_112() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_113() {
 		Expression expr = null;
-
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_114() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_115() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_116() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_117() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_118() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_119() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_120() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_121() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_122() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_123() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_124() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_125() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_126() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
 	public void test_127() {
 		Expression expr = null;
 
-		BagResult expected = new BagResult();
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}
 
 	@Test
@@ -1162,6 +1176,7 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -1178,6 +1193,10 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		expected.add(struct);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -1194,6 +1213,8 @@ public class OperatorsTest {
 		Expression expr = null;
 
 		BagResult expected = new BagResult();
+		expected.add(new StringResult("Ala"));
+		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 }
