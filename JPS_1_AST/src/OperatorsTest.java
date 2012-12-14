@@ -125,6 +125,8 @@ public class OperatorsTest {
 				new IntegerTerminal(1));
 
 		assertFalse(((BooleanResult) i.eval(expr)).getValue());
+		// TODO byc moze juz po pierwszym napotkanym false powinno zwrocic
+		// false, a nie isc dalej.
 	}
 
 	@Test
@@ -199,6 +201,7 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		// FIXME
 	}
 
 	@Test
@@ -212,6 +215,7 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		// FIXME
 	}
 
 	@Test
@@ -227,6 +231,7 @@ public class OperatorsTest {
 		BagResult expected = new BagResult();
 		expected.add(inner);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		// FIXME
 	}
 
 	@Test
