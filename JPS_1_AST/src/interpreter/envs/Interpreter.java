@@ -104,7 +104,7 @@ public class Interpreter implements IInterpreter {
 
 		IAbstractQueryResult innerRes = qres.pop();
 		BinderResult bindRes = new BinderResult(expr.getAuxiliaryName(),
-				 innerRes);
+				innerRes);
 		qres.push(bindRes);
 
 	}
@@ -163,14 +163,14 @@ public class Interpreter implements IInterpreter {
 				&& rightRes instanceof BooleanResult) {
 			BooleanResult left = (BooleanResult) leftRes;
 			BooleanResult right = (BooleanResult) rightRes;
-
-			if (left.getValue() && right.getValue()) {
-				boolRes = new BooleanResult(true);
-				qres.push(boolRes);
-			} else {
+			if (left.getValue() == false || right.getValue() == false) {
 				boolRes = new BooleanResult(false);
 				qres.push(boolRes);
+			} else {
+				boolRes = new BooleanResult(true);
+				qres.push(boolRes);
 			}
+
 		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());

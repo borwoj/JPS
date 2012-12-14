@@ -126,7 +126,7 @@ public class OperatorsTest {
 
 		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 		// TODO byc moze juz po pierwszym napotkanym false powinno zwrocic
-		// false, a nie isc dalej.
+		// false, a nie isc dalej. chociaz w sumie niekoniecznie
 	}
 
 	@Test
