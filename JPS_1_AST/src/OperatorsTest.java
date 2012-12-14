@@ -75,7 +75,7 @@ public class OperatorsTest {
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
-		System.out.println(store.allObjectsMap);
+		// System.out.println(store.allObjectsMap);
 	}
 
 	@After
