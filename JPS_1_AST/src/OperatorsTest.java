@@ -3,6 +3,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import interpreter.envs.Interpreter;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import result.BinderResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.ReferenceResult;
 import result.StringResult;
 import result.StructResult;
 import ast.Expression;
@@ -54,6 +56,8 @@ import ast.unary.NotExpression;
 import ast.unary.StructExpression;
 import ast.unary.SumExpression;
 import ast.unary.UniqueExpression;
+import datastore.MyOID;
+import datastore.SBAObject;
 import datastore.SBAStore;
 
 public class OperatorsTest {
@@ -71,6 +75,15 @@ public class OperatorsTest {
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
+		System.out.println(store.allObjectsMap);
+	}
+
+	@After
+	public void teardown() {
+		store = new SBAStore();
+		store.loadXML(OPERATORS_DATA);
+		i = new Interpreter(store);
+		MyOID.resetCounter();
 	}
 
 	@Test
@@ -126,7 +139,7 @@ public class OperatorsTest {
 
 		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 		// TODO byc moze juz po pierwszym napotkanym false powinno zwrocic
-		// false, a nie isc dalej. chociaz w sumie niekoniecznie
+		// false, a nie isc dalej.
 	}
 
 	@Test
@@ -201,7 +214,6 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-		// FIXME
 	}
 
 	@Test
@@ -215,7 +227,6 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-		// FIXME
 	}
 
 	@Test
@@ -231,49 +242,77 @@ public class OperatorsTest {
 		BagResult expected = new BagResult();
 		expected.add(inner);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-		// FIXME
 	}
 
 	@Test
 	public void test_18() {
 		Expression expr = new NameTerminal("integerNumber");
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(1));
+		expected.add(reference);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_19() {
 		Expression expr = new NameTerminal("realNumber");
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(3));
+		expected.add(reference);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_20() {
 		Expression expr = new NameTerminal("booleanValue");
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(5));
+		expected.add(reference);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_21() {
 		Expression expr = new NameTerminal("stringValue");
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(7));
+		expected.add(reference);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_22() {
 		Expression expr = new NameTerminal("pomidor");
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(9));
+		ReferenceResult reference2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(10));
+		ReferenceResult reference3 = new ReferenceResult(
+				MyOID.createOIDForJUnit(11));
+		ReferenceResult reference4 = new ReferenceResult(
+				MyOID.createOIDForJUnit(12));
+		expected.add(reference);
+		expected.add(reference2);
+		expected.add(reference3);
+		expected.add(reference4);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
 	public void test_23() {
 		Expression expr = new NameTerminal("sampleComplexObj");
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				SBAObject.allObjectsForJUnit.get("sampleComplexObj"));
+		expected.add(reference);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -391,8 +430,18 @@ public class OperatorsTest {
 	public void test_33() {
 		Expression expr = new DotExpression(new DotExpression(new NameTerminal(
 				"emp"), new NameTerminal("book")), new NameTerminal("author"));
-		// TODO
-		i.eval(expr);
+
+		BagResult expected = new BagResult();
+		ReferenceResult reference = new ReferenceResult(
+				MyOID.createOIDForJUnit(31));
+		ReferenceResult reference2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(43));
+		ReferenceResult reference3 = new ReferenceResult(
+				MyOID.createOIDForJUnit(46));
+		expected.add(reference);
+		expected.add(reference2);
+		expected.add(reference3);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -534,8 +583,6 @@ public class OperatorsTest {
 		inner.add(new IntegerResult(3));
 		BinderResult expected = new BinderResult("num", inner);
 		assertTrue(expected.equals((BinderResult) i.eval(expr)));
-		// FIXME cos jest nie tak, powstaje binder(name = num , value = bag(0 =
-		// 3)), czyli w bagu brakuje jedynki i dwojki
 	}
 
 	@Test
@@ -558,7 +605,6 @@ public class OperatorsTest {
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-		// FIXME lewy bag zle sie tworzy. podobnie jak w tescie 55
 	}
 
 	@Test
@@ -608,12 +654,12 @@ public class OperatorsTest {
 		BagResult expected = new BagResult();
 		expected.add(new IntegerResult(2));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-		// FIXME lewy bag zle sie tworzy, brakuje mu "ala" i dwojki
 	}
 
 	@Test
 	public void test_56() {
-		Expression expr = null;
+		Expression expr = new JoinExpression(new IntegerTerminal(1),
+				new IntegerTerminal(2));
 
 		BagResult expected = new BagResult();
 		StructResult struct = new StructResult();
@@ -913,7 +959,6 @@ public class OperatorsTest {
 		Expression expr = new PlusExpression(new DoubleTerminal(3.5),
 				new StringTerminal("Ala"));
 
-		BagResult expected = new BagResult();
 		assertEquals("3.5Ala", ((StringResult) i.eval(expr)).getValue());
 	}
 
@@ -1144,7 +1189,6 @@ public class OperatorsTest {
 		// Expression expr=new EmptyExpression(
 		// new IntegerTerminal(1)
 		// );
-		// TODO
 		Expression expr = null;
 		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
@@ -1162,7 +1206,6 @@ public class OperatorsTest {
 		// )
 		// )
 		// );
-		// TODO
 		Expression expr = null;
 		assertFalse(((BooleanResult) i.eval(expr)).getValue());
 	}
@@ -1171,7 +1214,7 @@ public class OperatorsTest {
 	public void test_112() {
 		// Expression expr = new EmptyExpression(new WhereExpression(
 		// new IntegerTerminal(1), new BooleanTerminal(false)));
-		// TODO
+
 		Expression expr = null;
 		assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	}

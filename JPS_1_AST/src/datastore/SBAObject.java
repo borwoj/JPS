@@ -1,19 +1,23 @@
 package datastore;
 
+import java.util.HashMap;
+
 import edu.pjwstk.jps.datastore.ISBAObject;
 
 public abstract class SBAObject implements ISBAObject {
 
 	public MyOID OID;
 	public String name;
-	//public static HashMap<Long, SBAObject> allObjects = new HashMap<Long, SBAObject>();
+
+	/**
+	 * Metoda tylko w celach testowych.
+	 */
+	public static HashMap<String, MyOID> allObjectsForJUnit = new HashMap<String, MyOID>();
 
 	public SBAObject(String name) {
 		this.name = name;
 		this.OID = MyOID.createOID();
-		//allObjects.put(this.OID.id, this);
-		
-		//SBAStore.allObjects.add(this);
+		allObjectsForJUnit.put(name, this.OID);
 		SBAStore.allObjectsMap.put(OID, this);
 	}
 

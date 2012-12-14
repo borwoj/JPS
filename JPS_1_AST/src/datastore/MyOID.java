@@ -24,6 +24,20 @@ public class MyOID implements OID {
 		this.id = OID;
 	}
 
+	/**
+	 * W celach testowych.
+	 */
+	public static MyOID createOIDForJUnit(long OID) {
+		return new MyOID(OID);
+	}
+
+	/**
+	 * W celach testowych.
+	 */
+	public static void resetCounter() {
+		idCounter = -1;
+	}
+
 	public String toString() {
 		return "i" + id;
 	}

@@ -49,8 +49,8 @@ public class SBAStore implements ISBAStore {
 	public void loadXML(String filePath) { 
 		try {
 			doc = builder.build(filePath);
-			System.out.println("Za³adowano XML:");
-			serializer.output(doc, System.out);
+			//System.out.println("Za³adowano XML:");
+			//serializer.output(doc, System.out);
 		} catch (JDOMException e) {
 			System.err.println(e);
 		} catch (IOException e) {
