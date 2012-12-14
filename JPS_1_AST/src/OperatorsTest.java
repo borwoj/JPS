@@ -71,7 +71,7 @@ public class OperatorsTest {
 
 	@Before
 	public void setUp() throws Exception {
-
+		MyOID.resetCounterForJUnit();
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
@@ -83,7 +83,6 @@ public class OperatorsTest {
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
-		MyOID.resetCounterForJUnit();
 	}
 
 	@Test
