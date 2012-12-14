@@ -104,7 +104,7 @@ public class Interpreter implements IInterpreter {
 
 		IAbstractQueryResult innerRes = qres.pop();
 		BinderResult bindRes = new BinderResult(expr.getAuxiliaryName(),
-				(AbstractQueryResult) innerRes);
+				 innerRes);
 		qres.push(bindRes);
 
 	}

@@ -6,11 +6,11 @@ import edu.pjwstk.jps.result.IBinderResult;
 public class BinderResult extends SingleResult implements IBinderResult {
 
 	public String name;
-	public AbstractQueryResult value;
+	public IAbstractQueryResult value;
 
-	public BinderResult(String name, AbstractQueryResult value) {
+	public BinderResult(String name, IAbstractQueryResult innerRes) {
 		this.name = name;
-		this.value = value;
+		this.value = innerRes;
 	}
 
 	@Override

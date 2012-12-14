@@ -374,8 +374,7 @@ public class OperatorsTest {
 		BagResult expected = new BagResult();
 		expected.add(new StringResult("Ala"));
 		expected.add(new StringResult("Ala"));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -499,16 +498,22 @@ public class OperatorsTest {
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)), new IntegerTerminal(3))),
 				"num");
-		// TODO
-		i.eval(expr);
+		BagResult inner = new BagResult();
+		inner.add(new IntegerResult(1));
+		inner.add(new IntegerResult(2));
+		inner.add(new IntegerResult(3));
+		BinderResult expected = new BinderResult("num", inner);
+		assertTrue(expected.equals((BinderResult) i.eval(expr)));
+		// FIXME cos jest nie tak, powstaje binder(name = num , value = bag(0 =
+		// 3)), czyli w bagu brakuje jedynki i dwojki
 	}
 
 	@Test
 	public void test_50() {
 		Expression expr = new GroupAsExpression(new IntegerTerminal(1),
 				"liczba");
-		// TODO
-		i.eval(expr);
+		BinderResult expected = new BinderResult("liczba", new IntegerResult(1));
+		assertTrue(expected.equals((BinderResult) i.eval(expr)));
 	}
 
 	@Test
@@ -522,8 +527,8 @@ public class OperatorsTest {
 		BagResult expected = new BagResult();
 		expected.add(new IntegerResult(2));
 		expected.add(new IntegerResult(3));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		// FIXME lewy bag zle sie tworzy. podobnie jak w tescie 55
 	}
 
 	@Test
@@ -533,8 +538,7 @@ public class OperatorsTest {
 
 		BagResult expected = new BagResult();
 		expected.add(new IntegerResult(1));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -545,8 +549,7 @@ public class OperatorsTest {
 						new IntegerTerminal(3)));
 
 		BagResult expected = new BagResult();
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -555,8 +558,12 @@ public class OperatorsTest {
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new CommaExpression(new IntegerTerminal(1),
 						new IntegerTerminal(2)));
-		// TODO
-		i.eval(expr);
+		BagResult expected = new BagResult();
+		StructResult struct = new StructResult();
+		struct.add(new IntegerResult(1));
+		struct.add(new IntegerResult(2));
+		expected.add(struct);
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
@@ -570,8 +577,8 @@ public class OperatorsTest {
 
 		BagResult expected = new BagResult();
 		expected.add(new IntegerResult(2));
-		assertEquals(expected, (BagResult) i.eval(expr));// TODO dlaczego nie
-															// dziala
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+		// FIXME lewy bag zle sie tworzy, brakuje mu "ala" i dwojki
 	}
 
 }
