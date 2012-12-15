@@ -79,7 +79,6 @@ public class Interpreter implements IInterpreter {
 		envs.init(store.getEntryOID(), store);
 	}
 
-	// fixed
 	@Override
 	public void visitAsExpression(IAsExpression expr) {
 		expr.getInnerExpression().accept(this);
@@ -423,7 +422,6 @@ public class Interpreter implements IInterpreter {
 
 	}
 
-	// fixed
 	@Override
 	public void visitInExpression(IInExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -443,7 +441,6 @@ public class Interpreter implements IInterpreter {
 		qres.push(boolRes);
 	}
 
-	// fixed
 	@Override
 	public void visitIntersectExpression(IIntersectExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -647,7 +644,6 @@ public class Interpreter implements IInterpreter {
 
 	}
 
-	// fixed
 	@Override
 	public void visitMinusSetExpression(IMinusSetExpression expr) {
 		expr.getLeftExpression().accept(this);
@@ -954,7 +950,6 @@ public class Interpreter implements IInterpreter {
 
 	}
 
-	// fixed
 	@Override
 	public void visitExistsExpression(IExistsExpression expr) {
 		expr.getInnerExpression().accept(this);
@@ -978,22 +973,27 @@ public class Interpreter implements IInterpreter {
 		IAbstractQueryResult innerRes = qres.pop();
 		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
 
-		DoubleResult doubleRes;
-
+		boolean maxIsDouble = false;
 		Double max = null;
 		for (ISingleResult element : innerBag.getElements()) {
 			if (element instanceof IIntegerResult) {
 				IntegerResult iRes = (IntegerResult) element;
-				if (max == null)
+				if (max == null) {
 					max = (double) iRes.getValue();
-				else if (iRes.getValue() > max)
+					maxIsDouble = false;
+				} else if (iRes.getValue() > max) {
 					max = (double) iRes.getValue();
+					maxIsDouble = false;
+				}
 			} else if (element instanceof IDoubleResult) {
 				DoubleResult dRes = (DoubleResult) element;
-				if (max == null)
+				if (max == null) {
 					max = dRes.getValue();
-				else if (dRes.getValue() > max)
+					maxIsDouble = true;
+				} else if (dRes.getValue() > max) {
 					max = dRes.getValue();
+					maxIsDouble = true;
+				}
 			} else
 				throw new RuntimeException(
 						"nieprawidlowe typy rezultatow, inner="
@@ -1001,8 +1001,8 @@ public class Interpreter implements IInterpreter {
 
 		}
 
-		doubleRes = new DoubleResult(max);
-		qres.push(doubleRes);
+		qres.push(maxIsDouble ? new DoubleResult(max) : new IntegerResult(max
+				.intValue()));
 
 	}
 
@@ -1053,7 +1053,6 @@ public class Interpreter implements IInterpreter {
 
 	}
 
-	// fixed
 	@Override
 	public void visitSumExpression(ISumExpression expr) {
 		expr.getInnerExpression().accept(this);
