@@ -1013,22 +1013,27 @@ public class Interpreter implements IInterpreter {
 		IAbstractQueryResult innerRes = qres.pop();
 		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
 
-		DoubleResult doubleRes;
-
+		boolean minIsDouble = false;
 		Double min = null;
 		for (ISingleResult element : innerBag.getElements()) {
 			if (element instanceof IIntegerResult) {
 				IntegerResult iRes = (IntegerResult) element;
-				if (min == null)
+				if (min == null) {
 					min = (double) iRes.getValue();
-				else if (iRes.getValue() < min)
+					minIsDouble = false;
+				} else if (iRes.getValue() < min) {
 					min = (double) iRes.getValue();
+					minIsDouble = false;
+				}
 			} else if (element instanceof IDoubleResult) {
 				DoubleResult dRes = (DoubleResult) element;
-				if (min == null)
+				if (min == null) {
 					min = dRes.getValue();
-				else if (dRes.getValue() < min)
+					minIsDouble = true;
+				} else if (dRes.getValue() < min) {
 					min = dRes.getValue();
+					minIsDouble = true;
+				}
 			} else
 				throw new RuntimeException(
 						"nieprawidlowe typy rezultatow, inner="
@@ -1036,8 +1041,8 @@ public class Interpreter implements IInterpreter {
 
 		}
 
-		doubleRes = new DoubleResult(min);
-		qres.push(doubleRes);
+		qres.push(minIsDouble ? new DoubleResult(min) : new IntegerResult(min
+				.intValue()));
 
 	}
 

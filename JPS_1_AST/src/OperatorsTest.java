@@ -62,6 +62,7 @@ import datastore.SBAStore;
 
 public class OperatorsTest {
 	private static final String OPERATORS_DATA = "operators_data.xml";
+	private static final double DELTA = 0.001;
 
 	Interpreter i;
 	SBAStore store;
@@ -377,7 +378,7 @@ public class OperatorsTest {
 	// new IntegerTerminal(5));
 	//
 	// assertEquals(2, ((DoubleResult) i.eval(expr)).getValue().doubleValue(),
-	// 0.001);
+	// DELTA);
 	// }
 
 	// @Test
@@ -386,7 +387,7 @@ public class OperatorsTest {
 	// new DoubleTerminal(3.50));
 	//
 	// assertEquals(1.4285714285714286, ((DoubleResult) i.eval(expr))
-	// .getValue().doubleValue(), 0.001);
+	// .getValue().doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -395,7 +396,7 @@ public class OperatorsTest {
 	// new IntegerTerminal(5));
 	//
 	// assertEquals(0.7, ((DoubleResult) i.eval(expr)).getValue()
-	// .doubleValue(), 0.001);
+	// .doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -404,7 +405,7 @@ public class OperatorsTest {
 	// new DoubleTerminal(5.50));
 	//
 	// assertEquals(0.63636363636364, ((DoubleResult) i.eval(expr)).getValue()
-	// .doubleValue(), 0.001);
+	// .doubleValue(), DELTA);
 	// }
 
 	@Test
@@ -759,7 +760,7 @@ public class OperatorsTest {
 		Expression expr = new MaxExpression(new IntegerTerminal(1));
 
 		assertEquals(1,
-				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
 	@Test
@@ -768,7 +769,7 @@ public class OperatorsTest {
 				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
 						new DoubleTerminal(3.35)), new IntegerTerminal(3))));
 
-		assertEquals(3.35, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(3.35, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -776,7 +777,7 @@ public class OperatorsTest {
 		Expression expr = new MinExpression(new IntegerTerminal(1));
 
 		assertEquals(1,
-				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
 	@Test
@@ -786,7 +787,7 @@ public class OperatorsTest {
 						new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
 						new IntegerTerminal(3))));
 
-		assertEquals(1.01, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(1.01, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -795,7 +796,7 @@ public class OperatorsTest {
 				new IntegerTerminal(5));
 
 		assertEquals(5,
-				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
 	@Test
@@ -803,7 +804,7 @@ public class OperatorsTest {
 		Expression expr = new MinusExpression(new IntegerTerminal(5),
 				new DoubleTerminal(3.50));
 
-		assertEquals(1.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(1.50, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -811,7 +812,7 @@ public class OperatorsTest {
 		Expression expr = new MinusExpression(new DoubleTerminal(3.50),
 				new IntegerTerminal(5));
 
-		assertEquals(-1.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(-1.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -820,7 +821,7 @@ public class OperatorsTest {
 				new DoubleTerminal(5.50));
 
 		assertEquals(-2, ((IntegerResult) i.eval(expr)).getValue()
-				.doubleValue(), 0.001);
+				.doubleValue(), DELTA);
 	}
 
 	// @Test
@@ -829,7 +830,7 @@ public class OperatorsTest {
 	// new IntegerTerminal(5));
 	//
 	// assertEquals(0,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -837,7 +838,7 @@ public class OperatorsTest {
 	// Expression expr = new ModuloExpression(new IntegerTerminal(5),
 	// new DoubleTerminal(3.50));
 	//
-	// assertEquals(1.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(1.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -845,7 +846,7 @@ public class OperatorsTest {
 	// Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
 	// new IntegerTerminal(5));
 	//
-	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -853,7 +854,7 @@ public class OperatorsTest {
 	// Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
 	// new DoubleTerminal(5.50));
 	//
-	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -862,7 +863,7 @@ public class OperatorsTest {
 	// new IntegerTerminal(5));
 	//
 	// assertEquals(50, ((IntegerResult) i.eval(expr)).getValue()
-	// .doubleValue(), 0.001);
+	// .doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -870,7 +871,7 @@ public class OperatorsTest {
 	// Expression expr = new MultiplyExpression(new IntegerTerminal(5),
 	// new DoubleTerminal(3.50));
 	//
-	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -878,7 +879,7 @@ public class OperatorsTest {
 	// Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
 	// new IntegerTerminal(5));
 	//
-	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -886,7 +887,7 @@ public class OperatorsTest {
 	// Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
 	// new DoubleTerminal(5.50));
 	//
-	// assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+	// assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
 	// @Test
@@ -920,7 +921,7 @@ public class OperatorsTest {
 				new IntegerTerminal(5));
 
 		assertEquals(15, ((IntegerResult) i.eval(expr)).getValue()
-				.doubleValue(), 0.001);
+				.doubleValue(), DELTA);
 	}
 
 	@Test
@@ -928,7 +929,7 @@ public class OperatorsTest {
 		Expression expr = new PlusExpression(new IntegerTerminal(5),
 				new DoubleTerminal(3.50));
 
-		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -936,7 +937,7 @@ public class OperatorsTest {
 		Expression expr = new PlusExpression(new DoubleTerminal(3.50),
 				new IntegerTerminal(5));
 
-		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(8.50, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	@Test
@@ -945,7 +946,7 @@ public class OperatorsTest {
 				new DoubleTerminal(5.50));
 
 		assertEquals(9,
-				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
 	@Test
@@ -1144,7 +1145,7 @@ public class OperatorsTest {
 		Expression expr = new SumExpression(new IntegerTerminal(1));
 
 		assertEquals(1,
-				((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 
 	}
 
@@ -1155,7 +1156,7 @@ public class OperatorsTest {
 						new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
 						new IntegerTerminal(3))));
 
-		assertEquals(6.36, ((DoubleResult) i.eval(expr)).getValue(), 0.001);
+		assertEquals(6.36, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
 	// @Test
@@ -1163,7 +1164,7 @@ public class OperatorsTest {
 	// Expression expr = new CountExpression(new IntegerTerminal(1));
 	//
 	// assertEquals(1,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -1173,7 +1174,7 @@ public class OperatorsTest {
 	// new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
 	// new IntegerTerminal(3))));
 	// assertEquals(3,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	// }
 
 	// @Test
@@ -1183,7 +1184,7 @@ public class OperatorsTest {
 	// new DoubleTerminal(2.35)), new IntegerTerminal(3)));
 	//
 	// assertEquals(1,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), 0.001);
+	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	// }
 
 	// @Test
