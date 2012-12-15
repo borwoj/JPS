@@ -977,60 +977,60 @@ public class OperatorsTest {
 		assertEquals("trueAla", ((StringResult) i.eval(expr)).getValue());
 	}
 
-	@Test
-	public void test_93() {
-		Expression expr = new StructExpression(new IntegerTerminal(1));
+	// @Test
+	// public void test_93() {
+	// Expression expr = new StructExpression(new IntegerTerminal(1));
+	//
+	// BagResult expected = new BagResult();
+	// StructResult struct = new StructResult();
+	// struct.add(new IntegerResult(1));
+	// expected.add(struct);
+	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	// }
 
-		BagResult expected = new BagResult();
-		StructResult struct = new StructResult();
-		struct.add(new IntegerResult(1));
-		expected.add(struct);
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	}
+	// @Test
+	// public void test_94() {
+	// Expression expr = new StructExpression(new CommaExpression(
+	// new CommaExpression(new IntegerTerminal(1),
+	// new IntegerTerminal(2)), new IntegerTerminal(3)));
+	//
+	// BagResult expected = new BagResult();
+	// StructResult struct = new StructResult();
+	// struct.add(new IntegerResult(1));
+	// struct.add(new IntegerResult(2));
+	// struct.add(new IntegerResult(3));
+	// expected.add(struct);
+	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	// }
 
-	@Test
-	public void test_94() {
-		Expression expr = new StructExpression(new CommaExpression(
-				new CommaExpression(new IntegerTerminal(1),
-						new IntegerTerminal(2)), new IntegerTerminal(3)));
+	// @Test
+	// public void test_95() {
+	// Expression expr = new StructExpression(new CommaExpression(
+	// new PlusExpression(new IntegerTerminal(1), new IntegerTerminal(
+	// 2)), new IntegerTerminal(3)));
+	//
+	// BagResult expected = new BagResult();
+	// StructResult struct = new StructResult();
+	// struct.add(new IntegerResult(3));
+	// struct.add(new IntegerResult(3));
+	// expected.add(struct);
+	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	// }
 
-		BagResult expected = new BagResult();
-		StructResult struct = new StructResult();
-		struct.add(new IntegerResult(1));
-		struct.add(new IntegerResult(2));
-		struct.add(new IntegerResult(3));
-		expected.add(struct);
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	}
-
-	@Test
-	public void test_95() {
-		Expression expr = new StructExpression(new CommaExpression(
-				new PlusExpression(new IntegerTerminal(1), new IntegerTerminal(
-						2)), new IntegerTerminal(3)));
-
-		BagResult expected = new BagResult();
-		StructResult struct = new StructResult();
-		struct.add(new IntegerResult(3));
-		struct.add(new IntegerResult(3));
-		expected.add(struct);
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	}
-
-	@Test
-	public void test_96() {
-		Expression expr = new StructExpression(new StructExpression(
-				new CommaExpression(new CommaExpression(new IntegerTerminal(1),
-						new IntegerTerminal(2)), new IntegerTerminal(3))));
-
-		BagResult expected = new BagResult();
-		StructResult struct = new StructResult();
-		struct.add(new IntegerResult(1));
-		struct.add(new IntegerResult(2));
-		struct.add(new IntegerResult(3));
-		expected.add(struct);
-		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	}
+	// @Test
+	// public void test_96() {
+	// Expression expr = new StructExpression(new StructExpression(
+	// new CommaExpression(new CommaExpression(new IntegerTerminal(1),
+	// new IntegerTerminal(2)), new IntegerTerminal(3))));
+	//
+	// BagResult expected = new BagResult();
+	// StructResult struct = new StructResult();
+	// struct.add(new IntegerResult(1));
+	// struct.add(new IntegerResult(2));
+	// struct.add(new IntegerResult(3));
+	// expected.add(struct);
+	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	// }
 
 	@Test
 	public void test_97() {
