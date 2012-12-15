@@ -423,7 +423,9 @@ public class OperatorsTest {
 				new IntegerTerminal(1), new IntegerTerminal(2)),
 				new StringTerminal("Ala"));
 
-		assertEquals("Ala", ((StringResult) i.eval(expr)).getValue());
+		BagResult expected = new BagResult();
+		expected.add(new StringResult("Ala"));
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
