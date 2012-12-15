@@ -412,8 +412,9 @@ public class OperatorsTest {
 		Expression expr = new DotExpression(new AsExpression(
 				new IntegerTerminal(1), "x"), new NameTerminal("x"));
 
-		assertEquals(1, ((DoubleResult) i.eval(expr)).getValue().doubleValue(),
-				0.001);
+		BagResult expected = new BagResult();
+		expected.add(new IntegerResult(1));
+		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
 	@Test
