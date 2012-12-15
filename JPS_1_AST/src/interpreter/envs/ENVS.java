@@ -63,10 +63,14 @@ public class ENVS implements IENVS {
 
 		for (int i = stack.size() - 1; i >= 0; i--) {
 			IENVSFrame frame = stack.get(i);
-			// TODO: potrzebna druga opcja: iterowanie baga (group as)
 			for (IENVSBinder bg : frame.getElements()) {
-				if (name == bg.getName()) {
-					bag.add((ISingleResult) bg.getValue());
+				if (name.equals(bg.getName())) {
+					if (bg.getValue() instanceof ISingleResult) {
+						bag.add((ISingleResult) bg.getValue());
+					} else {
+						BagResult br = (BagResult) bg.getValue();
+						bag.add(br);
+					}
 					found = true;
 				}
 			}
@@ -79,7 +83,7 @@ public class ENVS implements IENVS {
 	}
 
 	@Override
-	public IENVSFrame nested(IAbstractQueryResult result, ISBAStore store) {
+	public ENVSFrame nested(IAbstractQueryResult result, ISBAStore store) {
 
 		ENVSFrame frame = new ENVSFrame();
 
@@ -91,14 +95,11 @@ public class ENVS implements IENVS {
 
 				for (OID oid : ((ComplexObject) sbao).getChildOIDs()) {
 					ISBAObject object = store.retrieve(oid);
-					ENVSBinder binder = new ENVSBinder(object.getName(),
+					IENVSBinder binder = new ENVSBinder(object.getName(),
 							new ReferenceResult(oid));
 					frame.add(binder);
 				}
-
-			} /*
-			 * else if (sbao instanceof Obiekt Referencyjny) { } TODO
-			 */
+			}
 
 		} else if (result instanceof BinderResult) {
 			ENVSBinder binder = new ENVSBinder(
@@ -107,8 +108,7 @@ public class ENVS implements IENVS {
 			frame.add(binder);
 		} else if (result instanceof StructResult) {
 			for (ISingleResult s : ((StructResult) result).elements()) {
-				// TODO: dodanie do frame'a
-				nested(s, store);
+				frame = nested(s, store);
 			}
 		} else if (result instanceof BooleanResult
 				|| result instanceof DoubleResult
