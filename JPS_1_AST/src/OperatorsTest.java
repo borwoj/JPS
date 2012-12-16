@@ -79,13 +79,6 @@ public class OperatorsTest {
 		// System.out.println(store.allObjectsMap);
 	}
 
-	@After
-	public void teardown() {
-		store = new SBAStore();
-		store.loadXML(OPERATORS_DATA);
-		i = new Interpreter(store);
-	}
-
 	@Test
 	public void test_2() {
 		Expression expr = new ForAllExpression(new IntegerTerminal(1),
