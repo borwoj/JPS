@@ -1,6 +1,7 @@
 package result;
 
 import edu.pjwstk.jps.result.IAbstractQueryResult;
+import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.IBinderResult;
 
 public class BinderResult extends SingleResult implements IBinderResult {
@@ -25,9 +26,16 @@ public class BinderResult extends SingleResult implements IBinderResult {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IBinderResult
-				&& ((IBinderResult) obj).getValue().equals(getValue())) 
-			return true;
+		if (obj instanceof IBinderResult)
+			if (getValue() instanceof IBagResult
+					&& ((IBinderResult) obj).getValue() instanceof IBagResult) {
+				// porownywanie bagow w celach testowych
+				BagResult leftRes = (BagResult) getValue();
+				BagResult rightRes = (BagResult) ((IBinderResult) obj)
+						.getValue();
+				return leftRes.equalsForJUnit(rightRes);
+			} else if (((IBinderResult) obj).getValue().equals(getValue()))
+				return true;
 		return false;
 	}
 

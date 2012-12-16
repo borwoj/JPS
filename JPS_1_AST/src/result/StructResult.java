@@ -1,6 +1,7 @@
 package result;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class StructResult extends SingleResult implements IStructResult {
 
 	public void add(ISingleResult element) { // TODO czy jest struktura
 		elements.add(element);
+	}
+
+	public void add(Collection<ISingleResult> elements) {
+		this.elements.addAll(elements);
 	}
 
 	@Override

@@ -160,7 +160,14 @@ public class Interpreter implements IInterpreter {
 
 		BooleanResult boolRes;
 
+		// jesli napotykamy false to zwracamy false bez wzgledu na wartosc i typ
+		// drugiego argumentu
 		if (leftRes instanceof BooleanResult
+				&& ((BooleanResult) leftRes).getValue() == false) {
+			boolRes = new BooleanResult(false);
+			qres.push(boolRes);
+			return;
+		} else if (leftRes instanceof BooleanResult
 				&& rightRes instanceof BooleanResult) {
 			BooleanResult left = (BooleanResult) leftRes;
 			BooleanResult right = (BooleanResult) rightRes;
@@ -227,32 +234,22 @@ public class Interpreter implements IInterpreter {
 	public void visitCommaExpression(ICommaExpression expr) {
 		expr.getLeftExpression().accept(this);
 		expr.getRightExpression().accept(this);
-		IAbstractQueryResult rightRes = qres.pop();
-		IAbstractQueryResult leftRes = qres.pop();
-
-		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
-		IBagResult rightBag = InterpreterUtils.toBag(rightRes);
+		IBagResult rightBag = InterpreterUtils.toBag(qres.pop());
+		IBagResult leftBag = InterpreterUtils.toBag(qres.pop());
 
 		BagResult bagRes = new BagResult();
 
-		for (IAbstractQueryResult leftEl : leftBag.getElements()) {
-			for (IAbstractQueryResult rightEl : rightBag.getElements()) {
+		for (ISingleResult leftEl : leftBag.getElements()) {
+			for (ISingleResult rightEl : rightBag.getElements()) {
 				StructResult structRes = new StructResult();
-				if (leftEl instanceof IStructResult) {
-					IStructResult polaStruktury = new StructResult();
-					for (IAbstractQueryResult pole : polaStruktury.elements()) {
-						structRes.add((ISingleResult) pole);
-					}
-				} else
-					structRes.add((ISingleResult) leftEl);
-
-				if (rightEl instanceof IStructResult) {
-					IStructResult polaStruktury = new StructResult();
-					for (IAbstractQueryResult pole : polaStruktury.elements()) {
-						structRes.add((ISingleResult) pole);
-					}
-				} else
-					structRes.add((ISingleResult) rightEl);
+				if (leftEl instanceof StructResult)
+					structRes.add(((StructResult) leftEl).elements());
+				else
+					structRes.add(leftEl);
+				if (rightEl instanceof StructResult)
+					structRes.add(((StructResult) rightEl).elements());
+				else
+					structRes.add(rightEl);
 
 				bagRes.add(structRes);
 			}
@@ -460,7 +457,7 @@ public class Interpreter implements IInterpreter {
 
 		BooleanResult boolRes;
 
-		boolean contains = leftBag.getElements().retainAll(
+		boolean contains = !leftBag.getElements().retainAll(
 				rightBag.getElements());
 
 		boolRes = new BooleanResult(contains);
@@ -919,23 +916,22 @@ public class Interpreter implements IInterpreter {
 
 	}
 
-	// TODO
 	@Override
 	public void visitBagExpression(IBagExpression expr) {
 		expr.getInnerExpression().accept(this);
 
-		CollectionResult res = InterpreterUtils.toCollectionResult(qres.pop());
+		IBagResult bag = InterpreterUtils.toBag(qres.pop());
 
-		BagResult eres = new BagResult();
-		if (res.size() == 1
-				&& res.getElements().iterator().next() instanceof IStructResult) {
-			eres.addElements((IStructResult) res.getElements().iterator()
+		BagResult bagRes = new BagResult();
+		// jesli struct
+		if (bag.getElements().size() == 1
+				&& bag.getElements().iterator().next() instanceof IStructResult)
+			bagRes.addElements((IStructResult) bag.getElements().iterator()
 					.next());
-		} else {
-			eres.add(res);
-		}
+		else
+			bagRes.add(bag);
 
-		qres.push(eres);
+		qres.push(bagRes);
 
 	}
 

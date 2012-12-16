@@ -77,17 +77,6 @@ public class InterpreterUtils {
 		return res;
 	}
 
-	public static CollectionResult toCollectionResult(IAbstractQueryResult res) {
-		if (res instanceof CollectionResult) {
-			return (CollectionResult) res;
-		} else {
-
-			BagResult br = new BagResult();
-			br.add((SingleResult) res);
-			return br;
-		}
-	}
-
 	public static IBagResult toBag(IAbstractQueryResult res) {
 		if (res instanceof IBagResult) {
 			return (IBagResult) res;
