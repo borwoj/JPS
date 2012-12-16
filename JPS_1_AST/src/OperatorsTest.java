@@ -372,41 +372,41 @@ public class OperatorsTest {
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
-	// @Test
-	// public void test_27() {
-	// Expression expr = new DivideExpression(new IntegerTerminal(10),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(2, ((DoubleResult) i.eval(expr)).getValue().doubleValue(),
-	// DELTA);
-	// }
+	 @Test
+	 public void test_27() {
+	 Expression expr = new DivideExpression(new IntegerTerminal(10),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(2, ((IntegerResult) i.eval(expr)).getValue().doubleValue(),
+	 DELTA);
+	 }
 
-	// @Test
-	// public void test_28() {
-	// Expression expr = new DivideExpression(new IntegerTerminal(5),
-	// new DoubleTerminal(3.50));
-	//
-	// assertEquals(1.4285714285714286, ((DoubleResult) i.eval(expr))
-	// .getValue().doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_28() {
+	 Expression expr = new DivideExpression(new IntegerTerminal(5),
+	 new DoubleTerminal(3.50));
+	
+	 assertEquals(1.4285714285714286, ((DoubleResult) i.eval(expr))
+	 .getValue().doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_29() {
-	// Expression expr = new DivideExpression(new DoubleTerminal(3.50),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(0.7, ((DoubleResult) i.eval(expr)).getValue()
-	// .doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_29() {
+	 Expression expr = new DivideExpression(new DoubleTerminal(3.50),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(0.7, ((DoubleResult) i.eval(expr)).getValue()
+	 .doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_30() {
-	// Expression expr = new DivideExpression(new DoubleTerminal(3.50),
-	// new DoubleTerminal(5.50));
-	//
-	// assertEquals(0.63636363636364, ((DoubleResult) i.eval(expr)).getValue()
-	// .doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_30() {
+	 Expression expr = new DivideExpression(new DoubleTerminal(3.50),
+	 new DoubleTerminal(5.50));
+	
+	 assertEquals(0.63636363636364, ((DoubleResult) i.eval(expr)).getValue()
+	 .doubleValue(), DELTA);
+	 }
 
 	@Test
 	public void test_31() {
@@ -857,38 +857,38 @@ public class OperatorsTest {
 	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	// }
 
-	// @Test
-	// public void test_78() {
-	// Expression expr = new MultiplyExpression(new IntegerTerminal(10),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(50, ((IntegerResult) i.eval(expr)).getValue()
-	// .doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_78() {
+	 Expression expr = new MultiplyExpression(new IntegerTerminal(10),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(50, ((IntegerResult) i.eval(expr)).getValue()
+	 .doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_79() {
-	// Expression expr = new MultiplyExpression(new IntegerTerminal(5),
-	// new DoubleTerminal(3.50));
-	//
-	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_79() {
+	 Expression expr = new MultiplyExpression(new IntegerTerminal(5),
+	 new DoubleTerminal(3.50));
+	
+	 assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_80() {
-	// Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_80() {
+	 Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(17.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_81() {
-	// Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
-	// new DoubleTerminal(5.50));
-	//
-	// assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_81() {
+	 Expression expr = new MultiplyExpression(new DoubleTerminal(3.50),
+	 new DoubleTerminal(5.50));
+	
+	 assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
 	// @Test
 	// public void test_82() {

@@ -8,6 +8,7 @@ import result.BooleanResult;
 import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.SingleResult;
 import result.StringResult;
 import result.StructResult;
 import edu.pjwstk.jps.ast.IExpression;
@@ -63,6 +64,7 @@ import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.IBooleanResult;
 import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
+import edu.pjwstk.jps.result.ISimpleResult;
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStringResult;
 import edu.pjwstk.jps.result.IStructResult;
@@ -261,7 +263,31 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitDivideExpression(IDivideExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		leftRes = InterpreterUtils.toSingleResult(leftRes);
+		leftRes = InterpreterUtils.deref(leftRes, store);
+		rightRes = InterpreterUtils.toSingleResult(rightRes);
+		rightRes = InterpreterUtils.deref(rightRes, store);
+
+		if ((leftRes instanceof IIntegerResult || leftRes instanceof IDoubleResult)
+				&& (rightRes instanceof IIntegerResult || rightRes instanceof IDoubleResult)) {
+
+			Number left = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			Number right = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+
+			double result = left.doubleValue() / right.doubleValue();
+
+			qres.push(result == Math.floor(result) ? new IntegerResult(
+					(int) result) : new DoubleResult(result));
+		} else
+			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
+					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 
 	}
 
@@ -601,46 +627,21 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
-		if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IIntegerResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Integer rInt = rightInt.getValue();
-			Integer result = lInt - rInt;
-			IntegerResult res = new IntegerResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IDoubleResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Double rDouble = rightDouble.getValue();
-			Double result = lInt - rDouble;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IIntegerResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Integer rInt = rightInt.getValue();
-			Double result = lDouble - rInt;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IDoubleResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Double rDouble = rightDouble.getValue();
-			Double result = lDouble - rDouble;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else {
+		if ((leftRes instanceof IIntegerResult || leftRes instanceof IDoubleResult)
+				&& (rightRes instanceof IIntegerResult || rightRes instanceof IDoubleResult)) {
+
+			Number left = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			Number right = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+
+			double result = left.doubleValue() - right.doubleValue();
+
+			qres.push(result == Math.floor(result) ? new IntegerResult(
+					(int) result) : new DoubleResult(result));
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
 
 	}
 
@@ -670,7 +671,31 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitMultiplyExpression(IMultiplyExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		leftRes = InterpreterUtils.toSingleResult(leftRes);
+		leftRes = InterpreterUtils.deref(leftRes, store);
+		rightRes = InterpreterUtils.toSingleResult(rightRes);
+		rightRes = InterpreterUtils.deref(rightRes, store);
+
+		if ((leftRes instanceof IIntegerResult || leftRes instanceof IDoubleResult)
+				&& (rightRes instanceof IIntegerResult || rightRes instanceof IDoubleResult)) {
+
+			Number left = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			Number right = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+
+			double result = left.doubleValue() * right.doubleValue();
+
+			qres.push(result == Math.floor(result) ? new IntegerResult(
+					(int) result) : new DoubleResult(result));
+		} else
+			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
+					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 
 	}
 
@@ -752,91 +777,61 @@ public class Interpreter implements IInterpreter {
 		rightRes = InterpreterUtils.toSingleResult(rightRes);
 		rightRes = InterpreterUtils.deref(rightRes, store);
 
-		if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IIntegerResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Integer rInt = rightInt.getValue();
-			Integer result = lInt + rInt;
-			IntegerResult res = new IntegerResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IDoubleResult) {
-			IIntegerResult leftInt = (IIntegerResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Integer lInt = leftInt.getValue();
-			Double rDouble = rightDouble.getValue();
-			Double result = lInt + rDouble;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IIntegerResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IIntegerResult rightInt = (IIntegerResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Integer rInt = rightInt.getValue();
-			Double result = lDouble + rInt;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IDoubleResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			Double rDouble = rightDouble.getValue();
-			Double result = lDouble + rDouble;
-			DoubleResult res = new DoubleResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IIntegerResult
-				&& rightRes instanceof IStringResult) {
-			IIntegerResult leftInteger = (IIntegerResult) leftRes;
-			IStringResult rightString = (IStringResult) rightRes;
-			Integer lInt = leftInteger.getValue();
-			String rString = rightString.getValue();
-			String result = lInt + rString;
-			StringResult res = new StringResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IStringResult
-				&& rightRes instanceof IIntegerResult) {
-			IStringResult leftString = (IStringResult) leftRes;
-			IIntegerResult rightInteger = (IIntegerResult) rightRes;
-			String lString = leftString.getValue();
-			Integer rInt = rightInteger.getValue();
-			String result = lString + rInt;
-			StringResult res = new StringResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IStringResult
-				&& rightRes instanceof IStringResult) {
-			IStringResult leftString = (IStringResult) leftRes;
-			IStringResult rightString = (IStringResult) rightRes;
-			String lString = leftString.getValue();
-			String rString = rightString.getValue();
-			String result = lString + rString;
-			StringResult res = new StringResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IDoubleResult
-				&& rightRes instanceof IStringResult) {
-			IDoubleResult leftDouble = (IDoubleResult) leftRes;
-			IStringResult rightString = (IStringResult) rightRes;
-			Double lDouble = leftDouble.getValue();
-			String rString = rightString.getValue();
-			String result = lDouble + rString;
-			StringResult res = new StringResult(result);
-			qres.push(res);
-		} else if (leftRes instanceof IStringResult
-				&& rightRes instanceof IDoubleResult) {
-			IStringResult leftString = (IStringResult) leftRes;
-			IDoubleResult rightDouble = (IDoubleResult) rightRes;
-			String lString = leftString.getValue();
-			Double rDouble = rightDouble.getValue();
-			String result = lString + rDouble;
-			StringResult res = new StringResult(result);
-			qres.push(res);
-		} else {
+		boolean isLeftNumber = leftRes instanceof IIntegerResult
+				|| leftRes instanceof IDoubleResult;
+		boolean isRightNumber = rightRes instanceof IIntegerResult
+				|| rightRes instanceof IDoubleResult;
+		boolean isLeftString = leftRes instanceof IStringResult;
+		boolean isRightString = rightRes instanceof IStringResult;
+		boolean isLeftBoolean = leftRes instanceof IBooleanResult;
+		boolean isRightBoolean = rightRes instanceof IBooleanResult;
+
+		if ((isLeftNumber) && (isRightNumber)) {
+
+			Number left = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			Number right = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+			double result = left.doubleValue() + right.doubleValue();
+
+			qres.push(result == Math.floor(result) ? new IntegerResult(
+					(int) result) : new DoubleResult(result));
+		} else if (isLeftString && isRightString) {
+			String left = ((StringResult) leftRes).getValue();
+			String right = ((StringResult) rightRes).getValue();
+
+			qres.push(new StringResult(left + right));
+		} else if (isLeftString && isRightBoolean) {
+			String left = ((StringResult) leftRes).getValue();
+			String right = ((BooleanResult) rightRes).getValue().toString();
+
+			qres.push(new StringResult(left + right));
+		} else if (isLeftBoolean && isRightString) {
+			String left = ((BooleanResult) leftRes).getValue().toString();
+			String right = ((StringResult) rightRes).getValue();
+
+			qres.push(new StringResult(left + right));
+		} else if (isLeftString && isRightNumber) {
+			String left = ((StringResult) leftRes).getValue();
+			double rightNum = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+			String right = rightNum == Math.floor(rightNum) ? ((IntegerResult) rightRes)
+					.getValue().toString() : ((DoubleResult) rightRes)
+					.getValue().toString();
+
+			qres.push(new StringResult(left + right));
+		} else if (isLeftNumber && isRightString) {
+			double leftNum = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			String left = leftNum == Math.floor(leftNum) ? ((IntegerResult) leftRes)
+					.getValue().toString() : ((DoubleResult) leftRes)
+					.getValue().toString();
+			String right = ((StringResult) rightRes).getValue();
+
+			qres.push(new StringResult(left + right));
+		} else
 			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
 					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
-		}
 
 	}
 
