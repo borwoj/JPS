@@ -1019,7 +1019,12 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitCountExpression(ICountExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
+
+		qres.push(new IntegerResult(innerBag.getElements().size()));
 
 	}
 

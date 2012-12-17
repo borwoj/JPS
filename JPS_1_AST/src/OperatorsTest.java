@@ -1109,26 +1109,26 @@ public class OperatorsTest {
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
-	// @Test
-	// public void test_103() {
-	// Expression expr = new WhereExpression(new AsExpression(
-	// new BagExpression(new CommaExpression(new CommaExpression(
-	// new IntegerTerminal(1), new IntegerTerminal(2)),
-	// new IntegerTerminal(3))), "n"), new EqualsExpression(
-	// new NameTerminal("n"), new IntegerTerminal(1)));
-	//
-	// BagResult expected = new BagResult();
-	// expected.add(new BinderResult("n", new IntegerResult(1)));
-	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	// }
+	 @Test
+	 public void test_103() {
+	 Expression expr = new WhereExpression(new AsExpression(
+	 new BagExpression(new CommaExpression(new CommaExpression(
+	 new IntegerTerminal(1), new IntegerTerminal(2)),
+	 new IntegerTerminal(3))), "n"), new EqualsExpression(
+	 new NameTerminal("n"), new IntegerTerminal(1)));
+	
+	 BagResult expected = new BagResult();
+	 expected.add(new BinderResult("n", new IntegerResult(1)));
+	 assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	 }
 
-	// @Test
-	// public void test_104() {
-	// Expression expr = new WhereExpression(new NameTerminal("emp"),
-	// new NameTerminal("married"));
-	// BagResult expected = new BagResult();
-	// assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
-	// }
+	 @Test
+	 public void test_104() {
+	 Expression expr = new WhereExpression(new NameTerminal("emp"),
+	 new NameTerminal("married"));
+	 BagResult expected = new BagResult();
+	 assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	 }
 
 	@Test
 	public void test_105() {
@@ -1149,33 +1149,33 @@ public class OperatorsTest {
 		assertEquals(6.36, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
-	// @Test
-	// public void test_107() {
-	// Expression expr = new CountExpression(new IntegerTerminal(1));
-	//
-	// assertEquals(1,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_107() {
+	 Expression expr = new CountExpression(new IntegerTerminal(1));
+	
+	 assertEquals(1,
+	 ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_108() {
-	// Expression expr = new CountExpression(new BagExpression(
-	// new CommaExpression(new CommaExpression(
-	// new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
-	// new IntegerTerminal(3))));
-	// assertEquals(3,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_108() {
+	 Expression expr = new CountExpression(new BagExpression(
+	 new CommaExpression(new CommaExpression(
+	 new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
+	 new IntegerTerminal(3))));
+	 assertEquals(3,
+	 ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_109() {
-	// Expression expr = new CountExpression(new CommaExpression(
-	// new CommaExpression(new DoubleTerminal(1.01),
-	// new DoubleTerminal(2.35)), new IntegerTerminal(3)));
-	//
-	// assertEquals(1,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_109() {
+	 Expression expr = new CountExpression(new CommaExpression(
+	 new CommaExpression(new DoubleTerminal(1.01),
+	 new DoubleTerminal(2.35)), new IntegerTerminal(3)));
+	
+	 assertEquals(1,
+	 ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
+	 }
 
 	// @Test
 	// public void test_110() {
