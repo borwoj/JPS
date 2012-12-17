@@ -1097,7 +1097,22 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitNotExpression(INotExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+		IAbstractQueryResult innerRes = qres.pop();
+		innerRes = InterpreterUtils.toSingleResult(innerRes);
+		innerRes = InterpreterUtils.deref(innerRes, store);
+
+		BooleanResult boolRes;
+
+		if (innerRes instanceof BooleanResult) {
+			BooleanResult inner = (BooleanResult) innerRes;
+
+			boolRes = new BooleanResult(!inner.getValue());
+			qres.push(boolRes);
+
+		} else
+			throw new RuntimeException("nieprawidlowe typy rezultatow, inner="
+					+ innerRes.getClass());
 
 	}
 
