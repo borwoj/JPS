@@ -880,30 +880,30 @@ public class OperatorsTest {
 		assertEquals(19.25, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
 	}
 
-	// @Test
-	// public void test_82() {
-	// Expression expr = new OrExpression(new BooleanTerminal(true),
-	// new BooleanTerminal(false));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_82() {
+	 Expression expr = new OrExpression(new BooleanTerminal(true),
+	 new BooleanTerminal(false));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_83() {
-	// Expression expr = new OrExpression(new NameTerminal("booleanValue"),
-	// new BooleanTerminal(false));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_83() {
+	 Expression expr = new OrExpression(new NameTerminal("booleanValue"),
+	 new BooleanTerminal(false));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_84() {
-	// Expression expr = new OrExpression(new OrExpression(
-	// new BooleanTerminal(true), new BooleanTerminal(false)),
-	// new IntegerTerminal(1));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_84() {
+	 Expression expr = new OrExpression(new OrExpression(
+	 new BooleanTerminal(true), new BooleanTerminal(false)),
+	 new IntegerTerminal(1));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
 	@Test
 	public void test_85() {
@@ -1212,90 +1212,90 @@ public class OperatorsTest {
 	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
 	// }
 
-	// @Test
-	// public void test_113() {
-	// Expression expr = new NotExpression(new BooleanTerminal(true));
-	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_113() {
+	 Expression expr = new NotExpression(new BooleanTerminal(true));
+	 assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_114() {
-	// Expression expr = new NotExpression(new BooleanTerminal(false));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_114() {
+	 Expression expr = new NotExpression(new BooleanTerminal(false));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_115() {
-	// Expression expr = new XORExpression(new BooleanTerminal(true),
-	// new BooleanTerminal(false));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_115() {
+	 Expression expr = new XORExpression(new BooleanTerminal(true),
+	 new BooleanTerminal(false));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_116() {
-	// Expression expr = new XORExpression(new BooleanTerminal(true),
-	// new BooleanTerminal(true));
-	//
-	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_117() {
-	// Expression expr = new XORExpression(new BooleanTerminal(false),
-	// new BooleanTerminal(true));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_118() {
-	// Expression expr = new XORExpression(new NameTerminal("booleanValue"),
-	// new BooleanTerminal(true));
-	//
-	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_119() {
-	// Expression expr = new NotExpression(new AndExpression(
-	// new BooleanTerminal(true), new BooleanTerminal(false)));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_116() {
+	 Expression expr = new XORExpression(new BooleanTerminal(true),
+	 new BooleanTerminal(true));
+	
+	 assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_117() {
+	 Expression expr = new XORExpression(new BooleanTerminal(false),
+	 new BooleanTerminal(true));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_118() {
+	 Expression expr = new XORExpression(new NameTerminal("booleanValue"),
+	 new BooleanTerminal(true));
+	
+	 assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_119() {
+	 Expression expr = new NotExpression(new AndExpression(
+	 new BooleanTerminal(true), new BooleanTerminal(false)));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
-	// @Test
-	// public void test_120() {
-	// Expression expr = new NotExpression(new AndExpression(
-	// new BooleanTerminal(false), new BooleanTerminal(true)));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_121() {
-	// Expression expr = new NotExpression(new AndExpression(
-	// new BooleanTerminal(false), new BooleanTerminal(false)));
-	//
-	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_122() {
-	// Expression expr = new NotExpression(new AndExpression(
-	// new BooleanTerminal(true), new BooleanTerminal(true)));
-	//
-	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	// }
-	//
-	// @Test
-	// public void test_123() {
-	// Expression expr = new NotExpression(new AndExpression(new NameTerminal(
-	// "booleanValue"), new BooleanTerminal(true)));
-	//
-	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	// }
+	 @Test
+	 public void test_120() {
+	 Expression expr = new NotExpression(new AndExpression(
+	 new BooleanTerminal(false), new BooleanTerminal(true)));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_121() {
+	 Expression expr = new NotExpression(new AndExpression(
+	 new BooleanTerminal(false), new BooleanTerminal(false)));
+	
+	 assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_122() {
+	 Expression expr = new NotExpression(new AndExpression(
+	 new BooleanTerminal(true), new BooleanTerminal(true)));
+	
+	 assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	 }
+	
+	 @Test
+	 public void test_123() {
+	 Expression expr = new NotExpression(new AndExpression(new NameTerminal(
+	 "booleanValue"), new BooleanTerminal(true)));
+	
+	 assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	 }
 
 	@Test
 	public void test_124() {
