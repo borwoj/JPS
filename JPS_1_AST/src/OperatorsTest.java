@@ -814,38 +814,38 @@ public class OperatorsTest {
 				.doubleValue(), DELTA);
 	}
 
-	// @Test
-	// public void test_74() {
-	// Expression expr = new ModuloExpression(new IntegerTerminal(10),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(0,
-	// ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
-	// }
+	 @Test
+	 public void test_74() {
+	 Expression expr = new ModuloExpression(new IntegerTerminal(10),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(0,
+	 ((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_75() {
-	// Expression expr = new ModuloExpression(new IntegerTerminal(5),
-	// new DoubleTerminal(3.50));
-	//
-	// assertEquals(1.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_75() {
+	 Expression expr = new ModuloExpression(new IntegerTerminal(5),
+	 new DoubleTerminal(3.50));
+	
+	 assertEquals(1.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_76() {
-	// Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
-	// new IntegerTerminal(5));
-	//
-	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_76() {
+	 Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
+	 new IntegerTerminal(5));
+	
+	 assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
-	// @Test
-	// public void test_77() {
-	// Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
-	// new DoubleTerminal(5.50));
-	//
-	// assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
-	// }
+	 @Test
+	 public void test_77() {
+	 Expression expr = new ModuloExpression(new DoubleTerminal(3.50),
+	 new DoubleTerminal(5.50));
+	
+	 assertEquals(3.5, ((DoubleResult) i.eval(expr)).getValue(), DELTA);
+	 }
 
 	@Test
 	public void test_78() {

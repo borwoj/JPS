@@ -662,7 +662,31 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitModuloExpression(IModuloExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		expr.getRightExpression().accept(this);
+		IAbstractQueryResult rightRes = qres.pop();
+		IAbstractQueryResult leftRes = qres.pop();
+
+		leftRes = InterpreterUtils.toSingleResult(leftRes);
+		leftRes = InterpreterUtils.deref(leftRes, store);
+		rightRes = InterpreterUtils.toSingleResult(rightRes);
+		rightRes = InterpreterUtils.deref(rightRes, store);
+
+		if ((leftRes instanceof IIntegerResult || leftRes instanceof IDoubleResult)
+				&& (rightRes instanceof IIntegerResult || rightRes instanceof IDoubleResult)) {
+
+			Number left = leftRes instanceof IIntegerResult ? ((IIntegerResult) leftRes)
+					.getValue() : ((IDoubleResult) leftRes).getValue();
+			Number right = rightRes instanceof IIntegerResult ? ((IIntegerResult) rightRes)
+					.getValue() : ((IDoubleResult) rightRes).getValue();
+
+			double result = left.doubleValue() % right.doubleValue();
+
+			qres.push(result == Math.floor(result) ? new IntegerResult(
+					(int) result) : new DoubleResult(result));
+		} else
+			throw new RuntimeException("nieprawidlowe typy rezultatow, lewy="
+					+ leftRes.getClass() + " prawy=" + rightRes.getClass());
 
 	}
 
