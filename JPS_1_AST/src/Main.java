@@ -1,8 +1,11 @@
 import interpreter.envs.ENVS;
+import interpreter.envs.Interpreter;
 import interpreter.qres.QResStack;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import parser.ExprParser;
 
 import result.BagResult;
 import result.BinderResult;
@@ -44,6 +47,28 @@ public class Main {
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 	private static final String ENVS_DATA = "envs_data.xml";
 	private static final String OPERATORS_DATA = "operators_data.xml";
+	
+	public static void main(String[] args) {
+		parser("(1 + 2) * 3 / 4");
+	}
+	
+	public static void parser(String toParse){
+		
+		Interpreter i = new Interpreter();
+		ExprParser parser = new ExprParser(toParse);
+		
+		try {
+			parser.user_init();
+			parser.parse();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Expression res = parser.RESULT;	
+		res.accept(i);
+		
+		System.out.println(i);
+	}
 
 	public static void ENVS_zadanie_1() {
 		// ((emp where married).book.author) union (realNumber)

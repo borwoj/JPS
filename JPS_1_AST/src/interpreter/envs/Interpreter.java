@@ -5,10 +5,8 @@ import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
-import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
-import result.SingleResult;
 import result.StringResult;
 import result.StructResult;
 import edu.pjwstk.jps.ast.IExpression;
@@ -64,7 +62,6 @@ import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.IBooleanResult;
 import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
-import edu.pjwstk.jps.result.ISimpleResult;
 import edu.pjwstk.jps.result.ISingleResult;
 import edu.pjwstk.jps.result.IStringResult;
 import edu.pjwstk.jps.result.IStructResult;
@@ -73,6 +70,11 @@ public class Interpreter implements IInterpreter {
 	private IQResStack qres;
 	private IENVS envs;
 	private ISBAStore store;
+
+	public Interpreter() {
+		qres = new QResStack();
+		envs = new ENVS();
+	}
 
 	public Interpreter(ISBAStore store) {
 		qres = new QResStack();
