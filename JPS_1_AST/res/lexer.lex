@@ -1,8 +1,8 @@
-package edu.pjwstk.jps.parser;
+package parser;
   
 import java_cup.runtime.Symbol;
 
-import static edu.pjwstk.jps.parser.Symbols.*;
+import static parser.Symbols.*;
  
 
 

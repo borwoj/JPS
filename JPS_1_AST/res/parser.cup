@@ -1,4 +1,4 @@
-package edu.pjwstk.jps.parser;
+package parser;
  
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import java.util.List;
 import java_cup.runtime.DefaultSymbolFactory;
 import java_cup.runtime.Symbol;
 import ast.*;
+import ast.binary.*;
+import ast.terminal.*;
+import ast.unary.*;
 
 parser code {: 
 	public Lexer lexer;
