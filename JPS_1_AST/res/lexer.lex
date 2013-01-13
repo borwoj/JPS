@@ -42,11 +42,46 @@ WHITESPACE = {LineTerminator} | [ \t\f]
 	"-"						{ return createToken(MINUS				); }
 	"*"						{ return createToken(MULTIPLY			); }
 	"/"						{ return createToken(DIVIDE				); }
+	"%"						{ return createToken(MODULO				); } 
+	"=="					{ return createToken(EQUALS				); }
+	"!="					{ return createToken(NOT_EQUALS			); }
 	"("						{ return createToken(LEFT_ROUND_BRACKET	); }
 	")"						{ return createToken(RIGHT_ROUND_BRACKET); }	
-	 
+	"OR"|"or"|"\|\|"		{ return createToken(OR					); }
+	"AND"|"and"|"&&"		{ return createToken(AND				); }
+	"SUM"|"sum"				{ return createToken(SUM				); } 
+	"AVG"|"avg"				{ return createToken(AVG				); } 
+	"UNIQUE"|"unique"		{ return createToken(UNIQUE				); } 
+	"UNION"|"union"			{ return createToken(UNION				); } 
+	"MIN"|"min"				{ return createToken(MIN				); }
+	"MAX"|"max"				{ return createToken(MAX				); } 
+	"COUNT"|"count"			{ return createToken(COUNT				); }
+	"AS"|"as"				{ return createToken(AS					); }
+	"GROUP AS"|"group as" 	{ return createToken(GROUP_AS			); }
+	"BAG"|"bag"				{ return createToken(BAG				); }
+	"SEQUENCE"|"sequence"	{ return createToken(SEQUENCE			); }
+	"."                     { return createToken(DOT                ); }
+	">"                     { return createToken(MORE               ); }
+    "<"                     { return createToken(LESS               ); }
+    ">="                    { return createToken(MORE_OR_EQUAL      ); }
+    "<="                    { return createToken(LESS_OR_EQUAL      ); }
+    ","                     { return createToken(COMMA              ); }
+	"IN"|"in"				{ return createToken(IN					); }
+	"WHERE"|"where"			{ return createToken(WHERE				); } 
+	"EXISTS"|"exists"		{ return createToken(EXISTS				); }
+	"NOT"|"not"|"!"			{ return createToken(NOT				); }
+	"MINUS"|"minus" 		{ return createToken(MINUS_FUNCTION		); }
+	"STRUCT"|"struct" 		{ return createToken(STRUCT				); }
+	"INTERSECT"|"intersect" { return createToken(INTERSECT			); }
+	"JOIN"|"join" 	 		{ return createToken(JOIN				); }
+	"ALL"|"all" 			{ return createToken(FORALL				); }
+	"ANY"|"any"  			{ return createToken(FORANY				); }
+	"ORDER BY"|"order by" 	{ return createToken(ORDER_BY			); }
+	"close by"|"CLOSE BY" 	{ return createToken(CLOSE_BY			); }
+	"xor"|"XOR" 			{ return createToken(XOR				); }
 
 	{WHITESPACE} { }
+	{STRING} {return createToken(STRING_LITERAL, yytext().substring(1,yytext().length()-1)) ; }
 	{INTEGER} {
 		int val;
 		try {

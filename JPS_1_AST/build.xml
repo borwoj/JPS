@@ -8,7 +8,7 @@
 	
 	<target name="generate">
 		<jflex destdir="src" file="res/lexer.lex" nobak="true"/>	
-		<cup destdir="src" interface="true" package="parser" symbols="Symbols" parser="CalcParser" srcfile="res/parser.cup" />
+		<cup destdir="src" interface="true" package="parser" symbols="Symbols" parser="ExprParser" srcfile="res/parser.cup" />
 	</target>
 </project>
 

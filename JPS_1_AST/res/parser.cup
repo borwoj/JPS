@@ -7,6 +7,7 @@ import java.util.List;
 import java_cup.runtime.DefaultSymbolFactory;
 import java_cup.runtime.Symbol;
 import ast.*;
+import ast.auxname.*;
 import ast.binary.*;
 import ast.terminal.*;
 import ast.unary.*;
@@ -16,7 +17,7 @@ parser code {:
 	private String expr;
 	public Expression RESULT;
 	
-	public CalcParser(String expr) {
+	public ExprParser(String expr) {
 		this.symbolFactory = new DefaultSymbolFactory();   
 		this.expr = expr;
 	}
@@ -34,8 +35,10 @@ scan with {:		return lexer.next_token(); :};
 terminal Integer INTEGER_LITERAL;
 terminal Double DOUBLE_LITERAL;
 terminal Boolean BOOLEAN_LITERAL;
+terminal String STRING_LITERAL;
 
 terminal String WHERE;
+terminal String XOR;
 terminal String JOIN;
 
 terminal String FORALL;
@@ -93,7 +96,6 @@ terminal String RIGHT_ROUND_BRACKET;
 non terminal Expression goal;
 non terminal Expression expr;
 
-
 //priority
 
 precedence left WHERE, JOIN; 
@@ -102,7 +104,7 @@ precedence left NOT;
 precedence left UNION, IN; 
 precedence left ORDER_BY, CLOSE_BY; 
 precedence left COMMA; 
-precedence left OR, AND;
+precedence left OR, XOR, AND;
 precedence left EQUALS, NOT_EQUALS, MORE, LESS, MORE_OR_EQUAL, LESS_OR_EQUAL;  
 precedence left PLUS, MINUS; 
 precedence left MULTIPLY, DIVIDE, MODULO; 
@@ -117,10 +119,51 @@ start with goal;
 goal ::= expr:e		{: RESULT = e; parser.setResult(e); :} ;
 
 expr  ::=
-		expr:e1 PLUS:o expr:e2	{: RESULT = new PlusExpression(e1, e2); :}
-	| 	expr:e1 MINUS:o expr:e2	{: RESULT = new MinusExpression(e1, e2); :}
-	| 	expr:e1 MULTIPLY:o 	 expr:e2	{: RESULT = new MultiplyExpression(e1, e2); :}
-	| 	expr:e1 DIVIDE:o	 expr:e2	{: RESULT = new DivideExpression(e1, e2); :}
+	//	expr:e1	AS:o 	dunno	 {: RESULT = new AsExpression(e1, l); :} 
+	//| 	expr:e1	GROUP_AS:o dunno  {: RESULT = new GroupAsExpression(e1, l); :} 
+
+		expr:e1 AND:o 			 expr:e2	{: RESULT = new AndExpression(e1, e2); :}
+	|	expr:e1 CLOSE_BY:o 		 expr:e2	{: RESULT = new CloseByExpression(e1, e2); :}
+	|	expr:e1 COMMA:o 		 expr:e2	{: RESULT = new CommaExpression(e1, e2); :}
+	|	expr:e1 DIVIDE:o 		 expr:e2	{: RESULT = new DivideExpression(e1, e2); :}
+	|	expr:e1 DOT:o 			 expr:e2	{: RESULT = new DotExpression(e1, e2); :}
+	|	expr:e1 EQUALS:o		 expr:e2	{: RESULT = new EqualsExpression(e1, e2); :}
+	|	expr:e1 FORALL:o		 expr:e2	{: RESULT = new ForAllExpression(e1, e2); :}
+	|	expr:e1 FORANY:o		 expr:e2	{: RESULT = new ForAnyExpression(e1, e2); :}
+	|	expr:e1 MORE_OR_EQUAL:o	 expr:e2	{: RESULT = new GreaterOrEqualThanExpression(e1, e2); :}
+	|	expr:e1 MORE:o	 		 expr:e2	{: RESULT = new GreaterThanExpression(e1, e2); :}
+	|	expr:e1 IN:o	 		 expr:e2	{: RESULT = new InExpression(e1, e2); :}
+	|	expr:e1 INTERSECT:o	 	 expr:e2	{: RESULT = new IntersectExpression(e1, e2); :}
+	|	expr:e1 JOIN:o	 		 expr:e2	{: RESULT = new JoinExpression(e1, e2); :}
+	|	expr:e1 LESS_OR_EQUAL:o	 expr:e2	{: RESULT = new LessOrEqualThanExpression(e1, e2); :}
+	|	expr:e1 LESS:o	 		 expr:e2	{: RESULT = new LessThanExpression(e1, e2); :}	
+	| 	expr:e1 MINUS:o 		 expr:e2	{: RESULT = new MinusExpression(e1, e2); :}
+	| 	expr:e1 MINUS_FUNCTION:o expr:e2	{: RESULT = new MinusSetExpression(e1, e2); :}
+	|	expr:e1 MODULO:o	 	 expr:e2	{: RESULT = new ModuloExpression(e1, e2); :}
+	| 	expr:e1 MULTIPLY:o 	 	 expr:e2	{: RESULT = new MultiplyExpression(e1, e2); :}
+	|	expr:e1 NOT_EQUALS:o	 expr:e2	{: RESULT = new NotEqualsExpression(e1, e2); :}
+	|	expr:e1 ORDER_BY:o	 	 expr:e2	{: RESULT = new OrderByExpression(e1, e2); :}
+	|	expr:e1 OR:o	 		 expr:e2	{: RESULT = new OrExpression(e1, e2); :}	
+	|	expr:e1 PLUS:o 			 expr:e2	{: RESULT = new PlusExpression(e1, e2); :}
+	|	expr:e1 UNION:o	 	 	 expr:e2	{: RESULT = new UnionExpression(e1, e2); :}
+	|	expr:e1 WHERE:o	 	 	 expr:e2	{: RESULT = new WhereExpression(e1, e2); :}
+	|	expr:e1 XOR:o	 		 expr:e2	{: RESULT = new XORExpression(e1, e2); :}
+		
+	|	AVG:o	 	expr:e1	{: RESULT = new AvgExpression(e1); :}
+	|	BAG:o	 	expr:e1	{: RESULT = new BagExpression(e1); :}
+	|	COUNT:o	 	expr:e1	{: RESULT = new CountExpression(e1); :}
+	|	EXISTS:o 	expr:e1	{: RESULT = new ExistsExpression(e1); :}
+	|	MAX:o	 	expr:e1	{: RESULT = new MaxExpression(e1); :}	
+	|	MIN:o	 	expr:e1	{: RESULT = new MinExpression(e1); :}
+	|	NOT:o 		expr:e1	{: RESULT = new NotExpression(e1); :}
+	|	STRUCT:o	expr:e1	{: RESULT = new StructExpression(e1); :}
+	|	SUM:o	 	expr:e1	{: RESULT = new SumExpression(e1); :}
+	|	UNIQUE:o	expr:e1	{: RESULT = new UniqueExpression(e1); :}	
+	
+	| 	BOOLEAN_LITERAL:o {: RESULT = new BooleanTerminal((Boolean)o); :}
+	| 	DOUBLE_LITERAL:o  {: RESULT = new DoubleTerminal((Double)o); :}
 	| 	INTEGER_LITERAL:o {: RESULT = new IntegerTerminal((Integer)o); :}
+	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}
+	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	;
