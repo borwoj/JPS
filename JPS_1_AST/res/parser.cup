@@ -35,10 +35,57 @@ terminal Integer INTEGER_LITERAL;
 terminal Double DOUBLE_LITERAL;
 terminal Boolean BOOLEAN_LITERAL;
 
+terminal String WHERE;
+terminal String JOIN;
+
+terminal String FORALL;
+terminal String FORANY;
+
+terminal String NOT;
+
+terminal String UNION;
+terminal String IN;
+
+terminal String ORDER_BY;
+terminal String CLOSE_BY;
+
+terminal String COMMA;
+
+terminal String OR;
+terminal String AND;
+
+terminal String EQUALS;
+terminal String NOT_EQUALS;
+terminal String MORE;
+terminal String LESS;
+terminal String MORE_OR_EQUAL;
+terminal String LESS_OR_EQUAL;
+
 terminal String PLUS;
 terminal String MINUS;
+
 terminal String MULTIPLY; 
 terminal String DIVIDE;
+terminal String MODULO;
+
+terminal String AS;
+terminal String GROUP_AS;
+
+terminal String SUM;
+terminal String COUNT;
+terminal String AVG;
+terminal String MIN;
+terminal String MAX;
+terminal String UNIQUE;
+terminal String EXISTS;
+terminal String MINUS_FUNCTION;
+terminal String INTERSECT;
+
+terminal String DOT;
+
+terminal String BAG;
+terminal String SEQUENCE;
+terminal String STRUCT;
 
 terminal String LEFT_ROUND_BRACKET;
 terminal String RIGHT_ROUND_BRACKET;
@@ -48,8 +95,21 @@ non terminal Expression expr;
 
 
 //priority
+
+precedence left WHERE, JOIN; 
+precedence left FORALL, FORANY; 
+precedence left NOT; 
+precedence left UNION, IN; 
+precedence left ORDER_BY, CLOSE_BY; 
+precedence left COMMA; 
+precedence left OR, AND;
+precedence left EQUALS, NOT_EQUALS, MORE, LESS, MORE_OR_EQUAL, LESS_OR_EQUAL;  
 precedence left PLUS, MINUS; 
-precedence left MULTIPLY, DIVIDE; 
+precedence left MULTIPLY, DIVIDE, MODULO; 
+precedence left AS, GROUP_AS; 
+precedence left SUM, COUNT, AVG, MIN, MAX, UNIQUE, EXISTS, MINUS_FUNCTION, INTERSECT; 
+precedence left DOT; 
+precedence left BAG, SEQUENCE, STRUCT; 
 precedence left LEFT_ROUND_BRACKET, RIGHT_ROUND_BRACKET;
 
 start with goal;
