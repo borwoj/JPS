@@ -1,0 +1,63 @@
+package edu.pjwstk.jps.parser;
+ 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import java_cup.runtime.DefaultSymbolFactory;
+import java_cup.runtime.Symbol;
+import ast.*;
+
+parser code {: 
+	public Lexer lexer;
+	private String expr;
+	public Expression RESULT;
+	
+	public CalcParser(String expr) {
+		this.symbolFactory = new DefaultSymbolFactory();   
+		this.expr = expr;
+	}
+	
+	void setResult(Expression exp) {
+		this.RESULT = exp;
+	}  
+
+:};
+
+init with {: 	    lexer = new Lexer(new StringReader(expr)); :};
+scan with {:		return lexer.next_token(); :};
+
+
+terminal Integer INTEGER_LITERAL;
+terminal Double DOUBLE_LITERAL;
+terminal Boolean BOOLEAN_LITERAL;
+
+terminal String PLUS;
+terminal String MINUS;
+terminal String MULTIPLY; 
+terminal String DIVIDE;
+
+terminal String LEFT_ROUND_BRACKET;
+terminal String RIGHT_ROUND_BRACKET;
+
+non terminal Expression goal;
+non terminal Expression expr;
+
+
+//priority
+precedence left PLUS, MINUS; 
+precedence left MULTIPLY, DIVIDE; 
+precedence left LEFT_ROUND_BRACKET, RIGHT_ROUND_BRACKET;
+
+start with goal;
+
+goal ::= expr:e		{: RESULT = e; parser.setResult(e); :} ;
+
+expr  ::=
+		expr:e1 PLUS:o expr:e2	{: RESULT = new PlusExpression(e1, e2); :}
+	| 	expr:e1 MINUS:o expr:e2	{: RESULT = new MinusExpression(e1, e2); :}
+	| 	expr:e1 MULTIPLY:o 	 expr:e2	{: RESULT = new MultiplyExpression(e1, e2); :}
+	| 	expr:e1 DIVIDE:o	 expr:e2	{: RESULT = new DivideExpression(e1, e2); :}
+	| 	INTEGER_LITERAL:o {: RESULT = new IntegerTerminal((Integer)o); :}
+	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
+	;

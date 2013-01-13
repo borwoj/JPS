@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Calc" default="generate">
+	<property name="CLASSPATH" value="bin;lib/jflex-1.4.3.jar;lib/java-cup-11a.jar;"/>
+	<taskdef name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${CLASSPATH}"/>
+	<taskdef name="cup" classname="java_cup.anttask.CUPTask" classpath="${CLASSPATH}"/>
+
+	
+	
+	<target name="generate">
+		<jflex destdir="src" file="res/lexer.lex" nobak="true"/>	
+		<cup destdir="src" interface="true" package="parser" symbols="Symbols" parser="CalcParser" srcfile="res/parser.cup" />
+	</target>
+</project>
+
+
+		<!--
+		<java jar="lib/jflex-1.4.3.jar" fork="true" failonerror="true" classpath="${CLASSPATH}">
+			
+			<arg path="res/lexer.lex" />
+			<arg value="-nobak" />
+			<arg line="-d $parser" />
+		</java>
+		<java jar="lib/java-cup-11a.jar" fork="true" failonerror="true" classpath="${CLASSPATH}">
+			<arg line="-symbols Symbols" />
+			<arg line="-parser SBQLParser" />
+			<arg line="-interface" />
+			<arg line="-destdir src" />
+			<arg path="res/parser.cup" />
+		</java>
+		-->
