@@ -64,7 +64,7 @@ import datastore.SBAStore;
  * /misc/Zapytania testowe JPS.xlsx
  * 
  */
-public class OperatorsTest {
+public class OperatorsJUnitTestSuite {
 	private static final String OPERATORS_DATA = "operators_data.xml";
 	private static final double DELTA = 0.001;
 
