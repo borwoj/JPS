@@ -687,6 +687,21 @@ public class OperatorsTest {
 				new NameTerminal("married"));
 
 		BagResult expected = new BagResult();
+		ReferenceResult refRes1 = new ReferenceResult(
+				MyOID.createOIDForJUnit(20));
+		ReferenceResult refRes2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(33));
+		BooleanResult boolRes1 = new BooleanResult(true);
+		StructResult structRes1 = new StructResult();
+		StructResult structRes2 = new StructResult();
+		BooleanResult boolRes2 = new BooleanResult(true);
+		structRes1.add(refRes1);
+		structRes1.add(boolRes1);
+		structRes2.add(refRes2);
+		structRes2.add(boolRes2);
+		expected.add(structRes1);
+		expected.add(structRes2);
+		// BagResult br = (BagResult) i.eval(expr);
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(struct(ref(emp1), true), struct(ref(emp2), true))
 
@@ -699,6 +714,25 @@ public class OperatorsTest {
 				new NameTerminal("married")));
 
 		BagResult expected = new BagResult();
+
+		ReferenceResult refRes1 = new ReferenceResult(
+				MyOID.createOIDForJUnit(20));
+		ReferenceResult refRes2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(33));
+		BooleanResult boolRes1 = new BooleanResult(true);
+		StructResult structRes1 = new StructResult();
+		StructResult structRes2 = new StructResult();
+		BooleanResult boolRes2 = new BooleanResult(true);
+
+		BinderResult binderRes1 = new BinderResult("e", refRes1);
+		BinderResult binderRes2 = new BinderResult("e", refRes2);
+		structRes1.add(binderRes1);
+		structRes1.add(boolRes1);
+		structRes2.add(binderRes2);
+		structRes2.add(boolRes2);
+		expected.add(structRes1);
+		expected.add(structRes2);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(struct(<e,ref(emp1)>, true), struct(<e,ref(emp2)>, true))
 	}
@@ -1136,6 +1170,15 @@ public class OperatorsTest {
 		Expression expr = new WhereExpression(new NameTerminal("emp"),
 				new NameTerminal("married"));
 		BagResult expected = new BagResult();
+
+		ReferenceResult refRes1 = new ReferenceResult(
+				MyOID.createOIDForJUnit(20));
+		ReferenceResult refRes2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(33));
+
+		expected.add(refRes1);
+		expected.add(refRes2);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(ref(emp1), ref(emp2))
 	}
