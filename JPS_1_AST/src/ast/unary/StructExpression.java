@@ -9,7 +9,6 @@ public class StructExpression extends UnaryExpression implements
 
 	public StructExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

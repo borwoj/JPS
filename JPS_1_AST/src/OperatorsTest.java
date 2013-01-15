@@ -2,9 +2,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import interpreter.envs.Interpreter;
-import interpreter.envs.InterpreterUtils;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,7 +58,6 @@ import ast.unary.UniqueExpression;
 import datastore.MyOID;
 import datastore.SBAObject;
 import datastore.SBAStore;
-import edu.pjwstk.jps.result.ISingleResult;
 
 /**
  * Kazdy test case ma nazwe test_XX gdzie XX to numer wiersza w pliku
@@ -690,7 +687,6 @@ public class OperatorsTest {
 				new NameTerminal("married"));
 
 		BagResult expected = new BagResult();
-		 BagResult br = (BagResult) i.eval(expr);// TODO
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(struct(ref(emp1), true), struct(ref(emp2), true))
 
@@ -703,7 +699,6 @@ public class OperatorsTest {
 				new NameTerminal("married")));
 
 		BagResult expected = new BagResult();
-		BagResult br = (BagResult) i.eval(expr);// TODO
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(struct(<e,ref(emp1)>, true), struct(<e,ref(emp2)>, true))
 	}

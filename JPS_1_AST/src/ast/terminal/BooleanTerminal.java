@@ -8,7 +8,6 @@ public class BooleanTerminal extends TerminalExpression<Boolean> implements
 
 	public BooleanTerminal(Boolean value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

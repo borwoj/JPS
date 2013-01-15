@@ -8,7 +8,6 @@ public class BagExpression extends UnaryExpression implements IBagExpression {
 
 	public BagExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public void accept(ASTVisitor visitor) {

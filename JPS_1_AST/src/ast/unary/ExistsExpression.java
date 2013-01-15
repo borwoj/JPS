@@ -9,7 +9,6 @@ public class ExistsExpression extends UnaryExpression implements
 
 	public ExistsExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -9,7 +9,6 @@ public class GreaterThanExpression extends BinaryExpression implements
 
 	public GreaterThanExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

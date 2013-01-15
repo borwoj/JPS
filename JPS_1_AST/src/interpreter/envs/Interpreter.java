@@ -5,7 +5,6 @@ import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
-import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.StringResult;
@@ -230,7 +229,6 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitCloseByExpression(ICloseByExpression expr) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -9,7 +9,6 @@ public class LessOrEqualThanExpression extends BinaryExpression implements
 
 	public LessOrEqualThanExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

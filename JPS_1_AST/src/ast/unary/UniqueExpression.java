@@ -9,7 +9,6 @@ public class UniqueExpression extends UnaryExpression implements
 
 	public UniqueExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -9,7 +9,6 @@ public class NotEqualsExpression extends BinaryExpression implements
 
 	public NotEqualsExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

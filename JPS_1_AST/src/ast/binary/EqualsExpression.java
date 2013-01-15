@@ -9,7 +9,6 @@ public class EqualsExpression extends BinaryExpression implements
 
 	public EqualsExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

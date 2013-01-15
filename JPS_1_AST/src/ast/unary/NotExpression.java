@@ -8,7 +8,6 @@ public class NotExpression extends UnaryExpression implements INotExpression {
 
 	public NotExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

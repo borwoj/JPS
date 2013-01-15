@@ -9,7 +9,6 @@ public class CountExpression extends UnaryExpression implements
 
 	public CountExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public void accept(ASTVisitor visitor) {

@@ -9,7 +9,6 @@ public class MinusSetExpression extends BinaryExpression implements
 
 	public MinusSetExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

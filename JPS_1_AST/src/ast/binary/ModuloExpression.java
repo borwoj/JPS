@@ -9,7 +9,6 @@ public class ModuloExpression extends BinaryExpression implements
 
 	public ModuloExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

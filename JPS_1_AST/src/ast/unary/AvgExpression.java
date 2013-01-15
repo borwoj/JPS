@@ -8,7 +8,6 @@ public class AvgExpression extends UnaryExpression implements IAvgExpression {
 
 	public AvgExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

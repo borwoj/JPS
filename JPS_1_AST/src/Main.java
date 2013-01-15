@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import parser.ExprParser;
-
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;

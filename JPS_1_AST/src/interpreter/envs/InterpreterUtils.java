@@ -2,11 +2,9 @@ package interpreter.envs;
 
 import result.BagResult;
 import result.BooleanResult;
-import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.ReferenceResult;
-import result.SingleResult;
 import result.StringResult;
 import datastore.BooleanObject;
 import datastore.StringObject;

@@ -9,7 +9,6 @@ public class IntersectExpression extends BinaryExpression implements
 
 	public IntersectExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -8,7 +8,6 @@ public class XORExpression extends BinaryExpression implements IXORExpression {
 
 	public XORExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

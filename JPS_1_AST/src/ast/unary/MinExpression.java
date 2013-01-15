@@ -8,7 +8,6 @@ public class MinExpression extends UnaryExpression implements IMinExpression {
 
 	public MinExpression(Expression innerExp) {
 		super(innerExp);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

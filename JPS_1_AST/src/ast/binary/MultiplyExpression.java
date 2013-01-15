@@ -9,7 +9,6 @@ public class MultiplyExpression extends BinaryExpression implements
 
 	public MultiplyExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

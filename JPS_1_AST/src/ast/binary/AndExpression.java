@@ -8,7 +8,6 @@ public class AndExpression extends BinaryExpression implements IAndExpression {
 
 	public AndExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

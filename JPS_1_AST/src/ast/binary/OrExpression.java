@@ -8,7 +8,6 @@ public class OrExpression extends BinaryExpression implements IOrExpression {
 
 	public OrExpression(Expression expLeft, Expression expRight) {
 		super(expLeft, expRight);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
