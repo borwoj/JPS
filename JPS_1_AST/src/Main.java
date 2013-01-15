@@ -4,6 +4,7 @@ import interpreter.qres.QResStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import parser.ExprParser;
 
@@ -47,27 +48,45 @@ public class Main {
 	private static final String EXAMPLE_XML_2 = "example_2.xml";
 	private static final String ENVS_DATA = "envs_data.xml";
 	private static final String OPERATORS_DATA = "operators_data.xml";
-	
+
 	public static void main(String[] args) {
-		parser("(1 + 2) * 3 / 4");
+
+		readFromConsole();
+
 	}
-	
-	public static void parser(String toParse){
-		
+
+	public static void readFromConsole() {
+		System.out.println("Enter something here: ");
+
+		String str = "";
+
+		Scanner scanIn = new Scanner(System.in);
+
+		str = scanIn.nextLine();
+		System.out.println(str);
+		parser(str);
+
+		readFromConsole();
+
+	}
+
+	public static void parser(String toParse) {
+
 		Interpreter i = new Interpreter();
 		ExprParser parser = new ExprParser(toParse);
-		
+
 		try {
 			parser.user_init();
 			parser.parse();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: could not match input");
 		}
-		
-		Expression res = parser.RESULT;	
+
+		Expression res = parser.RESULT;
 		res.accept(i);
-		
+
 		System.out.println(i);
+
 	}
 
 	public static void ENVS_zadanie_1() {
