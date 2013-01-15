@@ -63,7 +63,6 @@ public class Main {
 		Scanner scanIn = new Scanner(System.in);
 
 		str = scanIn.nextLine();
-		System.out.println(str);
 		parser(str);
 
 		readFromConsole();

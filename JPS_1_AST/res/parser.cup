@@ -95,7 +95,7 @@ terminal String RIGHT_ROUND_BRACKET;
 
 non terminal Expression goal;
 non terminal Expression expr;
-non terminal Name identifier_literal;
+non terminal NameTerminal identifier_literal;
 
 //priority
 
@@ -120,8 +120,8 @@ start with goal;
 goal ::= expr:e		{: RESULT = e; parser.setResult(e); :} ;
 
 expr  ::=
-		expr:e1	AS:o 	identifier_literal:l	 {: RESULT = new AsExpression(e1, l); :} 
-	| 	expr:e1	GROUP_AS:o identifier_literal:l  {: RESULT = new GroupAsExpression(e1, l); :} 
+	/*	expr:e1	AS:o 	identifier_literal:l	 {: RESULT = new AsExpression(e1, l); :} 
+	| 	expr:e1	GROUP_AS:o identifier_literal:l  {: RESULT = new GroupAsExpression(e1, l); :} */
 
 		expr:e1 AND:o 			 expr:e2	{: RESULT = new AndExpression(e1, e2); :}
 	|	expr:e1 CLOSE_BY:o 		 expr:e2	{: RESULT = new CloseByExpression(e1, e2); :}
@@ -168,9 +168,9 @@ expr  ::=
 	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	
-	|	identifier_literal:l	{: RESULT = new NameExpression(l.pos, l); :}
+	//|	identifier_literal:l	{: RESULT = new AuxiliaryNameExpression(l.pos, l); :}
 	;
 	
-identifier_literal	::= 
-		IDENTIFIER:l	{: RESULT = new Name(l, parser.getCurrentPos()); :}  
-		;
+/*identifier_literal	::= 
+		IDENTIFIER:l	{: RESULT = new AuxiliaryNameExpression(l, parser.getCurrentPos()); :}  
+		;*/

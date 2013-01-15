@@ -112,4 +112,7 @@ WHITESPACE = {LineTerminator} | [ \t\f]
 		}
 		return createToken(BOOLEAN_LITERAL, new Boolean(val));
 	} 
+	{IDENTIFIER} {  
+        return createToken(IDENTIFIER);
+    }
 }
