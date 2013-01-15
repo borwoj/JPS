@@ -60,6 +60,11 @@ import datastore.MyOID;
 import datastore.SBAObject;
 import datastore.SBAStore;
 
+/**
+ * Kazdy test case ma nazwe test_XX gdzie XX to numer wiersza w pliku
+ * /misc/Zapytania testowe JPS.xlsx
+ * 
+ */
 public class OperatorsTest {
 	private static final String OPERATORS_DATA = "operators_data.xml";
 	private static final double DELTA = 0.001;
@@ -659,6 +664,7 @@ public class OperatorsTest {
 		struct.add(new IntegerResult(1));
 		struct.add(new IntegerResult(2));
 		expected.add(struct);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -672,6 +678,7 @@ public class OperatorsTest {
 		struct.add(new BinderResult("n", new IntegerResult(1)));
 		struct.add(new IntegerResult(1));
 		expected.add(struct);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -681,6 +688,7 @@ public class OperatorsTest {
 				new NameTerminal("married"));
 
 		BagResult expected = new BagResult();
+		BagResult br = (BagResult) i.eval(expr);// TODO
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 	}
 
@@ -691,7 +699,10 @@ public class OperatorsTest {
 				new NameTerminal("married")));
 
 		BagResult expected = new BagResult();
+		BagResult br = (BagResult) i.eval(expr);// TODO
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+
+		// bag(struct(<e,ref(emp1)>, true), struct(<e,ref(emp2)>, true))
 	}
 
 	@Test
@@ -1177,40 +1188,27 @@ public class OperatorsTest {
 				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
-	@Test
-	public void test_110() {
-		// Expression expr=new EmptyExpression(
-		// new IntegerTerminal(1)
-		// );
-		Expression expr = null;
-		assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	}
-
-	@Test
-	public void test_111() {
-		// Expression expr=new EmptyExpression(
-		// new BagExpression(
-		// new CommaExpression(
-		// new CommaExpression(
-		// new DoubleTerminal(1.01),
-		// new DoubleTerminal(2.35)
-		// ),
-		// new IntegerTerminal(3)
-		// )
-		// )
-		// );
-		Expression expr = null;
-		assertFalse(((BooleanResult) i.eval(expr)).getValue());
-	}
-
-	@Test
-	public void test_112() {
-		// Expression expr = new EmptyExpression(new WhereExpression(
-		// new IntegerTerminal(1), new BooleanTerminal(false)));
-
-		Expression expr = null;
-		assertTrue(((BooleanResult) i.eval(expr)).getValue());
-	}
+	/*
+	 * EmptyExpression nie ma w wymaganiach. Nie ma tez odpowiednich klas w
+	 * bibliotece jps-api_1.0.3
+	 * 
+	 * @Test public void test_110() { // Expression expr=new EmptyExpression( //
+	 * new IntegerTerminal(1) // ); Expression expr = null;
+	 * assertFalse(((BooleanResult) i.eval(expr)).getValue()); }
+	 * 
+	 * @Test public void test_111() { // Expression expr=new EmptyExpression( //
+	 * new BagExpression( // new CommaExpression( // new CommaExpression( // new
+	 * DoubleTerminal(1.01), // new DoubleTerminal(2.35) // ), // new
+	 * IntegerTerminal(3) // ) // ) // ); Expression expr = null;
+	 * assertFalse(((BooleanResult) i.eval(expr)).getValue()); }
+	 * 
+	 * @Test public void test_112() { // Expression expr = new
+	 * EmptyExpression(new WhereExpression( // new IntegerTerminal(1), new
+	 * BooleanTerminal(false)));
+	 * 
+	 * Expression expr = null; assertTrue(((BooleanResult)
+	 * i.eval(expr)).getValue()); }
+	 */
 
 	@Test
 	public void test_113() {

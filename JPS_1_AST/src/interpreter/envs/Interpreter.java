@@ -5,6 +5,7 @@ import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
+import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.StringResult;
@@ -59,6 +60,7 @@ import edu.pjwstk.jps.interpreter.envs.IInterpreter;
 import edu.pjwstk.jps.interpreter.qres.IQResStack;
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
+import edu.pjwstk.jps.result.IBinderResult;
 import edu.pjwstk.jps.result.IBooleanResult;
 import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
@@ -486,8 +488,41 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitJoinExpression(IJoinExpression expr) {
-		// TODO Auto-generated method stub
 
+		expr.getLeftExpression().accept(this);
+
+		IBagResult leftBag = InterpreterUtils.toBag(qres.pop());
+
+		BagResult bagRes = new BagResult();
+
+		for (ISingleResult leftEl : leftBag.getElements()) {
+			envs.push(envs.nested(leftEl, store));
+			expr.getRightExpression().accept(this);
+			IBagResult rightBag = InterpreterUtils.toBag(qres.pop());
+			for (ISingleResult rightEl : rightBag.getElements()) {
+				StructResult structRes = new StructResult();
+				if (leftEl instanceof IBinderResult)
+					structRes.add(leftEl);
+				else
+					structRes.add((ISingleResult) InterpreterUtils.deref(
+							leftEl, store));
+
+				if (rightEl instanceof IBinderResult)
+					structRes.add(rightEl);
+				else
+					structRes.add((ISingleResult) InterpreterUtils.deref(
+							rightEl, store));
+
+				
+
+				bagRes.add(structRes);
+			}
+			envs.pop();
+		}
+
+		qres.push(bagRes);
+
+		
 	}
 
 	@Override
@@ -1149,7 +1184,22 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitStructExpression(IStructExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
+		BagResult bagRes = (BagResult) InterpreterUtils.toBag(qres.pop());
+
+		StructResult structRes = new StructResult();
+
+		for (ISingleResult element : bagRes.getElements()) {
+			if (bagRes.size() == 1 && element instanceof IStructResult) {
+				structRes.add(((IStructResult) element).elements());
+				continue;
+			}
+			structRes.add(element);
+		}
+		// celowo bag
+		BagResult bagResult = new BagResult();
+		bagResult.add(structRes);
+		qres.push(bagResult);
 
 	}
 
