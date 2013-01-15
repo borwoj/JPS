@@ -19,8 +19,6 @@ public class ReferenceResult extends SingleResult implements IReferenceResult {
 
 	@Override
 	public boolean equals(Object obj) {
-		long a= value.id;
-		long b= ((ReferenceResult) obj).getOIDValue().id;
 		if (obj instanceof ReferenceResult
 				&& ((ReferenceResult) obj).getOIDValue().equals(getOIDValue()))
 			return true;

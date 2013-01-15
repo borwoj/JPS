@@ -701,7 +701,7 @@ public class OperatorsTest {
 		structRes2.add(boolRes2);
 		expected.add(structRes1);
 		expected.add(structRes2);
-		// BagResult br = (BagResult) i.eval(expr);
+
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
 		// bag(struct(ref(emp1), true), struct(ref(emp2), true))
 
@@ -1231,8 +1231,10 @@ public class OperatorsTest {
 	}
 
 	/*
+	 * =========================================================================
 	 * EmptyExpression nie ma w wymaganiach. Nie ma tez odpowiednich klas w
 	 * bibliotece jps-api_1.0.3
+	 * =========================================================================
 	 * 
 	 * @Test public void test_110() { // Expression expr=new EmptyExpression( //
 	 * new IntegerTerminal(1) // ); Expression expr = null;
