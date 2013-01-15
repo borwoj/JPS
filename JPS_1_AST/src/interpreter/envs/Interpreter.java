@@ -501,8 +501,7 @@ public class Interpreter implements IInterpreter {
 			IBagResult rightBag = InterpreterUtils.toBag(qres.pop());
 			for (ISingleResult rightEl : rightBag.getElements()) {
 				StructResult structRes = new StructResult();
-				
-				//TODO
+
 				if (leftEl instanceof IBinderResult)
 					structRes.add(leftEl);
 				else

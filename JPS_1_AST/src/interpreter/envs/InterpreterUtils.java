@@ -5,11 +5,13 @@ import result.BooleanResult;
 import result.CollectionResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.ReferenceResult;
 import result.SingleResult;
 import result.StringResult;
 import datastore.BooleanObject;
 import datastore.StringObject;
 import edu.pjwstk.jps.datastore.IBooleanObject;
+import edu.pjwstk.jps.datastore.IComplexObject;
 import edu.pjwstk.jps.datastore.IDoubleObject;
 import edu.pjwstk.jps.datastore.IIntegerObject;
 import edu.pjwstk.jps.datastore.ISBAObject;
@@ -66,6 +68,8 @@ public class InterpreterUtils {
 					res = new StringResult(iobj.getValue());
 				}
 
+			} else if (obj instanceof IComplexObject) {
+				return new ReferenceResult(((IComplexObject) obj).getOID());
 			} else {
 				throw new RuntimeException("excepted single object got: "
 						+ obj.getClass());
