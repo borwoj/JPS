@@ -501,6 +501,8 @@ public class Interpreter implements IInterpreter {
 			IBagResult rightBag = InterpreterUtils.toBag(qres.pop());
 			for (ISingleResult rightEl : rightBag.getElements()) {
 				StructResult structRes = new StructResult();
+				
+				//TODO
 				if (leftEl instanceof IBinderResult)
 					structRes.add(leftEl);
 				else
@@ -513,8 +515,6 @@ public class Interpreter implements IInterpreter {
 					structRes.add((ISingleResult) InterpreterUtils.deref(
 							rightEl, store));
 
-				
-
 				bagRes.add(structRes);
 			}
 			envs.pop();
@@ -522,7 +522,6 @@ public class Interpreter implements IInterpreter {
 
 		qres.push(bagRes);
 
-		
 	}
 
 	@Override
@@ -1240,8 +1239,19 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitUniqueExpression(IUniqueExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getInnerExpression().accept(this);
 
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult innerBag = InterpreterUtils.toBag(innerRes);
+
+		BagResult bagRes = new BagResult();
+
+		for (ISingleResult element : innerBag.getElements()) {
+			if (!bagRes.getElements().contains(element))
+				bagRes.add(element);
+		}
+
+		qres.push(bagRes);
 	}
 
 	@Override
