@@ -12,7 +12,8 @@ public class DoubleResult extends SimpleResult<Double> implements IDoubleResult 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof IDoubleResult || obj instanceof IIntegerResult)
-			if ((Number) value == (Number) (((SimpleResult) obj).getValue()))
+			if (((Number) value).equals((Number) (((SimpleResult) obj)
+					.getValue())))
 				return true;
 		return false;
 	}

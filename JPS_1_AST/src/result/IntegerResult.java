@@ -17,7 +17,7 @@ public class IntegerResult extends SimpleResult<Integer> implements
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof IIntegerResult || obj instanceof IDoubleResult)
-			if ((Number) value == (Number) (((SimpleResult) obj).getValue()))
+			if (((Number) value).equals((Number) (((SimpleResult) obj).getValue())))
 				return true;
 		return false;
 	}
