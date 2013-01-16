@@ -1,11 +1,6 @@
 package interpreter.envs;
 
 import interpreter.qres.QResStack;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
 import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
@@ -921,9 +916,9 @@ public class Interpreter implements IInterpreter {
 			envs.pop();
 		}
 
-		ArrayList<StructResult> list = new ArrayList<StructResult>();
-		list.addAll((Collection<? extends StructResult>) seqRes.getElements());
-		Collections.sort(list);
+//		ArrayList<StructResult> list = new ArrayList<StructResult>();
+//		list.addAll((Collection<? extends StructResult>) seqRes.getElements());
+//		Collections.sort(list);
 
 		qres.push(seqRes);
 

@@ -2,7 +2,6 @@ package result;
 
 import edu.pjwstk.jps.result.IDoubleResult;
 import edu.pjwstk.jps.result.IIntegerResult;
-import edu.pjwstk.jps.result.ISingleResult;
 
 public class IntegerResult extends SimpleResult<Integer> implements
 		IIntegerResult {
@@ -27,10 +26,5 @@ public class IntegerResult extends SimpleResult<Integer> implements
 		return "" + value;
 	}
 
-	@Override
-	public int compareTo(ISingleResult o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }

@@ -53,7 +53,6 @@ public class StructResult extends SingleResult implements IStructResult {
 		return str;
 	}
 
-	@Override
 	public int compareTo(ISingleResult o) {
 		if (o instanceof IStructResult) {
 			IStructResult structRes = (IStructResult) o;

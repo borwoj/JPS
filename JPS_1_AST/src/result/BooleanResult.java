@@ -1,7 +1,6 @@
 package result;
 
 import edu.pjwstk.jps.result.IBooleanResult;
-import edu.pjwstk.jps.result.ISingleResult;
 
 public class BooleanResult extends SimpleResult<Boolean> implements
 		IBooleanResult {
@@ -21,12 +20,6 @@ public class BooleanResult extends SimpleResult<Boolean> implements
 
 	public String toString() {
 		return "" + value;
-	}
-
-	@Override
-	public int compareTo(ISingleResult o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
