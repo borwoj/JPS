@@ -5,7 +5,6 @@ import interpreter.qres.QResStack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import result.AbstractQueryResult;
 import result.BagResult;
@@ -282,6 +281,23 @@ public class Interpreter implements IInterpreter {
 
 	@Override
 	public void visitCloseByExpression(ICloseByExpression expr) {
+
+		expr.getLeftExpression().accept(this);
+		BagResult innerBag = (BagResult) InterpreterUtils.toBag(qres.pop());
+
+		BagResult bagRes = new BagResult();
+
+		bagRes.add(innerBag);
+		for (ISingleResult element : innerBag.getElements()) {
+			envs.push(envs.nested(element, store));
+			expr.getRightExpression().accept(this);
+
+			bagRes.add(qres.pop());
+
+			envs.pop();
+		}
+
+		qres.push(bagRes);
 
 	}
 

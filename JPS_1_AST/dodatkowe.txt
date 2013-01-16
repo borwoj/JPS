@@ -5,3 +5,4 @@ a tak¿e dodatkowo:
 1. struct
 2. nand
 3. empty
+4. closeBy

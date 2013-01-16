@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.pjwstk.jps.result.ISequenceResult;
 import edu.pjwstk.jps.result.ISingleResult;
-import edu.pjwstk.jps.result.IStructResult;
 
 public class SequenceResult extends CollectionResult implements ISequenceResult {
 
