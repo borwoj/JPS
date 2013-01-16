@@ -1232,29 +1232,32 @@ public class OperatorsJUnitTestSuite {
 				((IntegerResult) i.eval(expr)).getValue().doubleValue(), DELTA);
 	}
 
-	/*
-	 * =========================================================================
-	 * EmptyExpression nie ma w wymaganiach. Nie ma tez odpowiednich klas w
-	 * bibliotece jps-api_1.0.3
-	 * =========================================================================
-	 * 
-	 * @Test public void test_110() { // Expression expr=new EmptyExpression( //
-	 * new IntegerTerminal(1) // ); Expression expr = null;
-	 * assertFalse(((BooleanResult) i.eval(expr)).getValue()); }
-	 * 
-	 * @Test public void test_111() { // Expression expr=new EmptyExpression( //
-	 * new BagExpression( // new CommaExpression( // new CommaExpression( // new
-	 * DoubleTerminal(1.01), // new DoubleTerminal(2.35) // ), // new
-	 * IntegerTerminal(3) // ) // ) // ); Expression expr = null;
-	 * assertFalse(((BooleanResult) i.eval(expr)).getValue()); }
-	 * 
-	 * @Test public void test_112() { // Expression expr = new
-	 * EmptyExpression(new WhereExpression( // new IntegerTerminal(1), new
-	 * BooleanTerminal(false)));
-	 * 
-	 * Expression expr = null; assertTrue(((BooleanResult)
-	 * i.eval(expr)).getValue()); }
-	 */
+	// (visitEmptyExpression jest zaimplementowane)
+	// @Test
+	// public void test_110() {
+	// Expression expr = new EmptyExpression(new IntegerTerminal(1));
+	// Expression expr = null;
+	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	// }
+	//
+	// @Test
+	// public void test_111() {
+	// Expression expr = new EmptyExpression(new BagExpression(
+	// new CommaExpression(new CommaExpression(
+	// new DoubleTerminal(1.01), new DoubleTerminal(2.35)),
+	// new IntegerTerminal(3))));
+	// Expression expr = null;
+	// assertFalse(((BooleanResult) i.eval(expr)).getValue());
+	// }
+	//
+	// @Test
+	// public void test_112() {
+	// Expression expr = new EmptyExpression(new WhereExpression(
+	// new IntegerTerminal(1), new BooleanTerminal(false)));
+	//
+	// Expression expr = null;
+	// assertTrue(((BooleanResult) i.eval(expr)).getValue());
+	// }
 
 	@Test
 	public void test_113() {
@@ -1466,7 +1469,7 @@ public class OperatorsJUnitTestSuite {
 		seqRes.add(structRes1);
 		seqRes.add(structRes2);
 		expected.add(seqRes);
-		//SequenceResult sR = (SequenceResult) i.eval(expr);
+		// SequenceResult sR = (SequenceResult) i.eval(expr);
 		assertTrue(seqRes.equalsForJUnit((SequenceResult) i.eval(expr)));
 	}
 }

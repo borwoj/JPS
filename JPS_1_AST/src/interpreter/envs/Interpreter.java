@@ -226,6 +226,21 @@ public class Interpreter implements IInterpreter {
 
 	}
 
+	public void visitEmptyExpression(IEmptyExpression expr) {
+		expr.getInnerExpression().accept(this);
+
+		IAbstractQueryResult innerRes = qres.pop();
+		IBagResult bag = InterpreterUtils.toBag(innerRes);
+
+		BooleanResult boolRes;
+		if (bag.getElements().isEmpty())
+			boolRes = new BooleanResult(true);
+		else
+			boolRes = new BooleanResult(false);
+
+		qres.push(boolRes);
+	}
+
 	@Override
 	public void visitAnyExpression(IForAnyExpression expr) {
 		expr.getLeftExpression().accept(this);
