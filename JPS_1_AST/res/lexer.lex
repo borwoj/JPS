@@ -3,7 +3,6 @@ package parser;
 import java_cup.runtime.Symbol;
 
 import static parser.Symbols.*;
- 
 
 
 %%
@@ -59,7 +58,6 @@ WHITESPACE = {LineTerminator} | [ \t\f]
 	"AS"|"as"				{ return createToken(AS					); }
 	"GROUP AS"|"group as" 	{ return createToken(GROUP_AS			); }
 	"BAG"|"bag"				{ return createToken(BAG				); }
-	"SEQUENCE"|"sequence"	{ return createToken(SEQUENCE			); }
 	"."                     { return createToken(DOT                ); }
 	">"                     { return createToken(MORE               ); }
     "<"                     { return createToken(LESS               ); }
