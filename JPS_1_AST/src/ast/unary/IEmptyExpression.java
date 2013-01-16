@@ -1,4 +1,4 @@
-package interpreter.envs;
+package ast.unary;
 
 import edu.pjwstk.jps.ast.unary.IUnaryExpression;
 

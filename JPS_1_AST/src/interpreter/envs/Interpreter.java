@@ -10,6 +10,8 @@ import result.IntegerResult;
 import result.SequenceResult;
 import result.StringResult;
 import result.StructResult;
+import ast.binary.INAndExpression;
+import ast.unary.IEmptyExpression;
 import edu.pjwstk.jps.ast.IExpression;
 import edu.pjwstk.jps.ast.auxname.IAsExpression;
 import edu.pjwstk.jps.ast.auxname.IGroupAsExpression;

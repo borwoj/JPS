@@ -1,4 +1,4 @@
-package interpreter.envs;
+package ast.binary;
 
 import edu.pjwstk.jps.ast.binary.IBinaryExpression;
 
