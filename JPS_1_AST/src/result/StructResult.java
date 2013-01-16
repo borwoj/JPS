@@ -17,7 +17,7 @@ public class StructResult extends SingleResult implements IStructResult {
 		return elements;
 	}
 
-	public void add(ISingleResult element) { // TODO czy jest struktura
+	public void add(ISingleResult element) {
 		elements.add(element);
 	}
 

@@ -1450,7 +1450,7 @@ public class OperatorsJUnitTestSuite {
 	public void test_orderBy() {
 		Expression expr = new OrderByExpression(new NameTerminal("emp"),
 				new NameTerminal("number"));
-		// TODO
+
 		BagResult expected = new BagResult();
 		SequenceResult seqRes = new SequenceResult();
 		ReferenceResult refRes1 = new ReferenceResult(
