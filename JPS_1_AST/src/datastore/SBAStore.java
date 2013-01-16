@@ -71,10 +71,10 @@ public class SBAStore implements ISBAStore {
 
 			SimpleObject simpleObj;
 
-			if (value.matches("([\\d]+[.|,][\\d]+)")) {
+			if (value.matches("([-]?[\\d]+[.|,][\\d]+)")) {
 				simpleObj = new DoubleObject(root.getName(),
 						Double.parseDouble(value.replace(",", ".")));
-			} else if (value.matches("[\\d]+")) { // TODO ujemny
+			} else if (value.matches("[-]?[\\d]+")) { 
 				simpleObj = new IntegerObject(root.getName(),
 						Integer.parseInt(value));
 			} else if (value.matches("(true)|(false)")) {
