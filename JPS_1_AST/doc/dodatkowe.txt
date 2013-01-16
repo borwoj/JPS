@@ -6,3 +6,4 @@ a tak¿e dodatkowo:
 2. nand
 3. empty
 4. closeBy
+5. czesciowo orderBy
