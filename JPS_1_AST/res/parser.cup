@@ -40,40 +40,29 @@ terminal String STRING_LITERAL;
 terminal String WHERE;
 terminal String XOR;
 terminal String JOIN;
-
 terminal String FORALL;
 terminal String FORANY;
-
 terminal String NOT;
-
 terminal String UNION;
 terminal String IN;
-
 terminal String ORDER_BY;
 terminal String CLOSE_BY;
-
 terminal String COMMA;
-
 terminal String OR;
 terminal String AND;
-
 terminal String EQUALS;
 terminal String NOT_EQUALS;
 terminal String MORE;
 terminal String LESS;
 terminal String MORE_OR_EQUAL;
 terminal String LESS_OR_EQUAL;
-
 terminal String PLUS;
 terminal String MINUS;
-
 terminal String MULTIPLY; 
 terminal String DIVIDE;
 terminal String MODULO;
-
 terminal String AS;
 terminal String GROUP_AS;
-
 terminal String SUM;
 terminal String COUNT;
 terminal String AVG;
@@ -83,41 +72,33 @@ terminal String UNIQUE;
 terminal String EXISTS;
 terminal String MINUS_FUNCTION;
 terminal String INTERSECT;
-
 terminal String DOT;
-
 terminal String BAG;
-terminal String SEQUENCE;
 terminal String STRUCT;
-
 terminal String LEFT_ROUND_BRACKET;
 terminal String RIGHT_ROUND_BRACKET;
 
 non terminal Expression goal;
 non terminal Expression expr;
-non terminal NameTerminal identifier_literal;
-non terminal DotExpression dot_expr;
-non terminal DotExpression dot_ident_expr;
-//non terminal BagExpression bag_expr;
-//non terminal SequenceExpression sequence_expr;
 
 //priority
-
 precedence left WHERE, JOIN; 
 precedence left FORALL, FORANY; 
 precedence left NOT; 
 precedence left UNION, IN; 
 precedence left ORDER_BY, CLOSE_BY; 
 precedence left COMMA; 
-precedence left OR, XOR, AND;
+precedence left IDENTIFIER;
+precedence left OR, AND, XOR;
 precedence left EQUALS, NOT_EQUALS, MORE, LESS, MORE_OR_EQUAL, LESS_OR_EQUAL;  
 precedence left PLUS, MINUS; 
 precedence left MULTIPLY, DIVIDE, MODULO; 
 precedence left AS, GROUP_AS; 
 precedence left SUM, COUNT, AVG, MIN, MAX, UNIQUE, EXISTS, MINUS_FUNCTION, INTERSECT; 
-precedence left DOT; 
-precedence left BAG, SEQUENCE, STRUCT; 
 precedence left LEFT_ROUND_BRACKET, RIGHT_ROUND_BRACKET;
+precedence left DOT; 
+precedence left BAG, STRUCT; 
+
 
 start with goal;
 
@@ -131,9 +112,10 @@ expr  ::=
 	|	expr:e1 CLOSE_BY:o 		 expr:e2	{: RESULT = new CloseByExpression(e1, e2); :}
 	|	expr:e1 COMMA:o 		 expr:e2	{: RESULT = new CommaExpression(e1, e2); :}
 	|	expr:e1 DIVIDE:o 		 expr:e2	{: RESULT = new DivideExpression(e1, e2); :}
+	|	expr:e1 DOT:o 		 	expr:e2		{: RESULT = new DotExpression(e1, e2); :}
 	|	expr:e1 EQUALS:o		 expr:e2	{: RESULT = new EqualsExpression(e1, e2); :}
-	|	FORALL:o	expr:e1		expr:e2	{: RESULT = new ForAllExpression(e1, e2); :}
-	|	FORANY:o	expr:e1		expr:e2	{: RESULT = new ForAnyExpression(e1, e2); :}
+	|	FORALL:o	 expr:e1		expr:e2	{: RESULT = new ForAllExpression(e1, e2); :}
+	|	FORANY:o	 expr:e1		expr:e2	{: RESULT = new ForAnyExpression(e1, e2); :}
 	|	expr:e1 MORE_OR_EQUAL:o	 expr:e2	{: RESULT = new GreaterOrEqualThanExpression(e1, e2); :}
 	|	expr:e1 MORE:o	 		 expr:e2	{: RESULT = new GreaterThanExpression(e1, e2); :}
 	|	expr:e1 IN:o	 		 expr:e2	{: RESULT = new InExpression(e1, e2); :}
@@ -164,21 +146,12 @@ expr  ::=
 	|	SUM:o	 	expr:e1	{: RESULT = new SumExpression(e1); :}
 	|	UNIQUE:o	expr:e1	{: RESULT = new UniqueExpression(e1); :}	
 	
+	|	IDENTIFIER:o {: RESULT = new NameTerminal((String)o); :}
 	| 	BOOLEAN_LITERAL:o {: RESULT = new BooleanTerminal((Boolean)o); :}
 	| 	DOUBLE_LITERAL:o  {: RESULT = new DoubleTerminal((Double)o); :}
 	| 	INTEGER_LITERAL:o {: RESULT = new IntegerTerminal((Integer)o); :}
-	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}
+	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}	
 	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	
-	|	dot_expr:e			{: RESULT = e; :}
-	//|	sequence_expr:e		{: RESULT = e; :}
 	;
-	
-dot_expr ::= expr:e1 DOT:o expr:e2	{: RESULT = new DotExpression(e1, e2); :};
-/*dot_ident_expr ::= identifier_literal:i1 DOT:o identifier_literal:i2 {: RESULT = new DotExpression(new NameExpression(i1), new NameExpression(i2)); :}
-				|  identifier_literal:i1 DOT:o dot_ident_expr:i2 {: RESULT = new DotExpression(new NameExpression(i1), i2); :}
-				;*/
-
-//sequence_expr ::= SEQUENCE:o expr:e1 {: RESULT = new SequenceExpression(e1, OperatorFactory.getOperator(o)); :}
-	

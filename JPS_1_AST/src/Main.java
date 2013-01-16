@@ -48,14 +48,20 @@ public class Main {
 	private static final String ENVS_DATA = "envs_data.xml";
 	private static final String OPERATORS_DATA = "operators_data.xml";
 
+	static Interpreter i;
+	static SBAStore store;
+
 	public static void main(String[] args) {
+		store = new SBAStore();
+		store.loadXML(OPERATORS_DATA);
+		i = new Interpreter(store);
 
 		readFromConsole();
 
 	}
 
 	public static void readFromConsole() {
-		System.out.println("\nEnter something here: ");
+		System.out.println("Enter something here: ");
 
 		String str = "";
 
@@ -65,8 +71,6 @@ public class Main {
 		try {
 			parser(str);
 		} catch (Exception e) {
-			//e.printStackTrace();
-			//System.out.println("Error: could not match input");
 		} finally {
 			readFromConsole();
 		}
@@ -74,16 +78,13 @@ public class Main {
 
 	public static void parser(String toParse) throws Exception {
 
-		Interpreter i = new Interpreter();
 		ExprParser parser = new ExprParser(toParse);
-
 		parser.user_init();
 		parser.parse();
 
-		Expression res = parser.RESULT;
-		res.accept(i);
+		Expression expr = parser.RESULT;
 
-		System.out.println(i);
+		System.out.println(i.eval(expr)+"\n");
 
 	}
 
