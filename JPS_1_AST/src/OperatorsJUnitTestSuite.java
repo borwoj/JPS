@@ -67,7 +67,7 @@ import datastore.SBAStore;
  * 
  */
 public class OperatorsJUnitTestSuite {
-	private static final String OPERATORS_DATA = "operators_data.xml";
+	private static final String OPERATORS_DATA = "res/operators_data.xml";
 	private static final double DELTA = 0.001;
 
 	Interpreter i;
