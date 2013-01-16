@@ -43,10 +43,10 @@ import edu.pjwstk.jps.result.ISingleResult;
  * @author Borys Wojciechowski (s6427)
  **/
 public class Main {
-	private static final String EXAMPLE_XML = "example.xml";
-	private static final String EXAMPLE_XML_2 = "example_2.xml";
-	private static final String ENVS_DATA = "envs_data.xml";
-	private static final String OPERATORS_DATA = "operators_data.xml";
+	private static final String EXAMPLE_XML = "res/example.xml";
+	private static final String EXAMPLE_XML_2 = "res/example_2.xml";
+	private static final String ENVS_DATA = "res/envs_data.xml";
+	private static final String OPERATORS_DATA = "res/operators_data.xml";
 
 	static Interpreter i;
 	static SBAStore store;
