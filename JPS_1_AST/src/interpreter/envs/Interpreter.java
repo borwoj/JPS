@@ -1170,7 +1170,7 @@ public class Interpreter implements IInterpreter {
 		BooleanResult boolRes;
 
 		boolean exists = false;
-		if (bagRes.getElements().size() > 0)
+		if (!bagRes.getElements().isEmpty())
 			exists = true;
 
 		boolRes = new BooleanResult(exists);
