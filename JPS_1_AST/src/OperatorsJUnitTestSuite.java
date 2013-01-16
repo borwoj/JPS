@@ -14,6 +14,7 @@ import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
 import result.ReferenceResult;
+import result.SequenceResult;
 import result.StringResult;
 import result.StructResult;
 import ast.Expression;
@@ -38,6 +39,7 @@ import ast.binary.MinusSetExpression;
 import ast.binary.ModuloExpression;
 import ast.binary.MultiplyExpression;
 import ast.binary.OrExpression;
+import ast.binary.OrderByExpression;
 import ast.binary.PlusExpression;
 import ast.binary.UnionExpression;
 import ast.binary.WhereExpression;
@@ -1439,5 +1441,32 @@ public class OperatorsJUnitTestSuite {
 		expected.add(new StringResult("Ala"));
 		expected.add(new IntegerResult(3));
 		assertTrue(expected.equalsForJUnit((BagResult) i.eval(expr)));
+	}
+
+	@Test
+	public void test_orderBy() {
+		Expression expr = new OrderByExpression(new NameTerminal("emp"),
+				new NameTerminal("number"));
+		// TODO
+		BagResult expected = new BagResult();
+		SequenceResult seqRes = new SequenceResult();
+		ReferenceResult refRes1 = new ReferenceResult(
+				MyOID.createOIDForJUnit(20));
+		ReferenceResult refRes2 = new ReferenceResult(
+				MyOID.createOIDForJUnit(33));
+		StringResult strRes1 = new StringResult("s0000");
+		StringResult strRes2 = new StringResult("s0001");
+		// StringResult strRes3 = new StringResult("Pan Tadeusz");
+		StructResult structRes1 = new StructResult();
+		StructResult structRes2 = new StructResult();
+		structRes1.add(refRes1);
+		structRes1.add(strRes1);
+		structRes2.add(refRes2);
+		structRes2.add(strRes2);
+		seqRes.add(structRes1);
+		seqRes.add(structRes2);
+		expected.add(seqRes);
+		//SequenceResult sR = (SequenceResult) i.eval(expr);
+		assertTrue(seqRes.equalsForJUnit((SequenceResult) i.eval(expr)));
 	}
 }

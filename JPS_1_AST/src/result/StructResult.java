@@ -53,4 +53,19 @@ public class StructResult extends SingleResult implements IStructResult {
 		return str;
 	}
 
+	@Override
+	public int compareTo(ISingleResult o) {
+		if (o instanceof IStructResult) {
+			IStructResult structRes = (IStructResult) o;
+			if (structRes.elements().size() == elements.size())
+				return 0;
+			else if (structRes.elements().size() > elements.size())
+				return -1;
+			else
+				return 1;
+		} else
+			throw new RuntimeException("compareTo w StructResult");
+
+	}
+
 }

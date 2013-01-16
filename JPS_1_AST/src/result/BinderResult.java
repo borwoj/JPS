@@ -3,6 +3,7 @@ package result;
 import edu.pjwstk.jps.result.IAbstractQueryResult;
 import edu.pjwstk.jps.result.IBagResult;
 import edu.pjwstk.jps.result.IBinderResult;
+import edu.pjwstk.jps.result.ISingleResult;
 
 public class BinderResult extends SingleResult implements IBinderResult {
 
@@ -41,6 +42,12 @@ public class BinderResult extends SingleResult implements IBinderResult {
 
 	public String toString() {
 		return "binder(name = " + name + " , value = " + value + ")";
+	}
+
+	@Override
+	public int compareTo(ISingleResult o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

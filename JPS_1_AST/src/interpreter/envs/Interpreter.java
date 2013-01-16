@@ -1,12 +1,19 @@
 package interpreter.envs;
 
 import interpreter.qres.QResStack;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import result.AbstractQueryResult;
 import result.BagResult;
 import result.BinderResult;
 import result.BooleanResult;
 import result.DoubleResult;
 import result.IntegerResult;
+import result.SequenceResult;
 import result.StringResult;
 import result.StructResult;
 import edu.pjwstk.jps.ast.IExpression;
@@ -489,15 +496,15 @@ public class Interpreter implements IInterpreter {
 
 		expr.getLeftExpression().accept(this);
 
-		IBagResult leftBag = InterpreterUtils.toBag(qres.pop());
+		IBagResult leftRes = InterpreterUtils.toBag(qres.pop());
 
 		BagResult bagRes = new BagResult();
 
-		for (ISingleResult leftEl : leftBag.getElements()) {
+		for (ISingleResult leftEl : leftRes.getElements()) {
 			envs.push(envs.nested(leftEl, store));
 			expr.getRightExpression().accept(this);
-			IBagResult rightBag = InterpreterUtils.toBag(qres.pop());
-			for (ISingleResult rightEl : rightBag.getElements()) {
+			IBagResult rightRes = InterpreterUtils.toBag(qres.pop());
+			for (ISingleResult rightEl : rightRes.getElements()) {
 				StructResult structRes = new StructResult();
 
 				if (leftEl instanceof IBinderResult)
@@ -807,9 +814,56 @@ public class Interpreter implements IInterpreter {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.pjwstk.jps.visitor.ASTVisitor#visitOrderByExpression(edu.pjwstk.jps
+	 * .ast.binary.IOrderByExpression)
+	 * 
+	 * orderby — sortowanie (niealgebraiczny). Ewaluacja: 1. Wykonaj operacje
+	 * join. 2. Podnies wynik z QRES. 3. Posortuj otrzymane struktury wg
+	 * drugiego pola kazdej z tych struktur, pozniej trzeciego, czwartego, etc.
+	 * 3. Usun wszystkie z wyjatkiem pierwszego pola otrzymanych struktur. 4.
+	 * Odloz kolekcje struktur na QRES.
+	 */
 	@Override
 	public void visitOrderByExpression(IOrderByExpression expr) {
-		// TODO Auto-generated method stub
+		expr.getLeftExpression().accept(this);
+		BagResult leftRes = (BagResult) InterpreterUtils.toBag(qres.pop());
+
+		SequenceResult seqRes = new SequenceResult();
+
+		for (ISingleResult leftEl : leftRes.getElements()) {
+			envs.push(envs.nested(leftEl, store));
+			expr.getRightExpression().accept(this);
+			BagResult rightRes = (BagResult) InterpreterUtils.toBag(qres.pop());
+
+			for (ISingleResult rightEl : rightRes.getElements()) {
+				StructResult structRes = new StructResult();
+
+				if (leftEl instanceof IBinderResult)
+					structRes.add(leftEl);
+				else
+					structRes.add((ISingleResult) InterpreterUtils.deref(
+							leftEl, store));
+
+				if (rightEl instanceof IBinderResult)
+					structRes.add(rightEl);
+				else
+					structRes.add((ISingleResult) InterpreterUtils.deref(
+							rightEl, store));
+
+				seqRes.add(structRes);
+			}
+			envs.pop();
+		}
+
+		ArrayList<StructResult> list = new ArrayList<StructResult>();
+		list.addAll((Collection<? extends StructResult>) seqRes.getElements());
+		Collections.sort(list);
+
+		qres.push(seqRes);
 
 	}
 
