@@ -55,30 +55,30 @@ public class Main {
 	}
 
 	public static void readFromConsole() {
-		System.out.println("Enter something here: ");
+		System.out.println("\nEnter something here: ");
 
 		String str = "";
 
 		Scanner scanIn = new Scanner(System.in);
 
 		str = scanIn.nextLine();
-		parser(str);
-
-		readFromConsole();
-
+		try {
+			parser(str);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//System.out.println("Error: could not match input");
+		} finally {
+			readFromConsole();
+		}
 	}
 
-	public static void parser(String toParse) {
+	public static void parser(String toParse) throws Exception {
 
 		Interpreter i = new Interpreter();
 		ExprParser parser = new ExprParser(toParse);
 
-		try {
-			parser.user_init();
-			parser.parse();
-		} catch (Exception e) {
-			System.out.println("Error: could not match input");
-		}
+		parser.user_init();
+		parser.parse();
 
 		Expression res = parser.RESULT;
 		res.accept(i);
