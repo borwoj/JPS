@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Calc" default="generate">
+<project name="JPS" default="generate">
 	<property name="CLASSPATH" value="bin;lib/jflex-1.4.3.jar;lib/java-cup-11a.jar;"/>
 	<taskdef name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${CLASSPATH}"/>
-	<taskdef name="cup" classname="java_cup.anttask.CUPTask" classpath="${CLASSPATH}"/>
-
-	
+	<taskdef name="cup" classname="java_cup.anttask.CUPTask" classpath="${CLASSPATH}"/>	
 	
 	<target name="generate">
 		<jflex destdir="src" file="res/lexer.lex" nobak="true"/>	
