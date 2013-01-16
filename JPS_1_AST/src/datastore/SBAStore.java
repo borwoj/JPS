@@ -19,8 +19,6 @@ import edu.pjwstk.jps.datastore.OID;
 public class SBAStore implements ISBAStore {
 
 	public static LinkedHashMap<OID, SBAObject> allObjectsMap = new LinkedHashMap<OID, SBAObject>();
-	// public static ArrayList<SBAObject> allObjects = new
-	// ArrayList<SBAObject>();
 
 	SAXBuilder builder = new SAXBuilder();
 	Document doc;
@@ -31,13 +29,6 @@ public class SBAStore implements ISBAStore {
 	@Override
 	public ISBAObject retrieve(OID oid) {
 		return allObjectsMap.get(oid);
-		// SBAObject ret = null;
-		// for (SBAObject sbao : allObjects) {
-		// if (oid == sbao.getOID()) {
-		// ret = sbao;
-		// }
-		// }
-		// return ret;
 	}
 
 	@Override
@@ -49,8 +40,6 @@ public class SBAStore implements ISBAStore {
 	public void loadXML(String filePath) { 
 		try {
 			doc = builder.build(filePath);
-			//System.out.println("Za³adowano XML:");
-			//serializer.output(doc, System.out);
 		} catch (JDOMException e) {
 			System.err.println(e);
 		} catch (IOException e) {
@@ -71,10 +60,10 @@ public class SBAStore implements ISBAStore {
 
 			SimpleObject simpleObj;
 
-			if (value.matches("([\\d]+[.|,][\\d]+)")) {
+			if (value.matches("([-]?[\\d]+[.|,][\\d]+)")) {
 				simpleObj = new DoubleObject(root.getName(),
 						Double.parseDouble(value.replace(",", ".")));
-			} else if (value.matches("[\\d]+")) { 
+			} else if (value.matches("[-]?[\\d]+")) { 
 				simpleObj = new IntegerObject(root.getName(),
 						Integer.parseInt(value));
 			} else if (value.matches("(true)|(false)")) {
@@ -128,7 +117,7 @@ public class SBAStore implements ISBAStore {
 	}
 
 	public OID identifyType(Object o, String objectName) {
-		SimpleObject simpleObj; // czy kolekcja
+		SimpleObject simpleObj; 
 
 		if (o instanceof Double) {
 			simpleObj = new DoubleObject(objectName, (Double) o);
