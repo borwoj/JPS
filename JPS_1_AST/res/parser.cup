@@ -168,6 +168,7 @@ expr  ::=
 	| 	DOUBLE_LITERAL:o  {: RESULT = new DoubleTerminal((Double)o); :}
 	| 	INTEGER_LITERAL:o {: RESULT = new IntegerTerminal((Integer)o); :}
 	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}
+	|	IDENTIFIER:o {: RESULT = new NameTerminal((String)o); :}
 	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	
