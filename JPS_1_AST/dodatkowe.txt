@@ -1,0 +1,6 @@
+Zaimplementowane zosta³y wszystkie operatory z
+CW5-Operatory1.pdf oraz CW6-Operatory2.pdf
+a tak¿e dodatkowo:
+
+1. struct
+2. nand
