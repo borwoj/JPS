@@ -61,7 +61,7 @@ public class Main {
 	}
 
 	public static void readFromConsole() {
-		System.out.println("\nEnter something here: ");
+		System.out.println("Enter something here: ");
 
 		String str = "";
 
@@ -84,7 +84,7 @@ public class Main {
 
 		Expression expr = parser.RESULT;
 
-		System.out.println(i.eval(expr));
+		System.out.println(i.eval(expr)+"\n");
 
 	}
 

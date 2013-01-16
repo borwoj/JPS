@@ -82,22 +82,23 @@ non terminal Expression goal;
 non terminal Expression expr;
 
 //priority
-
 precedence left WHERE, JOIN; 
 precedence left FORALL, FORANY; 
 precedence left NOT; 
 precedence left UNION, IN; 
 precedence left ORDER_BY, CLOSE_BY; 
 precedence left COMMA; 
-precedence left OR, XOR, AND;
+precedence left IDENTIFIER;
+precedence left OR, AND, XOR;
 precedence left EQUALS, NOT_EQUALS, MORE, LESS, MORE_OR_EQUAL, LESS_OR_EQUAL;  
 precedence left PLUS, MINUS; 
 precedence left MULTIPLY, DIVIDE, MODULO; 
 precedence left AS, GROUP_AS; 
 precedence left SUM, COUNT, AVG, MIN, MAX, UNIQUE, EXISTS, MINUS_FUNCTION, INTERSECT; 
+precedence left LEFT_ROUND_BRACKET, RIGHT_ROUND_BRACKET;
 precedence left DOT; 
 precedence left BAG, STRUCT; 
-precedence left LEFT_ROUND_BRACKET, RIGHT_ROUND_BRACKET;
+
 
 start with goal;
 
@@ -145,11 +146,11 @@ expr  ::=
 	|	SUM:o	 	expr:e1	{: RESULT = new SumExpression(e1); :}
 	|	UNIQUE:o	expr:e1	{: RESULT = new UniqueExpression(e1); :}	
 	
+	|	IDENTIFIER:o {: RESULT = new NameTerminal((String)o); :}
 	| 	BOOLEAN_LITERAL:o {: RESULT = new BooleanTerminal((Boolean)o); :}
 	| 	DOUBLE_LITERAL:o  {: RESULT = new DoubleTerminal((Double)o); :}
 	| 	INTEGER_LITERAL:o {: RESULT = new IntegerTerminal((Integer)o); :}
-	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}
-	|	IDENTIFIER:o {: RESULT = new NameTerminal((String)o); :}
+	| 	STRING_LITERAL:o  {: RESULT = new StringTerminal((String)o); :}	
 	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	
