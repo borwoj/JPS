@@ -119,7 +119,6 @@ public class Interpreter implements IInterpreter {
 	@Override
 	public void visitAllExpression(IForAllExpression expr) {
 		expr.getLeftExpression().accept(this);
-		// System.out.println(qres);
 		IAbstractQueryResult leftRes = qres.pop();
 		IBagResult leftBag = InterpreterUtils.toBag(leftRes);
 
@@ -888,6 +887,8 @@ public class Interpreter implements IInterpreter {
 	 */
 	@Override
 	public void visitOrderByExpression(IOrderByExpression expr) {
+		// ============================================
+		// join
 		expr.getLeftExpression().accept(this);
 		BagResult leftRes = (BagResult) InterpreterUtils.toBag(qres.pop());
 
@@ -917,10 +918,11 @@ public class Interpreter implements IInterpreter {
 			}
 			envs.pop();
 		}
-
-//		ArrayList<StructResult> list = new ArrayList<StructResult>();
-//		list.addAll((Collection<? extends StructResult>) seqRes.getElements());
-//		Collections.sort(list);
+		// ==============================================
+		// ArrayList<StructResult> list = new ArrayList<StructResult>();
+		// list.addAll((Collection<? extends StructResult>)
+		// seqRes.getElements());
+		// Collections.sort(list);
 
 		qres.push(seqRes);
 
