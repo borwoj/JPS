@@ -55,8 +55,8 @@ public class Main {
 		store = new SBAStore();
 		store.loadXML(OPERATORS_DATA);
 		i = new Interpreter(store);
-
-		readFromConsole();
+		
+		readFromConsole();		
 
 	}
 
@@ -295,126 +295,6 @@ public class Main {
 	}
 
 	public static void ENVS_zadanie_2() {
-		// ((emp.address) where number > 20).(street,city)
-
-		ENVS envs = new ENVS();
-		SBAStore store = new SBAStore();
-
-		store.loadXML(ENVS_DATA);
-
-		envs.init(store.getEntryOID(), store);
-		QResStack qres = new QResStack();
-
-		printStacks(envs, qres);
-
-		BagResult whereres = new BagResult();
-		BagResult dotres_1 = new BagResult();
-
-		BagResult bag_1 = (BagResult) envs.bind("emp"); // eval
-		qres.push(bag_1);
-		BagResult bag_2 = (BagResult) qres.pop();
-
-		for (ISingleResult emp : bag_2.getElements()) {
-			envs.push(envs.nested(emp, store));
-
-			BagResult bag_3 = (BagResult) envs.bind("address");
-			qres.push(bag_3);
-			BagResult bag_4 = (BagResult) qres.pop();
-
-			for (ISingleResult address : bag_4.getElements()) {
-				dotres_1.add(address);
-				qres.push(dotres_1);
-
-				BagResult bag_5 = (BagResult) qres.pop();
-				envs.push(envs.nested(getBagElement(bag_5, 0), store));
-				printStacks(envs, qres);
-
-				BagResult bag_6 = (BagResult) envs.bind("number"); // eval
-				qres.push(bag_6);
-				qres.push(new IntegerResult(20));
-				printStacks(envs, qres);
-				IntegerResult intres = (IntegerResult) qres.pop();
-				BagResult bag_7 = (BagResult) qres.pop();
-
-				IntegerObject intObj_1 = (IntegerObject) deref(
-						getBagElement(bag_7, 0), store);
-
-				if (intObj_1.getValue() > intres.getValue()) {
-					whereres.add(address);
-				}
-
-				envs.pop();
-			}
-			qres.push(whereres);
-			envs.pop();
-		}
-
-		qres.push(dotres_1);
-
-		BagResult dotres_2 = new BagResult();
-
-		BagResult bag_13 = (BagResult) qres.pop();
-
-		for (ISingleResult address : bag_13.getElements()) {
-			BagResult commares_1 = new BagResult();
-
-			BagResult bag_14 = (BagResult) envs.bind("street"); // eval
-			qres.push(bag_14);
-
-			BagResult bag_15 = (BagResult) envs.bind("city"); // eval
-			qres.push(bag_15);
-
-			printStacks(envs, qres);
-
-			StructResult structres_1 = new StructResult();
-			BagResult comma_1_temp = (BagResult) qres.pop();
-			BagResult comma_2_temp = (BagResult) qres.pop();
-			structres_1.add(getBagElement(comma_2_temp, 0));
-			structres_1.add(getBagElement(comma_1_temp, 0));
-
-			commares_1.add(structres_1);
-			envs.pop();
-
-			dotres_2.add(structres_1);
-
-			printStacks(envs, qres);
-
-			envs.push(envs.nested(getBagElement(bag_13, 1), store)); // address(i32)
-			printStacks(envs, qres);
-		}
-
-		// BagResult bag_13 = (BagResult) qres.pop();
-		envs.push(envs.nested(getBagElement(bag_13, 0), store)); // address(i32)
-		printStacks(envs, qres);
-
-		BagResult commares_2 = new BagResult();
-
-		BagResult bag_16 = (BagResult) envs.bind("street"); // eval
-		qres.push(bag_16);
-
-		BagResult bag_17 = (BagResult) envs.bind("city"); // eval
-		qres.push(bag_17);
-
-		printStacks(envs, qres);
-
-		StructResult structres_2 = new StructResult();
-		BagResult comma_3_temp = (BagResult) qres.pop();
-		BagResult comma_4_temp = (BagResult) qres.pop();
-		structres_2.add(getBagElement(comma_4_temp, 0));
-		structres_2.add(getBagElement(comma_3_temp, 0));
-
-		commares_2.add(structres_2);
-		envs.pop();
-
-		dotres_2.add(structres_2);
-
-		qres.push(dotres_2);
-
-		printStacks(envs, qres);
-
-	}
-
-	public static void ENVS_zadanie_2_old() {
 		// ((emp.address) where number > 20).(street,city)
 
 		ENVS envs = new ENVS();
