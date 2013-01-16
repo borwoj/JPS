@@ -97,7 +97,9 @@ non terminal Expression goal;
 non terminal Expression expr;
 non terminal NameTerminal identifier_literal;
 non terminal DotExpression dot_expr;
-non terminal BagExpression bag_expr;
+non terminal DotExpression dot_ident_expr;
+//non terminal BagExpression bag_expr;
+//non terminal SequenceExpression sequence_expr;
 
 //priority
 
@@ -122,10 +124,10 @@ start with goal;
 goal ::= expr:e		{: RESULT = e; parser.setResult(e); :} ;
 
 expr  ::=
-	/*	expr:e1	AS:o 	identifier_literal:l	 {: RESULT = new AsExpression(e1, l); :} 
-	| 	expr:e1	GROUP_AS:o identifier_literal:l  {: RESULT = new GroupAsExpression(e1, l); :} */
+		expr:e1	AS:o 		IDENTIFIER:l	 {: RESULT = new AsExpression(e1, l); :} 
+	| 	expr:e1	GROUP_AS:o 	IDENTIFIER:l  {: RESULT = new GroupAsExpression(e1, l); :} 
 
-		expr:e1 AND:o 			 expr:e2	{: RESULT = new AndExpression(e1, e2); :}
+	|	expr:e1 AND:o 			 expr:e2	{: RESULT = new AndExpression(e1, e2); :}
 	|	expr:e1 CLOSE_BY:o 		 expr:e2	{: RESULT = new CloseByExpression(e1, e2); :}
 	|	expr:e1 COMMA:o 		 expr:e2	{: RESULT = new CommaExpression(e1, e2); :}
 	|	expr:e1 DIVIDE:o 		 expr:e2	{: RESULT = new DivideExpression(e1, e2); :}
@@ -169,17 +171,14 @@ expr  ::=
 	
 	|	LEFT_ROUND_BRACKET:o expr:e1 RIGHT_ROUND_BRACKET {: RESULT = e1; :}
 	
-	|	dot_expr:e	{: RESULT = e; :}
-	|   bag_expr:e	{: RESULT = e; :}
-	//|	identifier_literal:l	{: RESULT = new AuxiliaryNameExpression(l); :}
+	|	dot_expr:e			{: RESULT = e; :}
+	//|	sequence_expr:e		{: RESULT = e; :}
 	;
 	
 dot_expr ::= expr:e1 DOT:o expr:e2	{: RESULT = new DotExpression(e1, e2); :};
+/*dot_ident_expr ::= identifier_literal:i1 DOT:o identifier_literal:i2 {: RESULT = new DotExpression(new NameExpression(i1), new NameExpression(i2)); :}
+				|  identifier_literal:i1 DOT:o dot_ident_expr:i2 {: RESULT = new DotExpression(new NameExpression(i1), i2); :}
+				;*/
 
-/*bag_expr ::=  BAG:o LESS IDENTIFIER:i MORE expr:e1 {: RESULT = new BagrExpression(parser.getCurrentPos(), e1, OperatorFactory.getOperator(o), new NameExpression(parser.getCurrentPos(), new Name(i, parser.getCurrentPos()))); :}
-	|		  BAG:o expr:e1 {: RESULT = new BagExpression(e1, OperatorFactory.getOperator(o)); :}
-	; */
+//sequence_expr ::= SEQUENCE:o expr:e1 {: RESULT = new SequenceExpression(e1, OperatorFactory.getOperator(o)); :}
 	
-/*identifier_literal	::= 
-		IDENTIFIER:l	{: RESULT = new AuxiliaryNameExpression(l); :}  
-		;*/
