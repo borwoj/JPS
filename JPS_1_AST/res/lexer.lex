@@ -25,10 +25,10 @@ import static parser.Symbols.*;
 	return createToken(EOF);
 %eofval}
 
-INTEGER = [-]?[0-9]+
+INTEGER = [0-9]+
 BOOLEAN = true|false
 IDENTIFIER = [_a-zA-Z][0-9a-zA-Z]*
-DOUBLE = [-]?[0-9]+\.[0-9]+
+DOUBLE = [0-9]+\.[0-9]+
 STRING = [\"][^\"]*[\"]
 CHAR = [\'][^\"][\']
 LineTerminator = \r|\n|\r\n 
